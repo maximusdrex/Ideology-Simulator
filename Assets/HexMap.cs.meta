@@ -3,7 +3,11 @@ guid: 4bac28ba3281840eba310209fe0ce0f4
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - HexModel: {fileID: 6188751399001136934, guid: 1f7359c85095e4c0b8742375cacf3587,
+      type: 3}
+  - MountainModel: {fileID: 9186117828343838436, guid: 5708f7f4dc09649c6b778d7c00082afe,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
