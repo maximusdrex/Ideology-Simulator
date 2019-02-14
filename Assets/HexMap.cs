@@ -9,8 +9,8 @@ public class HexMap : MonoBehaviour
 
     public GameObject HexModel;
     public GameObject MountainModel;
-    readonly int numRows = 40;
-    readonly int numCollumns = 50;
+    readonly int numRows = 54;
+    readonly int numCollumns = 84;
     readonly float heightAdd = .33f;
     readonly float heightMinus = .35f;
     readonly float heightDropOff = 1f;
@@ -33,7 +33,7 @@ public class HexMap : MonoBehaviour
         hexToGameObject = new Dictionary<Hex, GameObject>();
         createMap();
         createHeightMap(seed);
-        removeFeatures(2);
+        removeFeatures(4);
         colorHexes();
     }
     /// <summary>
