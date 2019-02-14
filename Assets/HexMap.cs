@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class HexMap : MonoBehaviour
 {
+    /// <summary>
+    /// Testing commit.
+    /// </summary>
 
     public Material[] HexTerrains;
 
