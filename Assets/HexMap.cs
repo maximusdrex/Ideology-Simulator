@@ -14,6 +14,8 @@ public class HexMap : MonoBehaviour
     readonly float heightAdd = .33f;
     readonly float heightMinus = .35f;
     readonly float heightDropOff = 1f;
+    readonly float landHeight = .5f;
+    readonly float mountainHeight = .8f;
 
     /// <summary>
     /// creates a 2D array of Hexes
@@ -31,6 +33,8 @@ public class HexMap : MonoBehaviour
         hexToGameObject = new Dictionary<Hex, GameObject>();
         createMap();
         createHeightMap(seed);
+        removeFeatures(2);
+        colorHexes();
     }
     /// <summary>
     /// Creates a blank Ocean World.
@@ -39,7 +43,7 @@ public class HexMap : MonoBehaviour
         for (int col = 0; col < numCollumns; col++){
             for (int row = 0; row < numRows; row++){
                 hexes[col, row] = new Hex(col, row);
-                GameObject hexObject = (GameObject)Instantiate(HexModel, hexes[col,row].GetPosition(0), Quaternion.identity, this.transform);
+                GameObject hexObject = (GameObject)Instantiate(HexModel, hexes[col,row].GetPosition(), Quaternion.identity, this.transform);
                 hexToGameObject.Add(hexes[col, row], hexObject);
                 hexObject.GetComponentInChildren<TextMesh>().text = col + " , " + row;
                 MeshRenderer mr = hexObject.GetComponentInChildren<MeshRenderer>();
@@ -52,67 +56,111 @@ public class HexMap : MonoBehaviour
     /// <summary>
     /// Creates the height map
     /// </summary>
-    public void createHeightMap(float seed){
-        //Creates Dictionary to hold GO's which need to be added after the loop completes
-        Dictionary < Hex, GameObject> islandOfMisfitTiles = new Dictionary<Hex, GameObject>(); 
+    public void createHeightMap(float seed)
+    {
 
         foreach (KeyValuePair<Hex, GameObject> hexGo in hexToGameObject)
         {
             float x = hexGo.Value.transform.position.x;
             float z = hexGo.Value.transform.position.z;
-            float height = Mathf.PerlinNoise(seed+x,seed+z);
+            float hexHeight = Mathf.PerlinNoise(seed + x, seed + z);
 
             float distance = hexGo.Key.getEuclideanDistance(hexes[numCollumns / 2, numRows / 2]);
-            float maxDistance = hexes[0,0].getEuclideanDistance(hexes[numCollumns / 2, numRows / 2]);
-            float d = Mathf.Min( distance / maxDistance, 1f);
-            height = height * Mathf.Pow(1-d,heightDropOff) + heightAdd * (1-d);
+            float maxDistance = hexes[0, 0].getEuclideanDistance(hexes[numCollumns / 2, numRows / 2]);
+            float d = Mathf.Min(distance / maxDistance, 1f);
+            hexHeight = hexHeight * Mathf.Pow(1 - d, heightDropOff) + heightAdd * (1 - d);
+            hexGo.Key.height = hexHeight;
             //hexGo.Value.GetComponentInChildren<TextMesh>().text =((float)((int)(height * 100)) / 100).ToString();
+        }
+    }
 
-            if (height > .5)
+    /// <summary>
+    /// Removes features which don't have the requisite number of neighbors
+    /// </summary>
+    public void removeFeatures(int requiredNeighbors)
+    {
+        List <Hex> atlanteanHexes = new List<Hex>();
+        List<Hex> raptureanHexes = new List<Hex>();
+
+        foreach (Hex h in hexes){
+            int numNeighbors = 0;
+
+            //if the height is land
+            if(h.height >= landHeight)
+            {
+                Hex[] neighboringHexes = h.getNeighbors(numRows, numCollumns);
+                Debug.Log(h);
+                foreach(Hex neighbor in neighboringHexes)
+                {
+                    Hex actualNeighbor = hexes[neighbor.C, neighbor.R];
+                    if (actualNeighbor.height >= landHeight)
+                    {
+                        numNeighbors+=1;
+                        Debug.Log(numNeighbors);
+                    }
+                }
+                if (numNeighbors < requiredNeighbors)
+                {
+                    atlanteanHexes.Add(h);
+                }
+            }
+
+            //if the height is water
+            if (h.height < landHeight) {
+                Hex[] neighboringHexes = h.getNeighbors(numRows, numCollumns);
+                Debug.Log(h);
+                foreach (Hex neighbor in neighboringHexes)
+                {
+                    Hex actualNeighbor = hexes[neighbor.C, neighbor.R];
+                    if (actualNeighbor.height < landHeight)
+                    {
+                        numNeighbors += 1;
+                        Debug.Log(numNeighbors);
+                    }
+                }
+                if (numNeighbors < requiredNeighbors)
+                {
+                    raptureanHexes.Add(h);
+                }
+            }
+
+        }
+
+        //Submerge the hex
+        foreach(Hex hex in atlanteanHexes) {
+            hex.height = landHeight - .01f;
+        }
+        //Raise each hex
+        foreach (Hex hex in raptureanHexes)
+        {
+            hex.height = landHeight + .01f;
+        }
+
+
+    }
+
+    public void colorHexes()
+    {
+        //Creates Dictionary to hold GO's which need to be added after the loop completes
+        Dictionary<Hex, GameObject> islandOfMisfitTiles = new Dictionary<Hex, GameObject>();
+        foreach (KeyValuePair<Hex, GameObject> hexGo in hexToGameObject)
+        {
+            float height = hexGo.Key.height;
+            if (height >= landHeight)
             {
                 MeshRenderer mr = hexGo.Value.GetComponentInChildren<MeshRenderer>();
                 mr.material = HexTerrains[1];
             }
-            if(height > .8) {
+            if (height >= mountainHeight)
+            {
                 Destroy(hexGo.Value);
-                GameObject hexObject = (GameObject)Instantiate(MountainModel, hexGo.Key.GetPosition(0), Quaternion.identity, this.transform);
+                GameObject hexObject = (GameObject)Instantiate(MountainModel, hexGo.Key.GetPosition(), Quaternion.identity, this.transform);
                 islandOfMisfitTiles.Add(hexGo.Key, hexObject);
             }
-
         }
-        foreach(KeyValuePair<Hex,GameObject> misfit in islandOfMisfitTiles)
+        foreach (KeyValuePair<Hex, GameObject> misfit in islandOfMisfitTiles)
         {
             hexToGameObject[misfit.Key] = misfit.Value;
         }
     }
-
-
-    //public GameObject createHex(float arrayPos){
-    //    float floatnumRows = numRows;
-    //    int Col = (int)Mathf.Floor(arrayPos / floatnumRows);
-    //    int Row = (int)(arrayPos - Col * numCollumns);
-    //    Hex h = new Hex(Col, Row);
-    //    hexes[(int)arrayPos] = h;
-    //    GameObject hexObject = (GameObject)Instantiate(HexModel, h.GetPosition(0), Quaternion.identity, this.transform);
-    //    return hexObject;
-    //}
-    //
-    //        float terrain = Random.Range(1, 4);
-    //       
-    //        //Add Hex
-
-    //        if (terrain > 2 )
-    //        {
-    //            //Make a Mountain
-    //            GameObject hexObject = (GameObject)Instantiate(MountainModel, h.GetPosition(0), Quaternion.identity, this.transform);
-    //        }
-    //        else
-    //        {
-    //            
-    //        }
-    //    }
-    //}
-    //While does cut down on number of batches to render, it produces a gross ripple
-    //And doesn't let you move camer
-    //StaticBatchingUtility.Combine(this.gameObject);
 }

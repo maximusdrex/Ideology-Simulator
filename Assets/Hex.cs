@@ -33,15 +33,14 @@ public class Hex
     /// Calculates the position in the world of a given hex
     /// </summary>
     /// <returns>The position.</returns>
-    public Vector3 GetPosition(float height)
+    public Vector3 GetPosition()
     {
         float radius = 1f;
         float diameter = radius * 2;
         float width = WIDTH_MOD * diameter;
         float horizontal = width;
         float vertical = diameter * .75f;
-        this.height = height;
-        return new Vector3(horizontal*(this.C + this.R/2f), height, vertical * this.R);
+        return new Vector3(horizontal*(this.C + this.R/2f), 0, vertical * this.R);
     }
 
     /// <summary>
@@ -65,9 +64,21 @@ public class Hex
         int newC = (this.C + cdir);
         int newR = (this.R + rdir);
         if (newC < 0)
+        {
             newC = numCollumns + newC;
-        if (newR < 0)
+        }
+        if(newC >= numCollumns) {
+            newC = newC - numCollumns;
+        }
+
+        if (newR < 0) {
             newR = numRows + newR;
+        }
+
+        if (newR >= numRows)
+        {
+            newR = newR - numRows;
+        }
         return new Hex(newC, newR);
     }
 
