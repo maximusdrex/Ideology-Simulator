@@ -17,6 +17,8 @@ public class Hex
     public int S;
 
     public float height;
+    public float temp;
+    public float moisture;
 
     public Hex (int c, int r)
     {
