@@ -44,7 +44,16 @@ public class HexMap : MonoBehaviour
         hexToGameObject = new Dictionary<Hex, GameObject>();
         createMap();
         createHeightMap(seed);
-        removeFeatures(3);
+
+        //removes single tile islands
+        removeFeatures(3, landHeight, -.01f);
+
+        //removes single tile lakes
+        removeFeatures(3, landHeight, .01f);
+
+        //make mountains require ranges
+        removeFeatures(2, mountainHeight, -.01f);
+
         setTempAndMoisture(moistureSeed);
         colorHexes();
     }
@@ -124,63 +133,62 @@ public class HexMap : MonoBehaviour
     /// <summary>
     /// Removes features which don't have the requisite number of neighbors
     /// </summary>
-    public void removeFeatures(int requiredNeighbors)
-    {
-        List <Hex> atlanteanHexes = new List<Hex>();
-        List<Hex> raptureanHexes = new List<Hex>();
-
+    public void removeFeatures(int requiredNeighbors, float requiredHeight, float modifier) { 
+        List<Hex> hexesToFix = new List<Hex>();
         foreach (Hex h in hexes){
+
             int numNeighbors = 0;
-
-            //if the height is land
-            if(h.height >= landHeight)
+            //if we're raising the height
+            if (modifier > 0)
             {
-                Hex[] neighboringHexes = h.getNeighbors(numRows, numCollumns);
-                foreach(Hex neighbor in neighboringHexes)
+                //check if it's lower than required
+                if (h.height < requiredHeight)
                 {
-                    Hex actualNeighbor = hexes[neighbor.C, neighbor.R];
-                    if (actualNeighbor.height >= landHeight)
+                    Hex[] neighboringHexes = h.getNeighbors(numRows, numCollumns);
+                    foreach (Hex neighbor in neighboringHexes)
                     {
-                        numNeighbors+=1;
+                        Hex actualNeighbor = hexes[neighbor.C, neighbor.R];
+                        //Needs neighbors of the same height
+                        if (actualNeighbor.height < requiredHeight)
+                        {
+                            numNeighbors += 1;
+                        }
+                    }
+                    if (numNeighbors < requiredNeighbors)
+                    {
+                        hexesToFix.Add(h);
                     }
                 }
-                if (numNeighbors < requiredNeighbors)
-                {
-                    atlanteanHexes.Add(h);
-                }
             }
 
-            //Submerge the hex
-            foreach (Hex hex in atlanteanHexes)
-            {
-                hex.height = landHeight - .01f;
-            }
-
-            //if the height is water
-            if (h.height < landHeight) {
-                Hex[] neighboringHexes = h.getNeighbors(numRows, numCollumns);
-                foreach (Hex neighbor in neighboringHexes)
+            //if we're submerging the height
+            if (modifier < 0) {
+                //check if it's taller than required
+                if (h.height >= requiredHeight)
                 {
-                    Hex actualNeighbor = hexes[neighbor.C, neighbor.R];
-                    if (actualNeighbor.height < landHeight)
+                    Hex[] neighboringHexes = h.getNeighbors(numRows, numCollumns);
+                    foreach (Hex neighbor in neighboringHexes)
                     {
-                        numNeighbors += 1;
+                        Hex actualNeighbor = hexes[neighbor.C, neighbor.R];
+                        //needs neighbors who are also tall to survive
+                        if (actualNeighbor.height >= requiredHeight)
+                        {
+                            numNeighbors += 1;
+                        }
+                    }
+                    if (numNeighbors < requiredNeighbors)
+                    {
+                        hexesToFix.Add(h);
                     }
                 }
-                if (numNeighbors < requiredNeighbors)
-                {
-                    raptureanHexes.Add(h);
-                }
             }
-
         }
 
-        //Raise each hex
-        foreach (Hex hex in raptureanHexes)
+        //Raise or lower the hexes
+        foreach (Hex hex in hexesToFix)
         {
-            hex.height = landHeight + .01f;
+            hex.height = requiredHeight + modifier;
         }
-
 
     }
 
