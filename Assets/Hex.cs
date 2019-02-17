@@ -26,10 +26,30 @@ public class Hex
         this.R = r;
         this.S = -(c + r);
     }
-
+    /// <summary>
+    /// Returns a string that represents the current Hex.
+    /// </summary>
+    /// <returns>A string that represents the current Hex.
     public override string ToString()
     {
         return "C: " + C + " R:" + R;
+    }
+
+    /// <summary>
+    /// Determines whether the specified Hex is equal to the current Hex.
+    /// </summary>
+    /// <param name="h">The Hex to compare with the current Hex.</param>
+    /// <returns> true if the specified Hex is equal to the current Hex; otherwise, false.</returns>
+    public bool Equals(Hex h)
+    {
+        if(h.C == C && h.R == R)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     /// <summary>
     /// Calculates the position in the world of a given hex
@@ -107,4 +127,5 @@ public class Hex
         Hex[] hexNeighbors = new Hex[] { Hex1, Hex2, Hex3, Hex4, Hex5, Hex6 };
         return hexNeighbors;
     }
+
 }

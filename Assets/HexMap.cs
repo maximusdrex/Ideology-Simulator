@@ -17,7 +17,8 @@ public class HexMap : MonoBehaviour
     public Material ocean;
 
     public GameObject HexModel;
-    public GameObject MountainModel;
+    public GameObject MountainModel; 
+    public GameObject ForestModel;
     readonly int numRows = 54;
     readonly int numCollumns = 84;
     readonly float heightAdd = .33f;
@@ -38,8 +39,8 @@ public class HexMap : MonoBehaviour
     void Start()
     {
         //float seed = Random.Range(1, 100000);
-        float seed = 10;
-        float moistureSeed = 25;
+        float seed = 100;
+        float moistureSeed = 97;
         hexes = new Hex[numCollumns,numRows];
         hexToGameObject = new Dictionary<Hex, GameObject>();
         createMap();
@@ -51,12 +52,31 @@ public class HexMap : MonoBehaviour
         //removes single tile lakes
         removeFeatures(3, landHeight, .01f);
 
+        //does it again
+        removeFeatures(3, landHeight, -.01f);
+        removeFeatures(3, landHeight, .01f);
+
         //make mountains require ranges
-        removeFeatures(2, mountainHeight, -.01f);
+        removeFeatures(2, 3, mountainHeight, -.01f);
+        removeFeatures(1, 2, mountainHeight, -.01f);
 
         setTempAndMoisture(moistureSeed);
         colorHexes();
+        //InvokeRepeating("tempChange", 0f, 1f);
     }
+
+    //simulate an ice age
+    public void tempChange()
+    {
+       foreach (KeyValuePair<Hex, GameObject> hexGo in hexToGameObject)
+            {
+                hexGo.Key.height -= .1f;
+                hexGo.Key.temp += .1f;
+            }
+        colorHexes();
+    }
+
+
     /// <summary>
     /// Creates a blank Ocean World.
     /// </summary>
@@ -91,6 +111,14 @@ public class HexMap : MonoBehaviour
             float d = Mathf.Min(distance / maxDistance, 1f);
             hexHeight = hexHeight * Mathf.Pow(1 - d, heightDropOff) + heightAdd * (1 - d);
             hexGo.Key.height = hexHeight;
+            if(hexHeight < landHeight)
+            {
+                hexGo.Key.moisture = 1f;
+            }
+            else
+            {
+                hexGo.Key.moisture = 0f;
+            }
             //hexGo.Value.GetComponentInChildren<TextMesh>().text =((float)((int)(height * 100)) / 100).ToString();
         }
     }
@@ -113,19 +141,20 @@ public class HexMap : MonoBehaviour
             float maxPolarDistance = hexes[numCollumns/2, 0].getEuclideanDistance(hexes[numCollumns / 2, numRows / 2]);
             float d = Mathf.Min(distance / maxPolarDistance, 1f);
             hexGo.Key.temp = d;
-            
-            distance = Mathf.Min(hexGo.Key.getEuclideanDistance(hexes[0, hexGo.Key.R]), hexGo.Key.getEuclideanDistance(hexes[numCollumns-1, hexGo.Key.R]));
-            //Debug.Log(hexGo.Key + " Distance:" + distance);
+
+            distance = Mathf.Min(hexGo.Key.getEuclideanDistance(hexes[0, hexGo.Key.R]), hexGo.Key.getEuclideanDistance(hexes[numCollumns - 1, hexGo.Key.R]));
             float maxCoastalDistance = hexes[0, 0].getEuclideanDistance(hexes[numCollumns / 2, numRows / 2]);
             d = Mathf.Min(distance / maxCoastalDistance, 1f);
-            //Debug.Log(hexGo.Key + " Pure D:" + d);
-            d = (1-d) * Random.Range(.7f, 1.3f);
-            //Debug.Log(hexGo.Key + " D:" + d);
+            d = (1 - d) * Random.Range(.7f, 1.3f);
             float noiseMoisture = Mathf.PerlinNoise(waterSeed + x, waterSeed + z);
-           //Debug.Log(hexGo.Key + "noise: " + noiseMoisture);
-            float moisture = noiseMoisture*.1f + Mathf.Pow(d,moistureDropOff);
-            //Debug.Log(hexGo.Key + "moisture" + moisture);
+            float moisture = noiseMoisture * .1f + Mathf.Pow(d, moistureDropOff);
             hexGo.Key.moisture = moisture;
+
+            if (hexGo.Key.moisture >= .9f && hexGo.Key.height < landHeight)
+            {
+                List<Hex> alreadyMoistened = new List<Hex>();
+                waterHexes(alreadyMoistened, hexGo.Key, 3);
+            }
 
         }
     }
@@ -133,9 +162,19 @@ public class HexMap : MonoBehaviour
     /// <summary>
     /// Removes features which don't have the requisite number of neighbors
     /// </summary>
-    public void removeFeatures(int requiredNeighbors, float requiredHeight, float modifier) { 
+    public void removeFeatures(int requiredNeighbors, float requiredHeight, float modifier) {
+        //Uses 7 as maxneighbors since it's impossible for a hex to have more than 7 neighbors.
+        removeFeatures(requiredNeighbors, 7, requiredHeight, modifier);
+    }
+
+    /// <summary>
+    /// Removes features which don't have the requisite number of neighbors
+    /// </summary>
+    public void removeFeatures(int requiredNeighbors, int maxNeighbors, float requiredHeight, float modifier)
+    {
         List<Hex> hexesToFix = new List<Hex>();
-        foreach (Hex h in hexes){
+        foreach (Hex h in hexes)
+        {
 
             int numNeighbors = 0;
             //if we're raising the height
@@ -154,7 +193,7 @@ public class HexMap : MonoBehaviour
                             numNeighbors += 1;
                         }
                     }
-                    if (numNeighbors < requiredNeighbors)
+                    if (numNeighbors < requiredNeighbors || numNeighbors > maxNeighbors)
                     {
                         hexesToFix.Add(h);
                     }
@@ -162,7 +201,8 @@ public class HexMap : MonoBehaviour
             }
 
             //if we're submerging the height
-            if (modifier < 0) {
+            if (modifier < 0)
+            {
                 //check if it's taller than required
                 if (h.height >= requiredHeight)
                 {
@@ -176,7 +216,7 @@ public class HexMap : MonoBehaviour
                             numNeighbors += 1;
                         }
                     }
-                    if (numNeighbors < requiredNeighbors)
+                    if (numNeighbors < requiredNeighbors || numNeighbors > maxNeighbors)
                     {
                         hexesToFix.Add(h);
                     }
@@ -192,6 +232,39 @@ public class HexMap : MonoBehaviour
 
     }
 
+
+    public void waterHexes(List <Hex> alreadyMoistened, Hex targetHex, int charges)
+    {
+        if(targetHex.height > mountainHeight)
+        {
+            return;
+        }
+        if(targetHex.moisture > 1f)
+        {
+            return;
+        }
+        if (charges == 0)
+        {
+            return;
+        }
+        if (alreadyMoistened.Contains(targetHex))
+        {
+            return;
+        }
+
+        charges--;
+        alreadyMoistened.Add(targetHex);
+        foreach (Hex h in targetHex.getNeighbors(numRows, numCollumns))
+        {
+            hexes[h.C,h.R].moisture += charges * .1f;
+            if(charges >= 3)
+            {
+                Debug.Log("Hex: " + h + " Moisture: " + h.moisture);
+            }
+            waterHexes(alreadyMoistened, h, charges);
+        }
+    }
+
     public void colorHexes()
     {
         //Creates Dictionary to hold GO's which need to be added after the loop completes
@@ -203,7 +276,7 @@ public class HexMap : MonoBehaviour
             float moisture = hexGo.Key.moisture;
             float temp = hexGo.Key.temp;
 
-            if (height >= landHeight)
+            if (height >= landHeight && height < mountainHeight)
             {
                 if(moisture >= .66f)
                 {
@@ -212,7 +285,7 @@ public class HexMap : MonoBehaviour
                     }
                     if(temp < .75f && temp >= .25f)
                     {
-                        mr.material = marsh;
+                        mr.material = forest;
                     }
                     if(temp < .25f) {
                         mr.material = tundra;
@@ -226,7 +299,11 @@ public class HexMap : MonoBehaviour
                     }
                     if (temp < .75f && temp >= .25f)
                     {
-                        mr.material = forest;
+                        Destroy(hexGo.Value);
+                        GameObject hexObject = (GameObject)Instantiate(ForestModel, hexGo.Key.GetPosition(), Quaternion.identity, this.transform);
+                        islandOfMisfitTiles.Add(hexGo.Key, hexObject);
+                        MeshRenderer forestMR = hexObject.GetComponentInChildren<MeshRenderer>();
+                        forestMR.material = forest;
                     }
                     if (temp < .25f)
                     {
@@ -250,6 +327,10 @@ public class HexMap : MonoBehaviour
                 }
             }
 
+            if(height < landHeight && moisture > .9f)
+            {
+                mr.material = ocean;
+            }
             if (temp < .07f)
             {
                 mr.material = ice;

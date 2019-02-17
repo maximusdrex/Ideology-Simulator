@@ -155,6 +155,8 @@ MonoBehaviour:
     type: 3}
   MountainModel: {fileID: 9186117828343838436, guid: 5708f7f4dc09649c6b778d7c00082afe,
     type: 3}
+  ForestModel: {fileID: 4070181540814893159, guid: a28d0a2a0beda4970ac2d34658cf9964,
+    type: 3}
 --- !u!4 &1492405271
 Transform:
   m_ObjectHideFlags: 0
