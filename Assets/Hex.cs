@@ -19,6 +19,7 @@ public class Hex
     public float height;
     public float temp;
     public float moisture;
+    public TerrainEnum terrain;
 
     public Hex (int c, int r)
     {
@@ -42,7 +43,7 @@ public class Hex
     /// <returns> true if the specified Hex is equal to the current Hex; otherwise, false.</returns>
     public bool Equals(Hex h)
     {
-        if(h.C == C && h.R == R)
+        if(h.C == C && h.R == R && h.S == S)
         {
             return true;
         }

@@ -24,7 +24,7 @@ public class HexMap : MonoBehaviour
     readonly float heightAdd = .33f;
     readonly float heightMinus = .35f;
     readonly float heightDropOff = .6f;
-    readonly float landHeight = .5f;
+    readonly float globalSeaLevel = .5f;
     readonly float mountainHeight = .8f;
     readonly float moistureDropOff = 1.5f;
 
@@ -47,14 +47,14 @@ public class HexMap : MonoBehaviour
         createHeightMap(seed);
 
         //removes single tile islands
-        removeFeatures(3, landHeight, -.01f);
+        removeFeatures(3, globalSeaLevel, -.01f);
 
         //removes single tile lakes
-        removeFeatures(3, landHeight, .01f);
+        removeFeatures(3, globalSeaLevel, .01f);
 
         //does it again
-        removeFeatures(3, landHeight, -.01f);
-        removeFeatures(3, landHeight, .01f);
+        removeFeatures(3, globalSeaLevel, -.01f);
+        removeFeatures(3, globalSeaLevel, .01f);
 
         //make mountains require ranges
         removeFeatures(2, 3, mountainHeight, -.01f);
@@ -62,7 +62,7 @@ public class HexMap : MonoBehaviour
 
         setTempAndMoisture(moistureSeed);
         colorHexes();
-        //InvokeRepeating("tempChange", 0f, 1f);
+        //InvokeRepat2ng("tempChange", 5f, 1f);
     }
 
     //simulate an ice age
@@ -70,8 +70,8 @@ public class HexMap : MonoBehaviour
     {
        foreach (KeyValuePair<Hex, GameObject> hexGo in hexToGameObject)
             {
-                hexGo.Key.height -= .1f;
-                hexGo.Key.temp += .1f;
+            hexGo.Key.moisture -= .01f;
+               hexGo.Key.temp -= .01f;
             }
         colorHexes();
     }
@@ -111,7 +111,7 @@ public class HexMap : MonoBehaviour
             float d = Mathf.Min(distance / maxDistance, 1f);
             hexHeight = hexHeight * Mathf.Pow(1 - d, heightDropOff) + heightAdd * (1 - d);
             hexGo.Key.height = hexHeight;
-            if(hexHeight < landHeight)
+            if(hexHeight < globalSeaLevel)
             {
                 hexGo.Key.moisture = 1f;
             }
@@ -128,6 +128,7 @@ public class HexMap : MonoBehaviour
     /// </summary>
     public void setTempAndMoisture(float waterSeed)
     {
+        Dictionary<Hex, float> moistureAdjustment = new Dictionary<Hex, float>();
         foreach (KeyValuePair<Hex, GameObject> hexGo in hexToGameObject)
         {
             float x = hexGo.Value.transform.position.x;
@@ -150,14 +151,34 @@ public class HexMap : MonoBehaviour
             float moisture = noiseMoisture * .1f + Mathf.Pow(d, moistureDropOff);
             hexGo.Key.moisture = moisture;
 
-            if (hexGo.Key.moisture >= .9f && hexGo.Key.height < landHeight)
+            if (hexGo.Key.moisture >= .9f && hexGo.Key.height < globalSeaLevel)
             {
-                List<Hex> alreadyMoistened = new List<Hex>();
-                waterHexes(alreadyMoistened, hexGo.Key, 3);
+                List<Hex> hexesToWater = waterHexes(hexGo.Key,4);
+                foreach(Hex h in hexesToWater)
+                {
+                    if (!moistureAdjustment.ContainsKey(h)) {
+                        moistureAdjustment.Add(h, .05f * hexGo.Key.getEuclideanDistance(h));
+                    }
+                    else
+                    {
+                        moistureAdjustment[h] += .05f * hexGo.Key.getEuclideanDistance(h);
+                    }
+
+                }
+            }
+
+        }
+
+        foreach(KeyValuePair<Hex, GameObject> hexGo in hexToGameObject)
+        {
+            if(moistureAdjustment.ContainsKey(hexGo.Key) == true)
+            {
+                hexGo.Key.moisture = (moistureAdjustment[hexGo.Key] + hexGo.Key.moisture)/2f;
             }
 
         }
     }
+
 
     /// <summary>
     /// Removes features which don't have the requisite number of neighbors
@@ -224,7 +245,7 @@ public class HexMap : MonoBehaviour
             }
         }
 
-        //Raise or lower the hexes
+        //Raise or lowerthe hexes
         foreach (Hex hex in hexesToFix)
         {
             hex.height = requiredHeight + modifier;
@@ -233,36 +254,88 @@ public class HexMap : MonoBehaviour
     }
 
 
-    public void waterHexes(List <Hex> alreadyMoistened, Hex targetHex, int charges)
+    public List<Hex> waterHexes(Hex baseHex, int range)
     {
-        if(targetHex.height > mountainHeight)
+        Debug.Log("Base Hex: " + baseHex + " " + baseHex.moisture);
+         
+        List<Hex> hexesToWater = new List<Hex>();
+        for (int x = -1*range; x <= range; x++ )
         {
-            return;
-        }
-        if(targetHex.moisture > 1f)
-        {
-            return;
-        }
-        if (charges == 0)
-        {
-            return;
-        }
-        if (alreadyMoistened.Contains(targetHex))
-        {
-            return;
-        }
-
-        charges--;
-        alreadyMoistened.Add(targetHex);
-        foreach (Hex h in targetHex.getNeighbors(numRows, numCollumns))
-        {
-            hexes[h.C,h.R].moisture += charges * .1f;
-            if(charges >= 3)
+            Debug.Log("X: " + x);
+            int yMin = Mathf.Max(-1*range, -1*x - range);
+            int yMax = Mathf.Min(range, -1*x + range);
+            for (int y = yMin; y <= yMax; y++)
             {
-                Debug.Log("Hex: " + h + " Moisture: " + h.moisture);
+                int newX = x + baseHex.C;
+                int newY = y + baseHex.R;
+
+                if (newX >= numCollumns)
+                {
+                    newX = newX - numCollumns;
+                }
+                if (newX < 0)
+                {
+                    newX = numCollumns + newX;
+                }
+                if (newY >= numRows)
+                {
+                    newY = newY - numRows;
+                }
+                if (newY < 0)
+                {
+                    newY = numRows + newY;
+                }
+
+                Debug.Log("X: " + newX + "Y: " + newY);
+
+                if (hexes[newX, newY].moisture < .9f)
+                {
+                    hexesToWater.Add(hexes[newX, newY]);
+                }
             }
-            waterHexes(alreadyMoistened, h, charges);
         }
+        foreach(Hex h in hexesToWater)
+        {
+            Debug.Log("Hexes: " + h);
+        }
+        return hexesToWater;
+    }
+
+
+
+
+
+
+        //if(targetHex.height > mountainHeight)
+        //{
+        //    return;
+        //}
+        //if(targetHex.moisture > 1f)
+        //{
+        //    return;
+        //}
+        //if (charges == 0)
+        //{
+        //    return;
+        //}
+        //if (alreadyMoistened.Contains(targetHex))
+        //{
+        //    return;
+        //}
+
+        //charges--;
+        //alreadyMoistened.Add(targetHex);
+        //foreach (Hex h in targetHex.getNeighbors(numRows, numCollumns))
+        //{
+        //    hexes[h.C,h.R].moisture += charges * .15f;
+        //    waterHexes(alreadyMoistened, h, charges);
+        //}
+
+    public float getRandomRotation()
+    {
+        int rotation = Random.Range(0, 360);
+        rotation = rotation / 60;
+        return rotation*60f;
     }
 
     public void colorHexes()
@@ -276,19 +349,31 @@ public class HexMap : MonoBehaviour
             float moisture = hexGo.Key.moisture;
             float temp = hexGo.Key.temp;
 
-            if (height >= landHeight && height < mountainHeight)
+            if (height >= globalSeaLevel && height < mountainHeight)
             {
                 if(moisture >= .66f)
                 {
                     if(temp >= .75f) {
                         mr.material = rainforest;
                     }
-                    if(temp < .75f && temp >= .25f)
+                    if (temp < .75f && temp >= .3f)
                     {
-                        mr.material = forest;
+                        Destroy(hexGo.Value);
+                        GameObject hexObject = (GameObject)Instantiate(ForestModel, hexGo.Key.GetPosition(), Quaternion.identity, this.transform);
+                        islandOfMisfitTiles.Add(hexGo.Key, hexObject);
+                        MeshRenderer forestMR = hexObject.GetComponentInChildren<MeshRenderer>();
+                        forestMR.material = forest;
+                        float rotation = getRandomRotation();
+                        hexObject.transform.rotation = Quaternion.Euler(0f, rotation, 0f);
                     }
-                    if(temp < .25f) {
-                        mr.material = tundra;
+                        if (temp < .3f) {
+                        Destroy(hexGo.Value);
+                        GameObject hexObject = (GameObject)Instantiate(ForestModel, hexGo.Key.GetPosition(), Quaternion.identity, this.transform);
+                        islandOfMisfitTiles.Add(hexGo.Key, hexObject);
+                        MeshRenderer tundraMR = hexObject.GetComponentInChildren<MeshRenderer>();
+                        tundraMR.material = tundra;
+                        float rotation = getRandomRotation();
+                        hexObject.transform.rotation = Quaternion.Euler(0f, rotation, 0f);
                     }
                 }
                 if (moisture < .66f && moisture >= .33f)
@@ -297,13 +382,19 @@ public class HexMap : MonoBehaviour
                     {
                         mr.material = savannah;
                     }
-                    if (temp < .75f && temp >= .25f)
+                    if (temp < .75f && temp >= .5f)
+                    {
+                        mr.material = grassland;
+                    }
+                    if (temp < .5f && temp >= .25f)
                     {
                         Destroy(hexGo.Value);
                         GameObject hexObject = (GameObject)Instantiate(ForestModel, hexGo.Key.GetPosition(), Quaternion.identity, this.transform);
                         islandOfMisfitTiles.Add(hexGo.Key, hexObject);
                         MeshRenderer forestMR = hexObject.GetComponentInChildren<MeshRenderer>();
                         forestMR.material = forest;
+                        float rotation = getRandomRotation();
+                        hexObject.transform.rotation = Quaternion.Euler(0f, rotation, 0f);
                     }
                     if (temp < .25f)
                     {
@@ -327,7 +418,7 @@ public class HexMap : MonoBehaviour
                 }
             }
 
-            if(height < landHeight && moisture > .9f)
+            if(height < globalSeaLevel && moisture > .9f)
             {
                 mr.material = ocean;
             }
@@ -340,7 +431,10 @@ public class HexMap : MonoBehaviour
             {
                 Destroy(hexGo.Value);
                 GameObject hexObject = (GameObject)Instantiate(MountainModel, hexGo.Key.GetPosition(), Quaternion.identity, this.transform);
+                float rotation = getRandomRotation();
+                hexObject.transform.rotation = Quaternion.Euler(0f, rotation, 0f);
                 islandOfMisfitTiles.Add(hexGo.Key, hexObject);
+
             }
         }
         foreach (KeyValuePair<Hex, GameObject> misfit in islandOfMisfitTiles)
