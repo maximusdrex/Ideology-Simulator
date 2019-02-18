@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class TerrainEnum
 {
-   public enum Terrain { Desert, Forest, Tundra, Grassland, Savannah, Ocean, Steppe, Ice};
+   public enum Terrain { Undefined, Rainforest, River, Desert, Forest, Tundra, Grassland, Savannah, Ocean, Steppe, Ice, Mountain};
 }

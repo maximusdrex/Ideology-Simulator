@@ -19,7 +19,7 @@ public class Hex
     public float height;
     public float temp;
     public float moisture;
-    public TerrainEnum terrain;
+    public TerrainEnum.Terrain terrain;
 
     public Hex (int c, int r)
     {
