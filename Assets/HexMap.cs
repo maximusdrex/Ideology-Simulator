@@ -28,8 +28,8 @@ public class HexMap : MonoBehaviour
     readonly float globalSeaLevel = .5f;
     readonly float mountainHeight = .8f;
     readonly float moistureDropOff = 1.5f;
-    readonly int numRivers = 4;
-
+    readonly int numLakes = 4;
+    readonly int waterRange = 3;
     /// <summary>
     /// creates a 2D array of Hexes
     /// </summary>
@@ -40,7 +40,7 @@ public class HexMap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //float seed = Random.Range(1, 100000);
+        Random.InitState(0);
         float seed = 100;
         float moistureSeed = 97;
         hexes = new Hex[numCollumns,numRows];
@@ -62,10 +62,17 @@ public class HexMap : MonoBehaviour
         removeFeatures(2, 3, mountainHeight, -.01f);
         removeFeatures(1, 2, mountainHeight, -.01f);
 
+        generateLakes(numLakes);
         setTempAndMoisture(moistureSeed);
-        generateRivers(8);
         allocateTerrain();
         colorHexes();
+
+        foreach(KeyValuePair<Hex,GameObject> hexGo in hexToGameObject)
+        {
+            hexGo.Value.GetComponentInChildren<TextMesh>().text += " " + ((int) (hexes[hexGo.Key.C, hexGo.Key.R].height *100)).ToString();
+        }
+
+
         //InvokeRepat2ng("tempChange", 5f, 1f);
     }
 
@@ -81,6 +88,7 @@ public class HexMap : MonoBehaviour
     }
 
 
+
     /// <summary>
     /// Creates a blank Ocean World.
     /// </summary>
@@ -88,7 +96,7 @@ public class HexMap : MonoBehaviour
         for (int col = 0; col < numCollumns; col++){
             for (int row = 0; row < numRows; row++){
                 hexes[col, row] = new Hex(col, row);
-                GameObject hexObject = (GameObject)Instantiate(HexModel, hexes[col,row].GetPosition(), Quaternion.identity, this.transform);
+                GameObject hexObject = (GameObject) Instantiate(HexModel, hexes[col,row].GetPosition(), Quaternion.identity, this.transform);
                 hexToGameObject.Add(hexes[col, row], hexObject);
                 hexObject.GetComponentInChildren<TextMesh>().text = col + " , " + row;
                 MeshRenderer mr = hexObject.GetComponentInChildren<MeshRenderer>();
@@ -124,23 +132,25 @@ public class HexMap : MonoBehaviour
             {
                 h.moisture = 0f;
             }
-            //hexGo.GetComponentInChildren<TextMesh>().text =((float)((int)(h.height * 100)) / 100).ToString();
         }
     }
 
-    public void generateRivers(int numberOfRivers)
+    public void generateLakes(int numberOfRivers)
     {
         for (int i = 0; i < numberOfRivers; i++)
         {
-            int randomCol = Random.Range(-10,10);
-            int randomRow = Random.Range(-10, 10);
+            int randomCol = Random.Range(-15,15);
+            int randomRow = Random.Range(-15, 15);
             Hex h = hexes[numCollumns / 2 + randomCol, numRows / 2 + randomRow];
-            int numSteps = Random.Range(7, 18);
-            nextRiverTile(h, numSteps);
+            int numSteps = Random.Range(3, 5);
+            h.terrain = TerrainEnum.Terrain.Ocean;
+            nextLakeTile(h, numSteps);
+            Debug.Log("Hex: " + h + " Elevation: " + h.height + " Num Steps: " + numSteps);
+
         }
     }
 
-    public void nextRiverTile(Hex h, int numSteps)
+    public void nextLakeTile(Hex h, int numSteps)
     {
         Debug.Log("Hex: " + h + " Elevation: " + h.height + " Num Steps: " + numSteps);
         if (numSteps <= 0)
@@ -149,19 +159,20 @@ public class HexMap : MonoBehaviour
         }
 
         h.moisture = 1f;
-        h.terrain = TerrainEnum.Terrain.River;
+        h.terrain = TerrainEnum.Terrain.Ocean;
         Hex[] neighbors = h.getNeighbors(numRows, numCollumns);
-        float moisture = 0f;
+        float elevation = 1f;
+        h.height = .4f;
         Hex nextTile = null;
         foreach(Hex neighbor in neighbors)
         {
-            if(neighbor.moisture >= moisture)
+            if(neighbor.height <= elevation)
             {
                 nextTile = neighbor;
-                moisture = neighbor.moisture;
+                elevation = neighbor.height;
             }
         }
-        nextRiverTile(hexes[nextTile.C,nextTile.R], numSteps-1);
+        nextLakeTile(hexes[nextTile.C,nextTile.R], numSteps-1);
     }
 
     /// <summary>
@@ -185,30 +196,36 @@ public class HexMap : MonoBehaviour
             float d = Mathf.Min(distance / maxPolarDistance, 1f);
             h.temp = d;
 
-            distance = Mathf.Min(h.getEuclideanDistance(hexes[0, h.R]), h.getEuclideanDistance(hexes[numCollumns - 1, h.R]));
-            float maxCoastalDistance = hexes[0, 0].getEuclideanDistance(hexes[numCollumns / 2, numRows / 2]);
-            d = Mathf.Min(distance / maxCoastalDistance, 1f);
-            d = (1 - d) * Random.Range(.7f, 1.3f);
-            float noiseMoisture = Mathf.PerlinNoise(waterSeed + x, waterSeed + z);
-            float moisture = noiseMoisture * .1f + Mathf.Pow(d, moistureDropOff);
-            h.moisture = moisture;
+            //distance = Mathf.Min(h.getEuclideanDistance(hexes[0, h.R]), h.getEuclideanDistance(hexes[numColelumns - 1, h.R]));
+            //float maxCoastalDistance = hexes[0, 0].getEuclideanDistance(hexes[numCollumns / 2, numRows / 2]);
+            //d = Mathf.Miny(dexGo.Keistance / maxCoastalDistance, 1f);
+            //d = (1 - d) * Random.Range(.7f, 1.3f);
+               //float noiseMoisture = hhf.PerlinNoise(waterSeed + x, waterSeed + z);
+           //float moisture = noiseMoisture * .1+ Mathf.Pow(d, moistureDropOff);
+            //h.moiure = moisexGo.Keyture;
 
             if (h.moisture >= .9f && h.height < globalSeaLevel)
             {
-                List<Hex> hexesToWater = waterHexes(h,4);
-                foreach(Hex hex in hexesToWater)
+                Hex[] hexesToWater = hexesInRange(h, waterRange);
+                foreach (Hex hex in hexesToWater)
                 {
-                    if (!moistureAdjustment.ContainsKey(hex)) {
-                        moistureAdjustment.Add(hex, .05f * h.getEuclideanDistance(h));
+                    if (!moistureAdjustment.ContainsKey(hex))
+                    {
+                        moistureAdjustment.Add(hex, Random.Range(.01f,.05f) * h.getEuclideanDistance(hex));
                     }
                     else
                     {
-                        moistureAdjustment[hex] += .05f * h.getEuclideanDistance(h);
+                        moistureAdjustment[hex] += Random.Range(.01f, .05f) * h.getEuclideanDistance(hex);
                     }
 
                 }
             }
 
+        }
+
+        foreach (KeyValuePair<Hex,float> fixHex in moistureAdjustment)
+        {
+            hexes[fixHex.Key.C, fixHex.Key.R].moisture = fixHex.Value;
         }
     }
 
@@ -283,50 +300,56 @@ public class HexMap : MonoBehaviour
         //Raise or lowerthe hexes
         foreach (Hex hex in hexesToFix)
         {
-            hex.height = requiredHeight + modifier;
+            hex.height = requiredHeight + modifier * Random.Range(1,10f);
         }
 
     }
 
-
-    public List<Hex> waterHexes(Hex baseHex, int range)
+    /// <summary>
+    /// Helper method to get Hexes in a given range
+    /// </summary>
+    /// <returns>The in range.</returns>
+    /// <param name="centerHex">Center hex.</param>
+    /// <param name="range">Range.</param>
+    public Hex[] hexesInRange(Hex centerHex, int range)
     {
-         
-        List<Hex> hexesToWater = new List<Hex>();
-        for (int x = -1*range; x <= range; x++ )
-        {
-            int yMin = Mathf.Max(-1*range, -1*x - range);
-            int yMax = Mathf.Min(range, -1*x + range);
-            for (int y = yMin; y <= yMax; y++)
-            {
-                int newX = x + baseHex.C;
-                int newY = y + baseHex.R;
+        List<Hex> results = new List<Hex>();
 
-                if (newX >= numCollumns)
-                {
-                    newX = newX - numCollumns;
-                }
-                if (newX < 0)
+        for (int dx = -range; dx <= range; dx++)
+        {
+            for (int dy = Mathf.Max(-range, -dx - range); dy <= Mathf.Min(range, -dx + range); dy++)
+            {
+                int newX = centerHex.C + dx;
+                int newY = centerHex.R + dy;
+                if(newX < 0)
                 {
                     newX = numCollumns + newX;
                 }
-                if (newY >= numRows)
+                if (newX >= numCollumns)
                 {
-                    newY = newY - numRows;
+                    newX = newX - numCollumns;
                 }
                 if (newY < 0)
                 {
                     newY = numRows + newY;
                 }
-
-                if (hexes[newX, newY].moisture < .9f)
+                if (newY >= numRows)
                 {
-                    hexesToWater.Add(hexes[newX, newY]);
+                    newY = newY - numRows;
                 }
+
+                try { results.Add(hexes[newX, newY]); }
+                catch
+                {
+                    Debug.Log(newX + "," + newY);
+                }
+
             }
         }
-        return hexesToWater;
+
+        return results.ToArray();
     }
+
 
 
     public float getRandomRotation()
@@ -396,7 +419,7 @@ public class HexMap : MonoBehaviour
                     }
            }
 
-            if ((height < globalSeaLevel || moisture > .9f) && h.terrain != TerrainEnum.Terrain.River)
+            if (height < globalSeaLevel && moisture > .9f && h.terrain != TerrainEnum.Terrain.River)
             {
                 h.moisture = 1f;
                 h.terrain = TerrainEnum.Terrain.Ocean;
@@ -419,7 +442,7 @@ public class HexMap : MonoBehaviour
         MeshRenderer hexMR = hexObject.GetComponentInChildren<MeshRenderer>();
         hexMR.material = material;
         // rotation = getRandomRotation();
-       hexObject.transform.rotation = Quaternion.Euler(0f, -60, 0f);
+       hexObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         return hexObject;
     }
 
