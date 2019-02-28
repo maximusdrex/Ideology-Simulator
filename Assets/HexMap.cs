@@ -86,6 +86,10 @@ public class HexMap : MonoBehaviour
         }
     }
 
+    public GameObject getHexObj(int x, int y)
+    {
+        return hexToGameObject[hexes[x,y]];
+    }
 
     //public GameObject createHex(float arrayPos){
     //    float floatnumRows = numRows;
@@ -115,4 +119,6 @@ public class HexMap : MonoBehaviour
     //While does cut down on number of batches to render, it produces a gross ripple
     //And doesn't let you move camer
     //StaticBatchingUtility.Combine(this.gameObject);
+
+
 }

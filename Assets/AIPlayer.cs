@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class scri : MonoBehaviour
+public class AIPlayer : Player
 {
+    public int id;
+
+    public AIPlayer(int pid) : base(pid)
+    {
+        id = pid;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
