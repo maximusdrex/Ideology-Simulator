@@ -20,7 +20,6 @@ public class Hex
     public float temp;
     public float moisture;
     public TerrainEnum.Terrain terrain;
-
     public Hex (int c, int r)
     {
         this.C = c;
@@ -85,6 +84,7 @@ public class Hex
     /// <param name="rdir">Magnitude of r direction.</param>
     public Hex getNeighbor(int numRows, int numCollumns, int cdir, int rdir){
         int newC = (this.C + cdir);
+
         int newR = (this.R + rdir);
         if (newC < 0)
         {
@@ -128,5 +128,4 @@ public class Hex
         Hex[] hexNeighbors = new Hex[] { Hex1, Hex2, Hex3, Hex4, Hex5, Hex6 };
         return hexNeighbors;
     }
-
 }
