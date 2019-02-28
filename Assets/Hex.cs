@@ -17,31 +17,52 @@ public class Hex
     public int S;
 
     public float height;
-
+    public float temp;
+    public float moisture;
+    public TerrainEnum.Terrain terrain;
     public Hex (int c, int r)
     {
         this.C = c;
         this.R = r;
         this.S = -(c + r);
     }
-
+    /// <summary>
+    /// Returns a string that represents the current Hex.
+    /// </summary>
+    /// <returns>A string that represents the current Hex.
     public override string ToString()
     {
         return "C: " + C + " R:" + R;
+    }
+
+    /// <summary>
+    /// Determines whether the specified Hex is equal to the current Hex.
+    /// </summary>
+    /// <param name="h">The Hex to compare with the current Hex.</param>
+    /// <returns> true if the specified Hex is equal to the current Hex; otherwise, false.</returns>
+    public bool Equals(Hex h)
+    {
+        if(h.C == C && h.R == R && h.S == S)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     /// <summary>
     /// Calculates the position in the world of a given hex
     /// </summary>
     /// <returns>The position.</returns>
-    public Vector3 GetPosition(float height)
+    public Vector3 GetPosition()
     {
         float radius = 1f;
         float diameter = radius * 2;
         float width = WIDTH_MOD * diameter;
         float horizontal = width;
         float vertical = diameter * .75f;
-        this.height = height;
-        return new Vector3(horizontal*(this.C + this.R/2f), height, vertical * this.R);
+        return new Vector3(horizontal*(this.C + this.R/2f), 0, vertical * this.R);
     }
 
     /// <summary>
@@ -63,11 +84,24 @@ public class Hex
     /// <param name="rdir">Magnitude of r direction.</param>
     public Hex getNeighbor(int numRows, int numCollumns, int cdir, int rdir){
         int newC = (this.C + cdir);
+
         int newR = (this.R + rdir);
         if (newC < 0)
+        {
             newC = numCollumns + newC;
-        if (newR < 0)
+        }
+        if(newC >= numCollumns) {
+            newC = newC - numCollumns;
+        }
+
+        if (newR < 0) {
             newR = numRows + newR;
+        }
+
+        if (newR >= numRows)
+        {
+            newR = newR - numRows;
+        }
         return new Hex(newC, newR);
     }
 
