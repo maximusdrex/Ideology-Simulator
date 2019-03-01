@@ -1,3 +1,4 @@
+
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -240,6 +241,10 @@ public class HexMap : MonoBehaviour
         removeFeatures(requiredNeighbors, 7, requiredHeight, modifier);
     }
 
+    public GameObject getHexObj(int x, int y)
+    {
+        return hexToGameObject[hexes[x,y]];
+    }
     /// <summary>
     /// Removes features which don't have the requisite number of neighbors
     /// </summary>
