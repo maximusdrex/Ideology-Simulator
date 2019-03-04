@@ -40,12 +40,13 @@ public class HexMap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Vector3 cameraPosition = Camera.main.transform.position;
         Random.InitState(0);
         float seed = 100;
         float moistureSeed = 97;
         hexes = new Hex[numCollumns,numRows];
         hexToGameObject = new Dictionary<Hex, GameObject>();
-        createMap();
+        createMap(cameraPosition);
         createHeightMap(seed);
 
         //removes single tile islands
@@ -65,38 +66,57 @@ public class HexMap : MonoBehaviour
         generateLakes(numLakes);
         setTempAndMoisture(moistureSeed);
         allocateTerrain();
-        colorHexes();
+        colorHexes(cameraPosition);
 
-        foreach(KeyValuePair<Hex,GameObject> hexGo in hexToGameObject)
+        //foreach(KeyValuePair<Hex,GameObject> hexGo in hexToGameObject)
+        //{
+        //    hexGo.Value.GetComponentInChildren<TextMesh>().text += " " + ((int) (hexes[hexGo.Key.C, hexGo.Key.R].height *100)).ToString();
+        //}
+        //fixWidths();
+
+
+        //InvokeRepeating("tempChange", 2f, .5f);
+    }
+
+    private void Update()
+    {
+       fixWidths();
+    }
+
+    public void fixWidths()
+    {
+        if (Camera.main.GetComponent<CameraMotion>().hasMoved == true)
         {
-            hexGo.Value.GetComponentInChildren<TextMesh>().text += " " + ((int) (hexes[hexGo.Key.C, hexGo.Key.R].height *100)).ToString();
+            Vector3 cameraPosition = Camera.main.transform.position;
+            foreach (KeyValuePair<Hex, GameObject> hexGo in hexToGameObject)
+            {
+                hexGo.Value.transform.position = hexGo.Key.updatePosition(cameraPosition, numCollumns);
+            }
         }
-
-
-        //InvokeRepat2ng("tempChange", 5f, 1f);
     }
 
     //simulate an ice age
-    public void tempChange()
-    {
-       foreach (KeyValuePair<Hex, GameObject> h in hexToGameObject)
-            {
-            h.Key.moisture -= .01f;
-               h.Key.temp -= .01f;
-            }
-        colorHexes();
-    }
+    //public void tempChange(Vector)
+    //{
+    //   foreach (Hex h in hexes)
+    //        {
+    //            h.moisture -= .01f;
+    //           h.temp -= .01f;
+    //        }
+    //    colorHexes(cameraPosition);
+    //}
 
 
 
     /// <summary>
     /// Creates a blank Ocean World.
     /// </summary>
-    public void createMap(){
+    public void createMap(Vector3 cameraPosition){
         for (int col = 0; col < numCollumns; col++){
             for (int row = 0; row < numRows; row++){
                 hexes[col, row] = new Hex(col, row);
-                GameObject hexObject = (GameObject) Instantiate(HexModel, hexes[col,row].GetPosition(), Quaternion.identity, this.transform);
+                Vector3 position = hexes[col, row].updatePosition(cameraPosition, numCollumns);
+                GameObject hexObject = (GameObject) Instantiate(HexModel, position, Quaternion.identity, this.transform);
                 hexToGameObject.Add(hexes[col, row], hexObject);
                 hexObject.GetComponentInChildren<TextMesh>().text = col + " , " + row;
                 MeshRenderer mr = hexObject.GetComponentInChildren<MeshRenderer>();
@@ -351,7 +371,10 @@ public class HexMap : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Generates a random rotation from 0,60,120,180,240,300,
+    /// </summary>
+    /// <returns>The random rotation.</returns>
     public float getRandomRotation()
     {
         int rotation = Random.Range(0, 360);
@@ -435,10 +458,11 @@ public class HexMap : MonoBehaviour
             }
     }
 
-    public GameObject instantiateTerrain(KeyValuePair<Hex,GameObject> hexGo, GameObject model, Material material)
+    public GameObject instantiateTerrain(KeyValuePair<Hex,GameObject> hexGo, GameObject model, Material material, Vector3 cameraPosition)
     {
         Destroy(hexGo.Value);
-        GameObject hexObject = (GameObject)Instantiate(model, hexGo.Key.GetPosition(), Quaternion.identity, this.transform);
+        Vector3 position = hexGo.Key.updatePosition(cameraPosition, numCollumns);
+        GameObject hexObject = (GameObject)Instantiate(model, position, Quaternion.identity, this.transform);
         MeshRenderer hexMR = hexObject.GetComponentInChildren<MeshRenderer>();
         hexMR.material = material;
         // rotation = getRandomRotation();
@@ -446,7 +470,7 @@ public class HexMap : MonoBehaviour
         return hexObject;
     }
 
-    public void colorHexes()
+    public void colorHexes(Vector3 cameraPosition)
     {
         //Creates Dictionary to hold GO's which need to be added after the loop completes
         Dictionary<Hex, GameObject> islandOfMisfitTiles = new Dictionary<Hex, GameObject>();
@@ -456,19 +480,19 @@ public class HexMap : MonoBehaviour
             MeshRenderer mr = hexGo.Value.GetComponentInChildren<MeshRenderer>();
             if (h.terrain == TerrainEnum.Terrain.River)
             {
-                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, RiverModel, savannah));
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, RiverModel, savannah, cameraPosition));
             }
             if (h.terrain == TerrainEnum.Terrain.Forest)
             {
-                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, ForestModel, forest));
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, ForestModel, forest, cameraPosition));
             }
             if (h.terrain == TerrainEnum.Terrain.Tundra)
             {
-                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, ForestModel, tundra));
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, ForestModel, tundra, cameraPosition));
             }
             if (h.terrain == TerrainEnum.Terrain.Mountain)
             {
-                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, MountainModel, forest));
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, MountainModel, forest, cameraPosition));
             }
             else if (h.terrain == TerrainEnum.Terrain.Ocean)
             {

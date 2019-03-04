@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class Hex
 {
-    static readonly float WIDTH_MOD = Mathf.Sqrt(3)/2;
+    public static float WIDTH_MOD = Mathf.Sqrt(3)/2;
     //c + r + s = 0 (must)
     //cubic collumn
     public int C;
@@ -64,6 +64,30 @@ public class Hex
         float horizontal = width;
         float vertical = diameter * .75f;
         return new Vector3(horizontal*(this.C + this.R/2f), 0, vertical * this.R);
+    }
+
+    public Vector3 updatePosition(Vector3 cameraPosition, float numCollumns)
+    {
+        float mapWidth = numCollumns * WIDTH_MOD * 2f;
+        Vector3 position = GetPosition();
+        float widthsFromCamera = Mathf.Round((position.x - cameraPosition.x) / mapWidth);
+        //should be between -.5 and .5
+        if (Mathf.Abs(widthsFromCamera) < .5f)
+        {
+            return GetPosition();
+        }
+        if (widthsFromCamera > 0)
+        {
+            widthsFromCamera += .5f;
+        }
+        else
+        {
+            widthsFromCamera -= .5f;
+        }
+
+        int widthsToFix = (int)widthsFromCamera;
+        position.x -= widthsToFix * mapWidth;
+        return position;
     }
 
     /// <summary>
@@ -127,6 +151,43 @@ public class Hex
 
         Hex[] hexNeighbors = new Hex[] { Hex1, Hex2, Hex3, Hex4, Hex5, Hex6 };
         return hexNeighbors;
+    }
+
+    static public int [] roundCoordinates(float x, float y)
+    {
+        float z = -(x + y);
+        int rx = Mathf.RoundToInt(x);
+        int ry = Mathf.RoundToInt(y);
+        int rz = Mathf.RoundToInt(-(x + y));
+        int x_diff = (int) Mathf.Abs((float)rx - (float)x);
+        int y_diff = (int)Mathf.Abs((float)ry - (float)y);
+        int z_diff = (int)Mathf.Abs((float)rz - (float)z);
+
+        if(x_diff > y_diff && x_diff > z_diff)
+        {
+            rx = -ry - rz;
+        }
+        else if (y_diff > z_diff)
+        {
+            ry = -rx - rz;
+        }
+        else
+        {
+            rz = -rx - ry;
+        }
+        int[] coordArray = new int[] { rx,ry};
+        return coordArray;
+    }
+
+     static public Hex pixelToHex(float x, float y)
+    {
+        float q = (Mathf.Sqrt(3f) / 3f * x - 1f/ 3f * y);
+        float r = (2f/ 3f * y);
+        r = Mathf.Max(0f, r);
+        Debug.Log("Q" + q + " R" + r);
+        int[] coordArray = roundCoordinates(q, r);
+        Debug.Log("Q" + coordArray[0] + " R" + coordArray[1]);
+        return new Hex(coordArray[0],coordArray[1]);
     }
 
 }
