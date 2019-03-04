@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +20,6 @@ public class Hex
     public float temp;
     public float moisture;
     public TerrainEnum.Terrain terrain;
-
     public Hex (int c, int r)
     {
         this.C = c;
@@ -109,6 +108,7 @@ public class Hex
     /// <param name="rdir">Magnitude of r direction.</param>
     public Hex getNeighbor(int numRows, int numCollumns, int cdir, int rdir){
         int newC = (this.C + cdir);
+
         int newR = (this.R + rdir);
         if (newC < 0)
         {
@@ -191,3 +191,4 @@ public class Hex
     }
 
 }
+
