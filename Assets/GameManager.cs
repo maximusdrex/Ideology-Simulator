@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
             for(int i = 0; i < players.Count; i++)
             {
                 players[i].PlayTurn();
-                Debug.Log("Player: " + players[i].id.ToString() + " played turn " + turn.ToString());
+                Debug.Log("Player: " + players[i].id.ToString() + " started turn " + turn.ToString());
             }
             turn++;
         }
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         placeOnHex(testObj, 20, 23);
     }
 
-    bool placeOnHex(GameObject obj, int x, int y)
+    public bool placeOnHex(GameObject obj, int x, int y)
     {
         obj.transform.position = gameMap.getHexObj(x, y).transform.position;
         return true;

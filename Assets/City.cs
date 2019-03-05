@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class City : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+public class City {
+    public int x;
+    public int y;
 
-    // Update is called once per frame
-    void Update()
+    int population;
+    
+    public City(int xcoord, int ycoord)
     {
-        
+        x = xcoord;
+        y = ycoord;
     }
 }
