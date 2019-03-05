@@ -476,6 +476,7 @@ public class HexMap : MonoBehaviour
         hexMR.material = material;
         // rotation = getRandomRotation();
         hexObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        return hexObject;
     }
 
 
@@ -537,10 +538,10 @@ public class HexMap : MonoBehaviour
             {
                 mr.material = steppe;
             }
-            foreach (KeyValuePair<Hex, GameObject> misfit in islandOfMisfitTiles)
-            {
-                hexToGameObject[misfit.Key] = misfit.Value;
-            }
+        }
+        foreach (KeyValuePair<Hex, GameObject> misfit in islandOfMisfitTiles)
+        {
+            hexToGameObject[misfit.Key] = misfit.Value;
         }
     }
 }

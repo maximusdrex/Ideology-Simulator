@@ -141,14 +141,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bac28ba3281840eba310209fe0ce0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HexTerrains:
-  - {fileID: 2100000, guid: 137000a436a8e4de4acad52eccd8febf, type: 2}
-  - {fileID: 2100000, guid: 8fcbbc8307cec40a3a243ed4dd5644b6, type: 2}
-  - {fileID: 2100000, guid: c4e4d3d07c05b45ed9498754ba67a543, type: 2}
-  - {fileID: 2100000, guid: 7b4a98b85d9fa4db286e170f25f0564f, type: 2}
+  rainforest: {fileID: 0}
+  savannah: {fileID: 0}
+  desert: {fileID: 0}
+  marsh: {fileID: 0}
+  forest: {fileID: 0}
+  grassland: {fileID: 0}
+  tundra: {fileID: 0}
+  steppe: {fileID: 0}
+  ice: {fileID: 0}
+  ocean: {fileID: 0}
   HexModel: {fileID: 6188751399001136934, guid: 1f7359c85095e4c0b8742375cacf3587,
     type: 3}
   MountainModel: {fileID: 100004, guid: e6fa3e1359e334158b23ae4d640336f1, type: 3}
+  ForestModel: {fileID: 0}
+  RiverModel: {fileID: 0}
 --- !u!4 &1382122272
 Transform:
   m_ObjectHideFlags: 0
@@ -174,6 +181,7 @@ GameObject:
   - component: {fileID: 1414851264}
   - component: {fileID: 1414851263}
   - component: {fileID: 1414851262}
+  - component: {fileID: 1414851265}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -245,6 +253,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+--- !u!114 &1414851265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414851261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3b38f5ce3c24d72aa3f7e232937369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lastPosition: {x: 0, y: 0, z: 0}
+  hasMoved: 0
+  magnitude: 0
 --- !u!1 &1661297267
 GameObject:
   m_ObjectHideFlags: 0

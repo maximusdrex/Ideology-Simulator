@@ -611,10 +611,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 6
-  cloudProjectId: 4d9434b5-cd75-4771-a00d-c1e9643c979c
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
-  projectName: Ideology Simulator (1)
-  organizationId: maximusdrex
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
