@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HexMap : MonoBehaviour
 {
-
+    //FOR DEBUG REENABLE HEX TEXT ON 126 AND 80
     public Material rainforest;
     public Material savannah;
     public Material desert;
@@ -75,7 +75,11 @@ public class HexMap : MonoBehaviour
         //}
         //fixWidths();
 
+        foreach(KeyValuePair<Hex, GameObject> hexGo in hexToGameObject)
+        {
+            hexGo.Value.GetComponentInChildren<TextMesh>().text = "";
 
+        }
         //InvokeRepeating("tempChange", 2f, .5f);
     }
 
@@ -122,7 +126,11 @@ public class HexMap : MonoBehaviour
                 Vector3 position = hexes[col, row].updatePosition(cameraPosition, numCollumns);
                 GameObject hexObject = (GameObject)Instantiate(HexModel, position, Quaternion.identity, this.transform);
                 hexToGameObject.Add(hexes[col, row], hexObject);
-                hexObject.GetComponentInChildren<TextMesh>().text = col + " , " + row;
+
+                //DISABLED FOR DEMO!!!
+
+                //hexObject.GetComponentInChildren<TextMesh>().text = col + " , " + row;
+                hexObject.GetComponentInChildren<TextMesh>().text = "";
                 MeshRenderer mr = hexObject.GetComponentInChildren<MeshRenderer>();
                 mr.material = ocean;
             }
@@ -538,6 +546,7 @@ public class HexMap : MonoBehaviour
             {
                 mr.material = steppe;
             }
+
         }
         foreach (KeyValuePair<Hex, GameObject> misfit in islandOfMisfitTiles)
         {
