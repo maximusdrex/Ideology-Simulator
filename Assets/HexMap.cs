@@ -1,5 +1,5 @@
 
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +18,7 @@ public class HexMap : MonoBehaviour
     public Material ocean;
 
     public GameObject HexModel;
-    public GameObject MountainModel; 
+    public GameObject MountainModel;
     public GameObject ForestModel;
     public GameObject RiverModel;
     readonly int numRows = 54;
@@ -41,12 +41,13 @@ public class HexMap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Vector3 cameraPosition = Camera.main.transform.position;
         Random.InitState(0);
         float seed = 100;
         float moistureSeed = 97;
-        hexes = new Hex[numCollumns,numRows];
+        hexes = new Hex[numCollumns, numRows];
         hexToGameObject = new Dictionary<Hex, GameObject>();
-        createMap();
+        createMap(cameraPosition);
         createHeightMap(seed);
 
         //removes single tile islands
@@ -66,38 +67,60 @@ public class HexMap : MonoBehaviour
         generateLakes(numLakes);
         setTempAndMoisture(moistureSeed);
         allocateTerrain();
-        colorHexes();
+        colorHexes(cameraPosition);
 
-        foreach(KeyValuePair<Hex,GameObject> hexGo in hexToGameObject)
+        //foreach(KeyValuePair<Hex,GameObject> hexGo in hexToGameObject)
+        //{
+        //    hexGo.Value.GetComponentInChildren<TextMesh>().text += " " + ((int) (hexes[hexGo.Key.C, hexGo.Key.R].height *100)).ToString();
+        //}
+        //fixWidths();
+
+
+        //InvokeRepeating("tempChange", 2f, .5f);
+    }
+
+    private void Update()
+    {
+        fixWidths();
+    }
+
+    public void fixWidths()
+    {
+        if (Camera.main.GetComponent<CameraMotion>().hasMoved == true)
         {
-            hexGo.Value.GetComponentInChildren<TextMesh>().text += " " + ((int) (hexes[hexGo.Key.C, hexGo.Key.R].height *100)).ToString();
+            Vector3 cameraPosition = Camera.main.transform.position;
+            foreach (KeyValuePair<Hex, GameObject> hexGo in hexToGameObject)
+            {
+                hexGo.Value.transform.position = hexGo.Key.updatePosition(cameraPosition, numCollumns);
+            }
         }
-
-
-        //InvokeRepat2ng("tempChange", 5f, 1f);
     }
 
     //simulate an ice age
-    public void tempChange()
-    {
-       foreach (KeyValuePair<Hex, GameObject> h in hexToGameObject)
-            {
-            h.Key.moisture -= .01f;
-               h.Key.temp -= .01f;
-            }
-        colorHexes();
-    }
+    //public void tempChange(Vector)
+    //{
+    //   foreach (Hex h in hexes)
+    //        {
+    //            h.moisture -= .01f;
+    //           h.temp -= .01f;
+    //        }
+    //    colorHexes(cameraPosition);
+    //}
 
 
 
     /// <summary>
     /// Creates a blank Ocean World.
     /// </summary>
-    public void createMap(){
-        for (int col = 0; col < numCollumns; col++){
-            for (int row = 0; row < numRows; row++){
+    public void createMap(Vector3 cameraPosition)
+    {
+        for (int col = 0; col < numCollumns; col++)
+        {
+            for (int row = 0; row < numRows; row++)
+            {
                 hexes[col, row] = new Hex(col, row);
-                GameObject hexObject = (GameObject) Instantiate(HexModel, hexes[col,row].GetPosition(), Quaternion.identity, this.transform);
+                Vector3 position = hexes[col, row].updatePosition(cameraPosition, numCollumns);
+                GameObject hexObject = (GameObject)Instantiate(HexModel, position, Quaternion.identity, this.transform);
                 hexToGameObject.Add(hexes[col, row], hexObject);
                 hexObject.GetComponentInChildren<TextMesh>().text = col + " , " + row;
                 MeshRenderer mr = hexObject.GetComponentInChildren<MeshRenderer>();
@@ -124,8 +147,8 @@ public class HexMap : MonoBehaviour
             float maxDistance = hexes[0, 0].getEuclideanDistance(hexes[numCollumns / 2, numRows / 2]);
             float d = Mathf.Min(distance / maxDistance, 1f);
             hexHeight = hexHeight * Mathf.Pow(1 - d, heightDropOff) + heightAdd * (1 - d);
-            h.height = hexHeight*Random.Range(.7f,1.3f);
-            if(hexHeight < globalSeaLevel)
+            h.height = hexHeight * Random.Range(.7f, 1.3f);
+            if (hexHeight < globalSeaLevel)
             {
                 h.moisture = 1f;
             }
@@ -140,7 +163,7 @@ public class HexMap : MonoBehaviour
     {
         for (int i = 0; i < numberOfRivers; i++)
         {
-            int randomCol = Random.Range(-15,15);
+            int randomCol = Random.Range(-15, 15);
             int randomRow = Random.Range(-15, 15);
             Hex h = hexes[numCollumns / 2 + randomCol, numRows / 2 + randomRow];
             int numSteps = Random.Range(3, 5);
@@ -165,15 +188,15 @@ public class HexMap : MonoBehaviour
         float elevation = 1f;
         h.height = .4f;
         Hex nextTile = null;
-        foreach(Hex neighbor in neighbors)
+        foreach (Hex neighbor in neighbors)
         {
-            if(neighbor.height <= elevation)
+            if (neighbor.height <= elevation)
             {
                 nextTile = neighbor;
                 elevation = neighbor.height;
             }
         }
-        nextLakeTile(hexes[nextTile.C,nextTile.R], numSteps-1);
+        nextLakeTile(hexes[nextTile.C, nextTile.R], numSteps - 1);
     }
 
     /// <summary>
@@ -188,12 +211,12 @@ public class HexMap : MonoBehaviour
             float x = hexGo.transform.position.x;
             float z = hexGo.transform.position.z;
             //Minimum distance to one of the poles
-            float distance = Mathf.Min(h.getEuclideanDistance(hexes[h.C, 0]), h.getEuclideanDistance(hexes[h.C, numRows-1]));
+            float distance = Mathf.Min(h.getEuclideanDistance(hexes[h.C, 0]), h.getEuclideanDistance(hexes[h.C, numRows - 1]));
 
             distance = distance * Random.Range(.7f, 1.3f);
 
             //maxDistance is from middle tile to polar
-            float maxPolarDistance = hexes[numCollumns/2, 0].getEuclideanDistance(hexes[numCollumns / 2, numRows / 2]);
+            float maxPolarDistance = hexes[numCollumns / 2, 0].getEuclideanDistance(hexes[numCollumns / 2, numRows / 2]);
             float d = Mathf.Min(distance / maxPolarDistance, 1f);
             h.temp = d;
 
@@ -201,8 +224,8 @@ public class HexMap : MonoBehaviour
             //float maxCoastalDistance = hexes[0, 0].getEuclideanDistance(hexes[numCollumns / 2, numRows / 2]);
             //d = Mathf.Miny(dexGo.Keistance / maxCoastalDistance, 1f);
             //d = (1 - d) * Random.Range(.7f, 1.3f);
-               //float noiseMoisture = hhf.PerlinNoise(waterSeed + x, waterSeed + z);
-           //float moisture = noiseMoisture * .1+ Mathf.Pow(d, moistureDropOff);
+            //float noiseMoisture = hhf.PerlinNoise(waterSeed + x, waterSeed + z);
+            //float moisture = noiseMoisture * .1+ Mathf.Pow(d, moistureDropOff);
             //h.moiure = moisexGo.Keyture;
 
             if (h.moisture >= .9f && h.height < globalSeaLevel)
@@ -212,7 +235,7 @@ public class HexMap : MonoBehaviour
                 {
                     if (!moistureAdjustment.ContainsKey(hex))
                     {
-                        moistureAdjustment.Add(hex, Random.Range(.01f,.05f) * h.getEuclideanDistance(hex));
+                        moistureAdjustment.Add(hex, Random.Range(.01f, .05f) * h.getEuclideanDistance(hex));
                     }
                     else
                     {
@@ -224,26 +247,27 @@ public class HexMap : MonoBehaviour
 
         }
 
-        foreach (KeyValuePair<Hex,float> fixHex in moistureAdjustment)
+        foreach (KeyValuePair<Hex, float> fixHex in moistureAdjustment)
         {
             hexes[fixHex.Key.C, fixHex.Key.R].moisture = fixHex.Value;
         }
     }
 
 
-    
 
-/// <summary>
+
+    /// <summary>
     /// Removes features which don't have the requisite number of neighbors
     /// </summary>
-    public void removeFeatures(int requiredNeighbors, float requiredHeight, float modifier) {
+    public void removeFeatures(int requiredNeighbors, float requiredHeight, float modifier)
+    {
         //Uses 7 as maxneighbors since it's impossible for a hex to have more than 7 neighbors.
         removeFeatures(requiredNeighbors, 7, requiredHeight, modifier);
     }
 
     public GameObject getHexObj(int x, int y)
     {
-        return hexToGameObject[hexes[x,y]];
+        return hexToGameObject[hexes[x, y]];
     }
     /// <summary>
     /// Removes features which don't have the requisite number of neighbors
@@ -305,7 +329,7 @@ public class HexMap : MonoBehaviour
         //Raise or lowerthe hexes
         foreach (Hex hex in hexesToFix)
         {
-            hex.height = requiredHeight + modifier * Random.Range(1,10f);
+            hex.height = requiredHeight + modifier * Random.Range(1, 10f);
         }
 
     }
@@ -326,7 +350,7 @@ public class HexMap : MonoBehaviour
             {
                 int newX = centerHex.C + dx;
                 int newY = centerHex.R + dy;
-                if(newX < 0)
+                if (newX < 0)
                 {
                     newX = numCollumns + newX;
                 }
@@ -356,12 +380,15 @@ public class HexMap : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Generates a random rotation from 0,60,120,180,240,300,
+    /// </summary>
+    /// <returns>The random rotation.</returns>
     public float getRandomRotation()
     {
         int rotation = Random.Range(0, 360);
         rotation = rotation / 60;
-        return rotation*60f;
+        return rotation * 60f;
     }
 
     public void allocateTerrain()
@@ -373,56 +400,56 @@ public class HexMap : MonoBehaviour
             float moisture = h.moisture;
             float temp = h.temp;
             if (moisture >= .66f && h.terrain != TerrainEnum.Terrain.River)
+            {
+                if (temp >= .75f)
                 {
-                    if (temp >= .75f)
-                    {
-                        h.terrain = TerrainEnum.Terrain.Rainforest;
-
-                    }
-                    if (temp < .75f && temp >= .3f)
-                    {
-                        h.terrain = TerrainEnum.Terrain.Forest;
-                    }
-                    if (temp < .3f)
-                    {
-                        h.terrain = TerrainEnum.Terrain.Tundra;
-                    }
+                    h.terrain = TerrainEnum.Terrain.Rainforest;
 
                 }
-                if (moisture < .66f && moisture >= .33f)
+                if (temp < .75f && temp >= .3f)
                 {
-                    if (temp >= .66f)
-                    {
-                        h.terrain = TerrainEnum.Terrain.Savannah;
-                    }
-                    if (temp < .66f && temp >= .5f)
-                    {
-                        h.terrain = TerrainEnum.Terrain.Grassland;
-                    }
-                    if (temp < .5f && temp >= .25f)
-                    {
-                        h.terrain = TerrainEnum.Terrain.Forest;
-                    }
-                    if (temp < .25f)
-                    {
-                        h.terrain = TerrainEnum.Terrain.Steppe;
-                    }
+                    h.terrain = TerrainEnum.Terrain.Forest;
                 }
-                if (moisture < .33f)
+                if (temp < .3f)
                 {
-                    if (temp >= .75f)
-                    {
-                        h.terrain = TerrainEnum.Terrain.Desert;
-                    }
-                    if (temp < .75f && temp >= .25f)
-                    {
-                        h.terrain = TerrainEnum.Terrain.Grassland;
-                    }
-                    if (temp < .25f)
-                    {
-                        h.terrain = TerrainEnum.Terrain.Ice;
-                    }
-           }
+                    h.terrain = TerrainEnum.Terrain.Tundra;
+                }
+
+            }
+            if (moisture < .66f && moisture >= .33f)
+            {
+                if (temp >= .66f)
+                {
+                    h.terrain = TerrainEnum.Terrain.Savannah;
+                }
+                if (temp < .66f && temp >= .5f)
+                {
+                    h.terrain = TerrainEnum.Terrain.Grassland;
+                }
+                if (temp < .5f && temp >= .25f)
+                {
+                    h.terrain = TerrainEnum.Terrain.Forest;
+                }
+                if (temp < .25f)
+                {
+                    h.terrain = TerrainEnum.Terrain.Steppe;
+                }
+            }
+            if (moisture < .33f)
+            {
+                if (temp >= .75f)
+                {
+                    h.terrain = TerrainEnum.Terrain.Desert;
+                }
+                if (temp < .75f && temp >= .25f)
+                {
+                    h.terrain = TerrainEnum.Terrain.Grassland;
+                }
+                if (temp < .25f)
+                {
+                    h.terrain = TerrainEnum.Terrain.Ice;
+                }
+            }
 
             if (height < globalSeaLevel && moisture > .9f && h.terrain != TerrainEnum.Terrain.River)
             {
@@ -437,21 +464,24 @@ public class HexMap : MonoBehaviour
             {
                 h.terrain = TerrainEnum.Terrain.Mountain;
             }
-            }
+        }
     }
-
-    public GameObject instantiateTerrain(KeyValuePair<Hex,GameObject> hexGo, GameObject model, Material material)
+    public GameObject instantiateTerrain(KeyValuePair<Hex, GameObject> hexGo, GameObject model, Material material, Vector3 cameraPosition)
     {
+
         Destroy(hexGo.Value);
-        GameObject hexObject = (GameObject)Instantiate(model, hexGo.Key.GetPosition(), Quaternion.identity, this.transform);
+        Vector3 position = hexGo.Key.updatePosition(cameraPosition, numCollumns);
+        GameObject hexObject = (GameObject)Instantiate(model, position, Quaternion.identity, this.transform);
         MeshRenderer hexMR = hexObject.GetComponentInChildren<MeshRenderer>();
         hexMR.material = material;
         // rotation = getRandomRotation();
-       hexObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        hexObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         return hexObject;
     }
 
-    public void colorHexes()
+
+
+    public void colorHexes(Vector3 cameraPosition)
     {
         //Creates Dictionary to hold GO's which need to be added after the loop completes
         Dictionary<Hex, GameObject> islandOfMisfitTiles = new Dictionary<Hex, GameObject>();
@@ -461,19 +491,19 @@ public class HexMap : MonoBehaviour
             MeshRenderer mr = hexGo.Value.GetComponentInChildren<MeshRenderer>();
             if (h.terrain == TerrainEnum.Terrain.River)
             {
-                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, RiverModel, savannah));
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, RiverModel, savannah, cameraPosition));
             }
             if (h.terrain == TerrainEnum.Terrain.Forest)
             {
-                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, ForestModel, forest));
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, ForestModel, forest, cameraPosition));
             }
             if (h.terrain == TerrainEnum.Terrain.Tundra)
             {
-                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, ForestModel, tundra));
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, ForestModel, tundra, cameraPosition));
             }
             if (h.terrain == TerrainEnum.Terrain.Mountain)
             {
-                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, MountainModel, forest));
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, MountainModel, forest, cameraPosition));
             }
             else if (h.terrain == TerrainEnum.Terrain.Ocean)
             {
