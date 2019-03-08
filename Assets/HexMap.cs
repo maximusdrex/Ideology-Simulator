@@ -77,7 +77,8 @@ public class HexMap : MonoBehaviour
 
         foreach(KeyValuePair<Hex, GameObject> hexGo in hexToGameObject)
         {
-            hexGo.Value.GetComponentInChildren<TextMesh>().text = "";
+            hexGo.Value.GetComponentInChildren<TextMesh>().text = hexGo.Key.C + " " + hexGo.Key.R;
+
 
         }
         //InvokeRepeating("tempChange", 2f, .5f);
@@ -129,7 +130,6 @@ public class HexMap : MonoBehaviour
 
                 //DISABLED FOR DEMO!!!
 
-                //hexObject.GetComponentInChildren<TextMesh>().text = col + " , " + row;
                 hexObject.GetComponentInChildren<TextMesh>().text = "";
                 MeshRenderer mr = hexObject.GetComponentInChildren<MeshRenderer>();
                 mr.material = ocean;
