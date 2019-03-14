@@ -122,7 +122,8 @@ public class HexMap : MonoBehaviour
                 Vector3 position = hexes[col, row].updatePosition(cameraPosition, numCollumns);
                 GameObject hexObject = (GameObject)Instantiate(HexModel, position, Quaternion.identity, this.transform);
                 hexToGameObject.Add(hexes[col, row], hexObject);
-                hexObject.GetComponentInChildren<TextMesh>().text = col + " , " + row;
+                //hexObject.GetComponentInChildren<TextMesh>().text = col + " , " + row;
+                hexObject.GetComponentInChildren<TextMesh>().text = "";
                 MeshRenderer mr = hexObject.GetComponentInChildren<MeshRenderer>();
                 mr.material = ocean;
             }

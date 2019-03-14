@@ -8,33 +8,30 @@ public class GameManager : MonoBehaviour
     public GameObject testObj;
     public int turn;
     private List<Player> players;
+    public Player playing;
+    public GameObject canvas;
 
     //Called before other Starts()
     void Awake()
     {
         gameMap = GameObject.FindObjectOfType<HexMap>();
-        turn = 0;
+        turn = 1;
         players = new List<Player>();
     }
 
     void Start()
     {
-        int numPlayers = 2;
-        players.Add(new Player(0));
+        int numPlayers = 5;
+        players.Add(new Player(0, canvas));
         for(int i = 1; i < numPlayers; i++)
         {
-            players.Add(new AIPlayer(i));
+            players.Add(new AIPlayer(i, canvas));
         }
-        while (turn < 150)
-        {
-            for(int i = 0; i < players.Count; i++)
-            {
-                players[i].PlayTurn();
-                Debug.Log("Player: " + players[i].id.ToString() + " started turn " + turn.ToString());
-            }
-            turn++;
-        }
+        playing = players[0];
+        playing.StartTurn();
+        
     }
+
 
     void Update()
     {
@@ -45,5 +42,21 @@ public class GameManager : MonoBehaviour
     {
         obj.transform.position = gameMap.getHexObj(x, y).transform.position;
         return true;
+    }
+
+    public void nextTurnPressed()
+    {
+        playing.EndTurn();
+        playing = players[(playing.id+1) % players.Count];
+        if(playing.id == 0)
+        {
+            turn++;
+        }
+        playing.StartTurn();
+    }
+
+    public Player GetPlayer(int id)
+    {
+        return players[id];
     }
 }

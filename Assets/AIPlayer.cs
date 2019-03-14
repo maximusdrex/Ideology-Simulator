@@ -4,22 +4,17 @@ using UnityEngine;
 
 public class AIPlayer : Player
 {
-    public int id;
 
-    public AIPlayer(int pid) : base(pid)
+
+    public AIPlayer(int pid, GameObject canvas) : base(pid, canvas)
     {
-        id = pid;
+
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public override void StartTurn()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        isTurn = true;
+        GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gm.nextTurnPressed();
     }
 }
