@@ -6,7 +6,9 @@ public class City {
     public int x;
     public int y;
 
-    int population;
+    int populationModifier;
+    List<Citizen> citizens;
+    List<Building> building;
     
     public City(int xcoord, int ycoord)
     {
