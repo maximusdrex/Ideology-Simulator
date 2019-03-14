@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Building
 {
-    float span;
+    public float span;
+    public string name;
+
+    public Building(string name)
+    {
+        this.name = name;
+    }
 
 }

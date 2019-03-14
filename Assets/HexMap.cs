@@ -68,6 +68,11 @@ public class HexMap : MonoBehaviour
         setTempAndMoisture(moistureSeed);
         allocateTerrain();
         colorHexes(cameraPosition);
+        City h = new City(0, 0, true, true, true);
+        for (int i = 0; i<7; i++)
+        {
+            City c = new City(0, 0, true, false, true);
+        }
 
         //foreach(KeyValuePair<Hex,GameObject> hexGo in hexToGameObject)
         //{

@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CityHall : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+public class CityHall : Building
 
-    // Update is called once per frame
-    void Update()
+{
+    public new float span = .5f;
+    public GameObject CityHallModel;
+
+
+    public CityHall(string name) : base(name)
     {
-        
+
     }
+    
 }
