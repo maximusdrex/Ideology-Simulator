@@ -11,7 +11,11 @@ public class CityHall : Building
 
     public CityHall(string name) : base(name)
     {
-
+        this.CityHallModel = getModel();
     }
-    
+
+    public GameObject getModel()
+    {
+        return (GameObject) Resources.Load("Assets/Resources/cityHall.fbx");
+    }
 }

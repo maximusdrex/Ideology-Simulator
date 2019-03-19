@@ -21,11 +21,18 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Game Manager started");
         int numPlayers = 5;
         players.Add(new Player(0, canvas));
         for(int i = 1; i < numPlayers; i++)
         {
             players.Add(new AIPlayer(i, canvas));
+            
+        }
+        foreach(Player p in players)
+        {
+            City c = new City(Random.Range(0, 40), Random.Range(0, 40), true, true, true);
+            p.cities.Add(c);
         }
         playing = players[0];
         playing.StartTurn();
@@ -35,7 +42,22 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        placeOnHex(testObj, 20, 23);
+        foreach (Player p in players)
+        {
+            foreach(City c in p.cities)
+            {
+                if(c.buildingChanged == true)
+                {
+                    Debug.Log("Instantiating new building");
+                    GameObject model = c.buildings[c.buildings.Count-1].model;
+                    placeOnHex(model, c.x, c.y);
+                    c.buildingChanged = false;
+                }
+                else
+                {
+                }
+            }
+        }
     }
 
     public bool placeOnHex(GameObject obj, int x, int y)

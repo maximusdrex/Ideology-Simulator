@@ -68,11 +68,6 @@ public class HexMap : MonoBehaviour
         setTempAndMoisture(moistureSeed);
         allocateTerrain();
         colorHexes(cameraPosition);
-        City h = new City(0, 0, true, true, true);
-        for (int i = 0; i<7; i++)
-        {
-            City c = new City(0, 0, true, false, true);
-        }
 
         //foreach(KeyValuePair<Hex,GameObject> hexGo in hexToGameObject)
         //{
@@ -180,15 +175,12 @@ public class HexMap : MonoBehaviour
             int numSteps = Random.Range(3, 5);
             h.terrain = TerrainEnum.Terrain.Ocean;
             nextLakeTile(h, numSteps);
-            Debug.Log("Hex: " + h + " Elevation: " + h.height + " Num Steps: " + numSteps);
-
         }
     }
 
     public void nextLakeTile(Hex h, int numSteps)
     {
-        Debug.Log("Hex: " + h + " Elevation: " + h.height + " Num Steps: " + numSteps);
-        if (numSteps <= 0)
+            if (numSteps <= 0)
         {
             return;
         }

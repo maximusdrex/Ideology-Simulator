@@ -7,29 +7,37 @@ using UnityEngine;
 public class City {
     public int x;
     public int y;
-    public int maxBuildings;
-    bool center;
-    bool capitol;
-    bool capitalist;
-    string name;
+    public int maxBuildings = 6;
+    public bool center;
+    public bool capitol;
+    public bool capitalist;
+    public string name;
 
-    int populationModifier;
-    List<Citizen> citizens;
-    List<Building> buildings;
+    public float populationModifier;
+    public List<Citizen> citizens;
+    public List<Building> buildings;
+    public bool buildingChanged;
+
     
     public City(int xcoord, int ycoord, bool center, bool capitol, bool capitalist)
     {
+        buildingChanged = true;
         x = xcoord;
-        name = getName(capitalist, capitol);
-        Debug.Log(name);
         y = ycoord;
-        maxBuildings = 6;
+        name = getName(capitalist, capitol);
         this.center = center;
+        if(center == true)
+        {
+            maxBuildings++;
+        }
         buildings = new List<Building>();
+        citizens = new List<Citizen>();
         if (center == true)
         {
             buildings.Add(new CityHall ("City Hall"));
+            Debug.Log("City Hall added");
         }
+        Debug.Log("City created at: " + xcoord + "," + ycoord + " named:" + name);
     }
 
     public string getName(bool capitalist, bool capitol)
@@ -78,11 +86,13 @@ public class City {
     {
         if(buildings.Count == maxBuildings)
         {
+            Debug.Log("Max buildings reached");
             return false;
         }
         else
         {
             buildings.Add(b);
+            buildingChanged = true;
             return true;
         }
     }
