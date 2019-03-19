@@ -144,6 +144,7 @@ MonoBehaviour:
   testObj: {fileID: 870155292}
   turn: 0
   playing: {fileID: 0}
+  canvas: {fileID: 1093670344}
 --- !u!4 &41425308
 Transform:
   m_ObjectHideFlags: 0
@@ -2527,6 +2528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  isTurn: 0
 --- !u!1 &1633868532
 GameObject:
   m_ObjectHideFlags: 0
