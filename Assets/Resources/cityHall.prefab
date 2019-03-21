@@ -1551,7 +1551,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4768803398956089336}
   m_Layer: 0
-  m_Name: cityhall3
+  m_Name: cityHall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1566,7 +1566,7 @@ Transform:
   m_GameObject: {fileID: 8046392357408705238}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 155.66919, y: 513.2641, z: -918.941}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 7524956610677684961}
   - {fileID: 2936946252903052313}

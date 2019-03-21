@@ -16,12 +16,16 @@ public class Hex
     //cubic z
     public int S;
 
+    public float x;
+    public float z;
+
     public List<IInteractableObj> tileObjs;
 
     public float height;
     public float temp;
     public float moisture;
     public TerrainEnum.Terrain terrain;
+    public Player owner;
     public Hex (int c, int r)
     {
         this.C = c;
@@ -66,7 +70,10 @@ public class Hex
         float width = WIDTH_MOD * diameter;
         float horizontal = width;
         float vertical = diameter * .75f;
-        return new Vector3(horizontal*(this.C + this.R/2f), 0, vertical * this.R);
+        Vector3 pos = new Vector3(horizontal * (this.C + this.R / 2f), 0, vertical * this.R);
+        this.x = pos.x;
+        this.z = pos.z;
+        return pos;
     }
 
     public Vector3 updatePosition(Vector3 cameraPosition, float numCollumns)
@@ -90,6 +97,8 @@ public class Hex
 
         int widthsToFix = (int)widthsFromCamera;
         position.x -= widthsToFix * mapWidth;
+        this.x = position.x;
+        this.z = position.z;
         return position;
     }
 
@@ -192,6 +201,16 @@ public class Hex
         int[] coordArray = roundCoordinates(q, r);
         Debug.Log("Q" + coordArray[0] + " R" + coordArray[1]);
         return new Hex(coordArray[0],coordArray[1]);
+    }
+
+    public bool addOwner(Player p)
+    {
+        if(owner == null)
+        {
+            owner = p;
+            return true;
+        }
+        return false;
     }
 
 }

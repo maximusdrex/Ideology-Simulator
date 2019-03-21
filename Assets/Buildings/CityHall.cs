@@ -5,12 +5,11 @@ using UnityEngine;
 public class CityHall : Building
 
 {
-    public new float span = .5f;
-
 
     public CityHall(string name) : base(name)
     {
         model = getModel();
+        span = .2f;
     }
 
     public GameObject getModel()

@@ -24,19 +24,22 @@ public class GameManager : MonoBehaviour
             players.Add(new AIPlayer(i, canvas));
 
         }
-        foreach (Player p in players)
-        {
-            City c = new City(Random.Range(0, 40), Random.Range(0, 40), true, true, true);
-            p.cities.Add(c);
-        }
     }
 
     void Start()
     {
         Debug.Log("Game Manager started");
-        
+        foreach (Player p in players)
+        {
+            int cityX = Random.Range(0, 40);
+            int cityY = Random.Range(0, 40);
+            Hex h = HexMap.hexes[cityX, cityY];
+            City c = new City(h, cityX, cityY, true, true, true,p);
+            p.cities.Add(c);
+        }
         playing = players[0];
         playing.StartTurn();
+
     }
 
 
@@ -48,26 +51,38 @@ public class GameManager : MonoBehaviour
             {
                 if(c.buildingChanged == true)
                 {
-                    Debug.Log("Instantiating new building");
-                    GameObject model = c.buildings[c.buildings.Count-1].model;
-                    placeOnHex(model, c.x, c.y);
-                    c.buildingChanged = false;
+                    instantiateBuilding(c);
                 }
                 else
                 {
-                    
+
                 }
             }
         }
-        placeOnHex(testObj, 2, 1);
     }
 
-    public bool placeOnHex(GameObject obj, int x, int y)
+    public void instantiateBuilding(City c)
     {
-        Instantiate(obj);
-        obj.transform.position = gameMap.getHexObj(x, y).transform.position;
-        obj.transform.SetParent(gameMap.getHexObj(x, y).transform);
-        obj.transform.localPosition = new Vector3(0, 0, 0);
+        Building b = c.buildings[c.buildings.Count - 1];
+        GameObject model = b.model;
+        float span = b.span;
+        placeOnHex(model, c.baseHex.C, c.baseHex.R, b.span);
+        c.buildingChanged = false;
+    }
+
+    public bool placeOnHex(GameObject obj, int x, int z)
+    {
+        placeOnHex(obj, x, z, 0);
+        return true;
+    }
+
+    public bool placeOnHex(GameObject obj, int x, int z, float span)
+    {
+        GameObject placedObject = Instantiate(obj);
+        placedObject.transform.position = gameMap.getHexObj(x, z).transform.position;
+        placedObject.transform.SetParent(gameMap.getHexObj(x, z).transform);
+        placedObject.transform.localPosition = new Vector3(0, 0, span);
+        Debug.Log(span);
         return true;
     }
 

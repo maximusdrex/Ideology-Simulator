@@ -21,8 +21,8 @@ public class HexMap : MonoBehaviour
     public GameObject MountainModel;
     public GameObject ForestModel;
     public GameObject RiverModel;
-    readonly int numRows = 54;
-    readonly int numCollumns = 84;
+    readonly static int numRows = 54;
+    readonly static int numCollumns = 84;
     readonly float heightAdd = .33f;
     readonly float heightMinus = .35f;
     readonly float heightDropOff = .6f;
@@ -31,25 +31,25 @@ public class HexMap : MonoBehaviour
     readonly float moistureDropOff = 1.5f;
     readonly int numLakes = 4;
     readonly int waterRange = 3;
+    float seed = 100;
+    float moistureSeed = 97;
+
     /// <summary>
     /// creates a 2D array of Hexes
     /// </summary>
-    public Hex[,] hexes;
+    public static Hex[,] hexes;
 
     public Dictionary<Hex, GameObject> hexToGameObject;
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         Vector3 cameraPosition = Camera.main.transform.position;
         Random.InitState(0);
-        float seed = 100;
-        float moistureSeed = 97;
         hexes = new Hex[numCollumns, numRows];
         hexToGameObject = new Dictionary<Hex, GameObject>();
         createMap(cameraPosition);
         createHeightMap(seed);
-
         //removes single tile islands
         removeFeatures(3, globalSeaLevel, -.01f);
 
@@ -68,20 +68,17 @@ public class HexMap : MonoBehaviour
         setTempAndMoisture(moistureSeed);
         allocateTerrain();
         colorHexes(cameraPosition);
+    }
 
-        //foreach(KeyValuePair<Hex,GameObject> hexGo in hexToGameObject)
-        //{
-        //    hexGo.Value.GetComponentInChildren<TextMesh>().text += " " + ((int) (hexes[hexGo.Key.C, hexGo.Key.R].height *100)).ToString();
-        //}
-        //fixWidths();
-
+    void Start()
+    {
+       
         foreach(KeyValuePair<Hex, GameObject> hexGo in hexToGameObject)
         {
             hexGo.Value.GetComponentInChildren<TextMesh>().text = hexGo.Key.C + " " + hexGo.Key.R;
 
 
         }
-        //InvokeRepeating("tempChange", 2f, .5f);
     }
 
     private void Update()
@@ -233,7 +230,7 @@ public class HexMap : MonoBehaviour
 
             if (h.moisture >= .9f && h.height < globalSeaLevel)
             {
-                Hex[] hexesToWater = hexesInRange(h, waterRange);
+                List<Hex> hexesToWater = hexesInRange(h, waterRange);
                 foreach (Hex hex in hexesToWater)
                 {
                     if (!moistureAdjustment.ContainsKey(hex))
@@ -361,7 +358,7 @@ public class HexMap : MonoBehaviour
     /// <returns>The in range.</returns>
     /// <param name="centerHex">Center hex.</param>
     /// <param name="range">Range.</param>
-    public Hex[] hexesInRange(Hex centerHex, int range)
+    public static List<Hex> hexesInRange(Hex centerHex, int range)
     {
         List<Hex> results = new List<Hex>();
 
@@ -397,7 +394,7 @@ public class HexMap : MonoBehaviour
             }
         }
 
-        return results.ToArray();
+        return results;
     }
 
 
