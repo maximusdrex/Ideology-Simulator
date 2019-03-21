@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 /// <summary>
 /// This class represents the Hex in the world
 /// </summary>
+[Serializable]
 public class Hex
 {
     public static float WIDTH_MOD = Mathf.Sqrt(3)/2;

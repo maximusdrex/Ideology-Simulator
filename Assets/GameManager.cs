@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         gameMap = GameObject.FindObjectOfType<HexMap>();
+        Debug.Log("Awake: gameMap" + gameMap);
         turn = 1;
         players = new List<Player>();
     }
@@ -48,8 +49,8 @@ public class GameManager : MonoBehaviour
             {
                 if(c.buildingChanged == true)
                 {
-                    Debug.Log("Instantiating new building");
                     GameObject model = c.buildings[c.buildings.Count-1].model;
+                    Debug.Log("Instantiating new building, model: " + model);
                     placeOnHex(model, c.x, c.y);
                     c.buildingChanged = false;
                 }
@@ -62,6 +63,8 @@ public class GameManager : MonoBehaviour
 
     public bool placeOnHex(GameObject obj, int x, int y)
     {
+        if (obj == null)
+            return false;
         obj.transform.position = gameMap.getHexObj(x, y).transform.position;
         return true;
     }

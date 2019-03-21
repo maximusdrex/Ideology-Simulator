@@ -41,6 +41,7 @@ public class HexMap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("HexMap start");
         Vector3 cameraPosition = Camera.main.transform.position;
         Random.InitState(0);
         float seed = 100;
@@ -84,6 +85,12 @@ public class HexMap : MonoBehaviour
         //InvokeRepeating("tempChange", 2f, .5f);
     }
 
+    public void save()
+    {
+        Debug.Log("hexmap save, hexes " + hexes.GetLength(0) + "/" + hexes.GetLength(1));
+        SaveHexMap.SaveMap(hexes);
+    }
+
     private void Update()
     {
         fixWidths();
@@ -119,6 +126,7 @@ public class HexMap : MonoBehaviour
     /// </summary>
     public void createMap(Vector3 cameraPosition)
     {
+        Debug.Log("createMap " + numCollumns + "/" + numRows);
         for (int col = 0; col < numCollumns; col++)
         {
             for (int row = 0; row < numRows; row++)

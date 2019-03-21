@@ -8,6 +8,8 @@ public class Player
     public bool isTurn;
     private GameObject indicator;
     public List <City> cities;
+    public double GDP;
+    public double money;
 
     public Player(int pid, GameObject canvas)
     {
@@ -24,6 +26,12 @@ public class Player
     {
         isTurn = true;
         indicator.GetComponent<UnityEngine.UI.Toggle>().isOn = true;
+        foreach(City c in cities)
+        {
+            c.startTurn(c);
+            GDP += c.GDP;
+            money += c.getDmoney();
+        }
     }
 
     public void EndTurn()

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.496413, b: 0.5748175, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1196,6 +1196,7 @@ GameObject:
   - component: {fileID: 839772080}
   - component: {fileID: 839772079}
   - component: {fileID: 839772078}
+  - component: {fileID: 839772081}
   m_Layer: 5
   m_Name: Save
   m_TagString: Untagged
@@ -1262,7 +1263,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 839772079}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 839772081}
+        m_MethodName: save
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &839772079
@@ -1302,6 +1314,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 839772076}
   m_CullTransparentMesh: 0
+--- !u!114 &839772081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839772076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bac28ba3281840eba310209fe0ce0f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rainforest: {fileID: 2100000, guid: 97cf73a9d4110432f92c309d31d3c739, type: 2}
+  savannah: {fileID: 2100000, guid: e585c0a657677433d9200ff993881851, type: 2}
+  desert: {fileID: 2100000, guid: 137000a436a8e4de4acad52eccd8febf, type: 2}
+  marsh: {fileID: 2100000, guid: 208d18170a05a404584ffb4c56f077f1, type: 2}
+  forest: {fileID: 2100000, guid: 55693419cf62f4fe6a984646ed90aa4b, type: 2}
+  grassland: {fileID: 2100000, guid: 8fcbbc8307cec40a3a243ed4dd5644b6, type: 2}
+  tundra: {fileID: 2100000, guid: 1d8417cadd1fb455b89ec09e852da9c8, type: 2}
+  steppe: {fileID: 2100000, guid: c4e4d3d07c05b45ed9498754ba67a543, type: 2}
+  ice: {fileID: 2100000, guid: e78c613c042214bc898c82afc2a99639, type: 2}
+  ocean: {fileID: 2100000, guid: 7b4a98b85d9fa4db286e170f25f0564f, type: 2}
+  HexModel: {fileID: 6188751399001136934, guid: 1f7359c85095e4c0b8742375cacf3587,
+    type: 3}
+  MountainModel: {fileID: 9186117828343838436, guid: 5708f7f4dc09649c6b778d7c00082afe,
+    type: 3}
+  ForestModel: {fileID: 4070181540814893159, guid: a28d0a2a0beda4970ac2d34658cf9964,
+    type: 3}
+  RiverModel: {fileID: 225609403953614499, guid: e035997fd806b4b39af39154723ca66b,
+    type: 3}
 --- !u!1 &854698682
 GameObject:
   m_ObjectHideFlags: 0
