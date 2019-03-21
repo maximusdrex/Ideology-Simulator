@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Citizen
 {
+    private int maxEducation = 2;
+    public string name;
     public float health;
     private int education;
-    private int maxEducation = 2;
     public int gender;
+    private float wealth;
 
     public Citizen(float health) {
         this.health = health;
-        this.education = 0;
+        education = 0;
+        wealth = 0;
     }
 
     public int getEducation()
