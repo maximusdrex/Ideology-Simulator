@@ -5,8 +5,9 @@ using System.IO;
 using UnityEngine;
 
 public class City {
-    public int x;
-    public int y;
+    public Hex baseHex;
+    public float x;
+    public float z;
     public int maxBuildings = 6;
     public bool center;
     public bool capitol;
@@ -50,14 +51,25 @@ public class City {
     public float populationModifier;
     public List<Citizen> citizens;
     public List<Building> buildings;
+    public List<Hex> ownedHexes;
+    public static int maxRange = 2;
+    public List<Hex> possibleHexes;
     public bool buildingChanged;
 
-    
-    public City(int xcoord, int ycoord, bool center, bool capitol, bool capitalist)
+    public Player owner;
+
+
+    public City(Hex hex, float xcoord, float zcoord, bool center, bool capitol, bool capitalist, Player owner)
     {
+        this.owner = owner;
+        ownedHexes = new List<Hex>();
+        baseHex = hex;
+        ownedHexes.Add(baseHex);
+        possibleHexes = HexMap.hexesInRange(baseHex, maxRange);
+
         buildingChanged = true;
         x = xcoord;
-        y = ycoord;
+        z = zcoord;
         name = getName(capitalist, capitol);
         this.center = center;
         if(center == true)
@@ -71,7 +83,7 @@ public class City {
             buildings.Add(new CityHall ("City Hall"));
             Debug.Log("City Hall added");
         }
-        Debug.Log("City created at: " + xcoord + "," + ycoord + " named:" + name);
+        Debug.Log("City created at: " + xcoord + "," + zcoord + " named:" + name);
     }
 
     public string getName(bool capitalist, bool capitol)
@@ -129,6 +141,17 @@ public class City {
             buildingChanged = true;
             return true;
         }
+    }
+
+    public bool addHex(Hex h)
+    {
+        if (possibleHexes.Contains(h) && HexMap.hexes[h.C, h.R].owner == null)
+        {
+            HexMap.hexes[h.C, h.R].addOwner(owner);
+            ownedHexes.Add(h);
+            return true;
+        }
+        return false;
     }
 
     public void startTurn(City c)

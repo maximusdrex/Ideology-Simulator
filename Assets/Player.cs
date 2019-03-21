@@ -20,6 +20,7 @@ public class Player
         indicator.GetComponentInChildren<UnityEngine.UI.Text>().text = "Player " + id.ToString();
         indicator.GetComponent<UnityEngine.UI.Toggle>().isOn = false;
         cities = new List<City>();
+        
     }
 
     public virtual void StartTurn()
