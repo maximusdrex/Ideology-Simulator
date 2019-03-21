@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
 
     public bool placeOnHex(GameObject obj, int x, int y)
     {
+        Instantiate(obj);
         obj.transform.position = gameMap.getHexObj(x, y).transform.position;
         return true;
     }
