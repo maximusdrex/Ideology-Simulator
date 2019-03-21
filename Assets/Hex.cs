@@ -16,6 +16,8 @@ public class Hex
     //cubic z
     public int S;
 
+    public List<IInteractableObj> tileObjs;
+
     public float height;
     public float temp;
     public float moisture;
@@ -25,6 +27,8 @@ public class Hex
         this.C = c;
         this.R = r;
         this.S = -(c + r);
+
+        tileObjs = new List<IInteractableObj>();
     }
     /// <summary>
     /// Returns a string that represents the current Hex.

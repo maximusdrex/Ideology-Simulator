@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CityHall : MonoBehaviour
+public class CityHall : Building
+
 {
-    // Start is called before the first frame update
-    void Start()
+    public new float span = .5f;
+    public GameObject CityHallModel;
+
+
+    public CityHall(string name) : base(name)
     {
-        
+        this.CityHallModel = getModel();
     }
 
-    // Update is called once per frame
-    void Update()
+    public GameObject getModel()
     {
-        
+        return (GameObject) Resources.Load("Assets/Resources/cityHall.fbx");
     }
 }

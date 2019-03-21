@@ -175,15 +175,12 @@ public class HexMap : MonoBehaviour
             int numSteps = Random.Range(3, 5);
             h.terrain = TerrainEnum.Terrain.Ocean;
             nextLakeTile(h, numSteps);
-            Debug.Log("Hex: " + h + " Elevation: " + h.height + " Num Steps: " + numSteps);
-
         }
     }
 
     public void nextLakeTile(Hex h, int numSteps)
     {
-        Debug.Log("Hex: " + h + " Elevation: " + h.height + " Num Steps: " + numSteps);
-        if (numSteps <= 0)
+            if (numSteps <= 0)
         {
             return;
         }
@@ -274,6 +271,24 @@ public class HexMap : MonoBehaviour
     public GameObject getHexObj(int x, int y)
     {
         return hexToGameObject[hexes[x, y]];
+    }
+
+    public Hex getHexFromObj(GameObject obj)
+    {
+        if(hexToGameObject.ContainsValue(obj))
+        {
+            foreach(KeyValuePair<Hex, GameObject> kv in hexToGameObject)
+            {
+                if(kv.Value == obj)
+                {
+                    return kv.Key;
+                }
+            }
+            return null;
+        } else
+        {
+            return null;
+        }
     }
     /// <summary>
     /// Removes features which don't have the requisite number of neighbors

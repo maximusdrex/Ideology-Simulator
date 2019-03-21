@@ -4,12 +4,26 @@ using UnityEngine;
 
 public class Citizen
 {
-    float health;
-    int education;
+    public float health;
+    private int education;
+    private int maxEducation = 2;
+    public int gender;
 
-    public Citizen(float health, int education) {
+    public Citizen(float health) {
         this.health = health;
-        this.education = education;
+        this.education = 0;
     }
 
+    public int getEducation()
+    {
+        return education;
+    }
+
+    public void increaseEducation()
+    {
+        if(education != maxEducation)
+        {
+            education++;
+        }
+    }
 }
