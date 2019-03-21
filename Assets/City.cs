@@ -4,7 +4,7 @@ using System.IO;
 
 using UnityEngine;
 
-public class City {
+public class City : IInteractableObj {
     public int x;
     public int y;
     public int maxBuildings = 6;

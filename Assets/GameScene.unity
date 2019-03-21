@@ -143,6 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testObj: {fileID: 870155292}
   turn: 0
+  playing: {fileID: 0}
   canvas: {fileID: 1093670344}
 --- !u!4 &41425308
 Transform:
@@ -2513,7 +2514,6 @@ MonoBehaviour:
   lastPosition: {x: 0, y: 0, z: 0}
   hasMoved: 0
   magnitude: 0
-  panSpeed: 0
 --- !u!1 &1633868532
 GameObject:
   m_ObjectHideFlags: 0

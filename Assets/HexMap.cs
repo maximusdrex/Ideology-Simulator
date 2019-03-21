@@ -272,6 +272,24 @@ public class HexMap : MonoBehaviour
     {
         return hexToGameObject[hexes[x, y]];
     }
+
+    public Hex getHexFromObj(GameObject obj)
+    {
+        if(hexToGameObject.ContainsValue(obj))
+        {
+            foreach(KeyValuePair<Hex, GameObject> kv in hexToGameObject)
+            {
+                if(kv.Value == obj)
+                {
+                    return kv.Key;
+                }
+            }
+            return null;
+        } else
+        {
+            return null;
+        }
+    }
     /// <summary>
     /// Removes features which don't have the requisite number of neighbors
     /// </summary>

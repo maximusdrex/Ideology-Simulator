@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private HexMap gameMap;
+    public HexMap gameMap;
     public GameObject testObj;
     public int turn;
     private List<Player> players;
@@ -17,26 +17,26 @@ public class GameManager : MonoBehaviour
         gameMap = GameObject.FindObjectOfType<HexMap>();
         turn = 1;
         players = new List<Player>();
+        int numPlayers = 5;
+        players.Add(new Player(0, canvas));
+        for (int i = 1; i < numPlayers; i++)
+        {
+            players.Add(new AIPlayer(i, canvas));
+
+        }
+        foreach (Player p in players)
+        {
+            City c = new City(Random.Range(0, 40), Random.Range(0, 40), true, true, true);
+            p.cities.Add(c);
+        }
     }
 
     void Start()
     {
         Debug.Log("Game Manager started");
-        int numPlayers = 5;
-        players.Add(new Player(0, canvas));
-        for(int i = 1; i < numPlayers; i++)
-        {
-            players.Add(new AIPlayer(i, canvas));
-            
-        }
-        foreach(Player p in players)
-        {
-            City c = new City(Random.Range(0, 40), Random.Range(0, 40), true, true, true);
-            p.cities.Add(c);
-        }
+        
         playing = players[0];
         playing.StartTurn();
-        
     }
 
 
@@ -55,15 +55,19 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
+                    
                 }
             }
         }
+        placeOnHex(testObj, 2, 1);
     }
 
     public bool placeOnHex(GameObject obj, int x, int y)
     {
         Instantiate(obj);
         obj.transform.position = gameMap.getHexObj(x, y).transform.position;
+        obj.transform.SetParent(gameMap.getHexObj(x, y).transform);
+        obj.transform.localPosition = new Vector3(0, 0, 0);
         return true;
     }
 
