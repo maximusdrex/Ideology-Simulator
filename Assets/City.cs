@@ -4,7 +4,7 @@ using System.IO;
 
 using UnityEngine;
 
-public class City {
+public class City : IInteractableObj {
     public Hex baseHex;
     public float x;
     public float z;
@@ -172,6 +172,11 @@ public class City {
         c.setElectronics(c.getElecronics() + c.getDelectronics());
         c.setPlastics(c.getPlastics() + c.getDplastics());
         c.GDP = (c.getDfood() * 2000000 + c.getDlumber() * 500000 + c.getDiron() * 1200000 + c.getDsteel() * 150000 + c.getDcoal() * 37000 + c.getDoil() * 60000 + c.getDstone() * 27500 + c.getDfuel() * 160000 + c.getDluxury() * 200000 + c.getDplastics() * 330000 + c.getAluminum() * 2100000 + c.getDelectronics()*200000 + c.getDuranium() * 200000 + c.getDtransport()*400000);
+    }
+
+    public Canvas GetUI()
+    {
+        
     }
 
     //getters and setters for resources
