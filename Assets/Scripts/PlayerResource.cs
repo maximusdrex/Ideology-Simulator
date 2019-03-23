@@ -30,6 +30,11 @@ public class PlayerResource
         return damount;
     }
 
+    public void setResource(double toSet)
+    {
+        amount = toSet;
+    }
+
     public void gainResource(double toAdd)
     {
         amount += toAdd;
@@ -44,4 +49,10 @@ public class PlayerResource
     {
         damount += toAdd;
     }
+
+    public void setDResource(double toSet)
+    {
+        damount = toSet;
+    }
+
 }
