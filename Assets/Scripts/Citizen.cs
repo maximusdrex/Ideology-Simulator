@@ -55,10 +55,7 @@ public class Citizen
         {
             return "male";
         }
-        if (gender == 0)
-        {
-            return "nonbinary";
-        }
+        return "nonbinary";
     }
 
     public int assignGender(float genderRand)
