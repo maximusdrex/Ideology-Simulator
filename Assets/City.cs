@@ -94,7 +94,7 @@ public class City {
             if(capitalist == false)
             {
                 int rand = 0;
-                string[] lines = System.IO.File.ReadAllLines(@"Assets/communistCityNames.txt");
+                string[] lines = System.IO.File.ReadAllLines(@"Assets/TextResources/communistCityNames.txt");
                 if(capitol == true)
                 {   
                     rand = Random.Range(1, 5);
@@ -108,7 +108,7 @@ public class City {
             else
             {
                 int rand = 0;
-                string[] lines = System.IO.File.ReadAllLines(@"Assets/capitalistCityNames.txt");
+                string[] lines = System.IO.File.ReadAllLines(@"Assets/TextResource/capitalistCityNames.txt");
                 if (capitol == true)
                 {
                     rand = Random.Range(1, 9);
