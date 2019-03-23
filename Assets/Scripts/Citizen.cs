@@ -42,6 +42,7 @@ public class Citizen
         age += 1;
         recievePay(pay, tax);
 
+
     }
 
     public string genderAsString()
@@ -70,10 +71,9 @@ public class Citizen
         {
             return -1;
         }
-        if (genderRand > 50f)
-        {
-            return 1;
-        }
+
+        return 1;
+        
     }
     /// <summary>
     /// Checks if citizen is due for a medical emergency, requiring expenses. 

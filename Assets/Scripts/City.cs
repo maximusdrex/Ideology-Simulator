@@ -174,8 +174,6 @@ public class City {
         c.GDP = (c.getDfood() * 2000000 + c.getDlumber() * 500000 + c.getDiron() * 1200000 + c.getDsteel() * 150000 + c.getDcoal() * 37000 + c.getDoil() * 60000 + c.getDstone() * 27500 + c.getDfuel() * 160000 + c.getDluxury() * 200000 + c.getDplastics() * 330000 + c.getAluminum() * 2100000 + c.getDelectronics()*200000 + c.getDuranium() * 200000 + c.getDtransport()*400000);
     }
 
-
-
     //getters and setters for resources
     public double getMoney()
     {
