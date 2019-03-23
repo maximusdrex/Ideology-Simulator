@@ -1,0 +1,375 @@
+[33mcommit a6500c8e4bbe9a58dac1c1fb53727e0e7cd7c464[m
+Merge: 9f55ed2 78c800c
+Author: BrainyPanda <alex.my.zhang@outlook.com>
+Date:   Sat Mar 23 11:52:35 2019 -0700
+
+    Merge branch 'master' of https://github.com/maximusdrex/Ideology-Simulator
+
+[33mcommit 9f55ed2ed98e0fa49a70451ca1cdc38eaec63ea0[m
+Author: BrainyPanda <alex.my.zhang@outlook.com>
+Date:   Sat Mar 23 11:51:48 2019 -0700
+
+    Fixed city, player, and playerResource classes to reflect the new playerResource class.
+
+[33mcommit 78c800cb858ea9dcc0f33b18b6afb5fad452ccb3[m
+Merge: 7d21303 ef7c1d0
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Sat Mar 23 11:28:17 2019 -0700
+
+    fixed merge conflicts
+
+[33mcommit 7d21303ab390bc364f1f6788073fef5384cf7631[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Sat Mar 23 11:23:34 2019 -0700
+
+    made some changes to Citizen
+
+[33mcommit ef7c1d0e8b86dc3471fe2fad0e4b0961c07645b4[m
+Author: BrainyPanda <alex.my.zhang@outlook.com>
+Date:   Fri Mar 22 11:16:36 2019 -0700
+
+    PlayerResource class
+
+[33mcommit afc898095de58ca1196bdc27b8b36ecc33dc8d69[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Thu Mar 21 14:54:35 2019 -0700
+
+    added some helper methods to Citizen
+
+[33mcommit 8674fdf2bf320ae9295f1f3feba211603cb68068[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Thu Mar 21 14:43:55 2019 -0700
+
+    changed city name path
+
+[33mcommit 29a326cec686184cf4f90f4b4eeb62e1533a67f4[m
+Author: nlumiere <nicholaslumiere@gmail.com>
+Date:   Thu Mar 21 09:28:11 2019 -0700
+
+    re-added playermanager
+
+[33mcommit 3b2d390eb8ef13e2ce28641da9a2d26131adf741[m
+Author: nlumiere <nicholaslumiere@gmail.com>
+Date:   Thu Mar 21 09:19:33 2019 -0700
+
+    tidied up UI
+
+[33mcommit e709ca092b81d8b362d0795f1b8341e2699bc3f7[m
+Merge: 18a29c5 e16244e
+Author: nlumiere <nicholaslumiere@gmail.com>
+Date:   Thu Mar 21 08:45:54 2019 -0700
+
+    resolved merge conflicts with saving
+
+[33mcommit 18a29c5ef71eb8a306cd58fc05468f39d86e6019[m
+Author: nlumiere <nicholaslumiere@gmail.com>
+Date:   Wed Mar 20 23:55:01 2019 -0700
+
+    saving and resources
+
+[33mcommit e16244e7c652c88a5d3850a946a26f137bf268df[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Wed Mar 20 23:52:44 2019 -0700
+
+    added a bunch of helper methods and stuff
+
+[33mcommit e9c26c9f973f7f37bb95397995dd0b843da6e5cc[m
+Merge: ad93146 d80dc5a
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Wed Mar 20 22:58:00 2019 -0700
+
+    merge conflicts fixed
+
+[33mcommit ad931463a4a27bb99fe3f42133a008f3f99524da[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Wed Mar 20 22:55:39 2019 -0700
+
+    changes to gamemanager
+
+[33mcommit d80dc5a3fda7b2bc7c1604fcebb12c6b7f0687df[m
+Merge: 6561e1f b1af4d5
+Author: Max Schaefer <max@theschaefers.com>
+Date:   Wed Mar 20 22:15:32 2019 -0700
+
+    Interactivity started
+
+[33mcommit 6561e1f6172a451d23be634a8a4341479a63fe94[m
+Author: Max Schaefer <max@theschaefers.com>
+Date:   Tue Mar 19 11:14:46 2019 -0700
+
+    temp commit
+
+[33mcommit b1af4d553ba2ed0425b7aec589d20f076a2a4b16[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Tue Mar 19 11:13:47 2019 -0700
+
+    base code for cities and buildings
+
+[33mcommit a1b588d76a0371a232ceef7220cf2f65f2d9f4d3[m
+Merge: 8b0cf36 29fb41a
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Thu Mar 14 10:48:24 2019 -0700
+
+    cities have names
+
+[33mcommit 8b0cf367baf93e9505b431423662b5bc41d5d2cb[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Thu Mar 14 10:47:05 2019 -0700
+
+    cities have names
+
+[33mcommit 29fb41a8d2bf608c707d08e6300b930f90348714[m
+Merge: b8e051a cf36e28
+Author: Max Schaefer <max@theschaefers.com>
+Date:   Thu Mar 14 10:44:46 2019 -0700
+
+    merge fixed
+
+[33mcommit b8e051a157f3f29136786666b1e640605bd016ac[m
+Author: Max Schaefer <max@theschaefers.com>
+Date:   Thu Mar 14 10:42:30 2019 -0700
+
+    Turn logic
+
+[33mcommit cf36e28cee0c3b4fe07fa51e8c8be44f062cdaa0[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Fri Mar 8 11:02:00 2019 -0800
+
+    building
+
+[33mcommit 87c321578446864048bc5de6db946c1cc10d25f8[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Tue Mar 5 10:37:19 2019 -0800
+
+    prettied up for demo
+
+[33mcommit 9cf199f179aa00843b872e1f629ced4ebff2b36a[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Tue Mar 5 10:23:16 2019 -0800
+
+    camera movement
+
+[33mcommit dad13ecf3b73dea3569483ef61cebb9a0d56ca83[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Mon Mar 4 22:45:30 2019 -0800
+
+    now world wrapping works
+
+[33mcommit a8e0a2fc15191edb185af3e2ff88c4074a4448de[m
+Merge: 297ea84 365bcf6
+Author: Max Schaefer <max@theschaefers.com>
+Date:   Mon Mar 4 22:39:34 2019 -0800
+
+    Merge branch 'master' of https://github.com/maximusdrex/Ideology-Simulator
+
+[33mcommit 297ea842b4cb1ebc94883797678c1a00393316dd[m
+Merge: 2659beb 92c17e2
+Author: Max Schaefer <max@theschaefers.com>
+Date:   Mon Mar 4 22:39:27 2019 -0800
+
+    Cities started
+
+[33mcommit 365bcf6d946b3c8421de0bc22e7bc859fce541aa[m
+Merge: f99face 92c17e2
+Author: BrainyPanda <alex.my.zhang@outlook.com>
+Date:   Mon Mar 4 22:37:57 2019 -0800
+
+    Menu changes, background change
+
+[33mcommit f99facebe99fc21b4b750e65308c9820be8c7f66[m
+Author: BrainyPanda <alex.my.zhang@outlook.com>
+Date:   Mon Mar 4 22:22:11 2019 -0800
+
+    Changed a few more menus
+
+[33mcommit 2659beb563cca039efe62d34abdbe6023cc7fc6a[m
+Author: Max Schaefer <max@theschaefers.com>
+Date:   Mon Mar 4 20:41:39 2019 -0800
+
+    temp commit
+
+[33mcommit 92c17e2a0bd888b18d8a54547708477ec143ab50[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Mon Mar 4 20:28:24 2019 -0800
+
+    fixed version merge issue
+
+[33mcommit aeb81b2d0ddd02aa83fbfada61c91c813b4b9130[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Mon Mar 4 20:25:02 2019 -0800
+
+    fixed a merge conflict
+
+[33mcommit f389c9301f976add703a6c64369ddb8ef72e902f[m
+Merge: add4097 f52dea6
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Mon Mar 4 11:36:04 2019 -0800
+
+    world wrapping
+
+[33mcommit add4097c49b30a986797d3cdab1d08cc1a2b5c0b[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Sun Mar 3 20:48:35 2019 -0800
+
+    map now raps – sorry, wraps
+
+[33mcommit f52dea6b59cb7088adcaecc5d8c98c5ab06b2740[m
+Merge: 195cc2a b163298
+Author: BrainyPanda <alex.my.zhang@outlook.com>
+Date:   Thu Feb 28 22:40:16 2019 -0800
+
+    all menus changed, background for main menu
+
+[33mcommit 195cc2ae1cae54df6913555f786d4f23e684aa62[m
+Author: BrainyPanda <alex.my.zhang@outlook.com>
+Date:   Thu Feb 28 22:19:59 2019 -0800
+
+    Changes all option menus, new background for main menu
+
+[33mcommit b163298ba90835c55099f29c94603009fe1d1eac[m
+Author: nlumiere <nicholaslumiere@gmail.com>
+Date:   Thu Feb 28 10:57:52 2019 -0800
+
+    removed broken scripts
+
+[33mcommit ccb095b000b6077602e953f5849798cad7fa3976[m
+Merge: 0764887 37812a6
+Author: nlumiere <nicholaslumiere@gmail.com>
+Date:   Thu Feb 28 10:52:45 2019 -0800
+
+    Merge branch 'master' of https://github.com/maximusdrex/Ideology-Simulator
+
+[33mcommit 0764887566e1a170eac49ef9382b3ed07e18a8ee[m
+Author: nlumiere <nicholaslumiere@gmail.com>
+Date:   Thu Feb 28 10:51:26 2019 -0800
+
+    unfinished saving scripts
+
+[33mcommit 37812a6e6e2a62b137cd784f724e228624fa1b9c[m
+Merge: a386425 45590d2
+Author: Max Schaefer <max@theschaefers.com>
+Date:   Thu Feb 28 10:49:56 2019 -0800
+
+    merge conflicts fixed
+
+[33mcommit a386425970a6f24fc4935b7dc9a125fd733793d0[m
+Merge: caa411d b326103
+Author: Max Schaefer <max@theschaefers.com>
+Date:   Thu Feb 28 10:41:32 2019 -0800
+
+    Game logic started
+
+[33mcommit 45590d20df8fbc467a9d9a7a60cd8c2c5e7cf19f[m
+Author: nlumiere <nicholaslumiere@gmail.com>
+Date:   Wed Feb 27 17:40:43 2019 -0800
+
+    updated options tabs in menus
+
+[33mcommit d8d78f17275090302aa7752f683d47abccb2f95e[m
+Author: nlumiere <nicholaslumiere@gmail.com>
+Date:   Tue Feb 26 13:14:55 2019 -0800
+
+    'New Game' button generates world
+
+[33mcommit 15b3a24602e98b271226151823ae260976e3ea90[m
+Author: nlumiere <nicholaslumiere@gmail.com>
+Date:   Tue Feb 26 11:20:33 2019 -0800
+
+    adding menu assets
+
+[33mcommit 8414af7eae590c029513350576c118b5f1ad266b[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Tue Feb 26 10:58:24 2019 -0800
+
+    Updated moisture
+
+[33mcommit 18bfcb1d24a344f25a42165a7c8365f8ba21f896[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Sun Feb 17 23:11:05 2019 -0700
+
+    rivers now exist but aren't implemented well
+
+[33mcommit 70a1127c03af4023c35ac6cdda5217c33d28358c[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Sat Feb 16 23:41:35 2019 -0800
+
+    implemented a system to determine moisture by closeness to water tiles. dubious usefullness
+
+[33mcommit 51f7ec681739c12fc656eaec1cda11e73e693f32[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Sat Feb 16 17:54:16 2019 -0800
+
+    added trees and made a change to the way water interacts with moisture
+
+[33mcommit 884119f620f51566565a4624ae405f237f0fedfe[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Fri Feb 15 09:28:14 2019 -0800
+
+    mountains now form 'ranges'
+
+[33mcommit f85332fd09bd8fddff687494fb9dea350c34b35f[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Fri Feb 15 08:58:30 2019 -0800
+
+    Added biomes based on temp/moisture
+
+[33mcommit d4986ad1b011041401c9d8e7e0310f9145e3ff07[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Thu Feb 14 10:51:22 2019 -0800
+
+    Saved scene
+
+[33mcommit 4349fe48ec6ac7a2e1b614c8687c42a29dde277f[m
+Merge: 7ef1949 f930777
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Thu Feb 14 10:47:45 2019 -0800
+
+    Added code to HexMap to replace single tile features
+
+[33mcommit 7ef1949a367dea2abd24fbb56cc3a4e5b77f7d37[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Thu Feb 14 10:45:10 2019 -0800
+
+    Added code to remove single tile features
+
+[33mcommit f9307779d4465563e5af6c0a740d571e5a10c777[m
+Author: nlumiere <nicholaslumiere@gmail.com>
+Date:   Thu Feb 14 10:19:39 2019 -0800
+
+    test
+
+[33mcommit caa411dd9c1ed036b5839007062403a395130cdb[m
+Author: Max Schaefer <max@theschaefers.com>
+Date:   Thu Feb 14 09:45:07 2019 -0800
+
+    fixed git
+
+[33mcommit b326103ca232f61fcb3cb5e760f18a3dc20b242f[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Thu Feb 14 09:44:26 2019 -0800
+
+    removed unnecessary files from repo
+
+[33mcommit 3ed9a3b1764dc34a352d87987ee699022f2c6aee[m
+Author: Max Schaefer <max@theschaefers.com>
+Date:   Thu Feb 14 09:36:49 2019 -0800
+
+    merge conflicts
+
+[33mcommit 95d0596f6cc952b4c461f6976fcc69f1d63292b4[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Wed Feb 13 23:06:03 2019 -0800
+
+    Now map elevation is controlled by Poisson noise with a scaling factor based on distance from center
+
+[33mcommit 42a47d88d12b8cbfa4db2dcd56766ea56492a1ce[m
+Author: Cayden Franklin <caydenf19@lakesideschool.org>
+Date:   Fri Feb 8 11:45:36 2019 -0800
+
+    RNG Hex Map – not wrabbable
+
+[33mcommit 6d299dae8b1c8dbb756881a9bd32527bc71e5c32[m
+Author: Max Schaefer <max@theschaefers.com>
+Date:   Thu Feb 7 10:18:32 2019 -0800
+
+    First Commit

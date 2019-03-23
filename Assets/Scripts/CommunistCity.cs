@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class CommunistCity : City
 {
-    public CommunistCity(Hex hex, float xcoord, float zcoord, bool center, bool capitol, Player owner) :
-    base(hex, xcoord, zcoord, center, capitol, owner)
+    public CommunistCity(Hex[,] hexes, bool center, bool capitol, Player owner) :
+    base(hexes, center, capitol, owner)
+
     {
 
         name = getName(capitol);
+        Debug.Log("City created at: " + x + "," + z + " named:" + name);
     }
+
 
     public string getName(bool capitol)
     {

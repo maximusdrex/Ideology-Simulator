@@ -4,7 +4,8 @@ using System.IO;
 
 using UnityEngine;
 
-public class City {
+public class City
+{
     public Hex baseHex;
     public float x;
     public float z;
@@ -28,19 +29,20 @@ public class City {
     public Player owner;
 
 
-    public City(Hex hex, float xcoord, float zcoord, bool center, bool capitol, Player owner)
+    public City(Hex[,] hexes, bool center, bool capitol, Player owner)
     {
+        baseHex = this.getStartingLocation(hexes);
+
         this.owner = owner;
         ownedHexes = new List<Hex>();
-        baseHex = hex;
         ownedHexes.Add(baseHex);
         possibleHexes = HexMap.hexesInRange(baseHex, maxRange);
 
         buildingChanged = true;
-        x = xcoord;
-        z = zcoord;
+        x = baseHex.x;
+        z = baseHex.z;
         this.center = center;
-        if(center == true)
+        if (center == true)
         {
             maxBuildings++;
         }
@@ -48,11 +50,10 @@ public class City {
         citizens = new List<Citizen>();
         if (center == true)
         {
-            buildings.Add(new CityHall ("City Hall"));
+            buildings.Add(new CityHall("City Hall"));
             Debug.Log("City Hall added");
         }
         initializeResources();
-        Debug.Log("City created at: " + xcoord + "," + zcoord + " named:" + name + " with all resources. ");
     }
 
     private void initializeResources()
@@ -93,7 +94,7 @@ public class City {
 
     public bool addBuilding(Building b)
     {
-        if(buildings.Count == maxBuildings)
+        if (buildings.Count == maxBuildings)
         {
             Debug.Log("Max buildings reached");
             return false;
@@ -119,7 +120,6 @@ public class City {
 
     public void startTurn(City c)
     {
-        //add all resources.
         foreach (var resource in resources)
         {
             resource.setResource(resource.getAmount() + resource.getDamount());
@@ -141,4 +141,22 @@ public class City {
         c.GDP += (c.getResource("transport").getDamount() * 400000);
     }
 
+
+    public Hex getStartingLocation(Hex[,] hexes)
+    {
+        bool goodLocation = false;
+        int cityX = 0;
+        int cityY = 0;
+        while (goodLocation == false)
+        {
+            cityX = Random.Range(0, hexes.GetLength(0) - 1);
+            cityY = Random.Range(0, hexes.GetLength(1) - 1);
+            TerrainEnum.Terrain terrain = hexes[cityX, cityY].terrain;
+            if (terrain != TerrainEnum.Terrain.Ocean && terrain != TerrainEnum.Terrain.Mountain)
+            {
+                goodLocation = true;
+            }
+        }
+        return hexes[cityX, cityY];
+    }
 }
