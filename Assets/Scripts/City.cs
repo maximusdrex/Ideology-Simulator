@@ -59,7 +59,7 @@ public class City {
     public Player owner;
 
 
-    public City(Hex hex, float xcoord, float zcoord, bool center, bool capitol, bool capitalist, Player owner)
+    public City(Hex hex, float xcoord, float zcoord, bool center, bool capitol, Player owner)
     {
         this.owner = owner;
         ownedHexes = new List<Hex>();
@@ -70,7 +70,6 @@ public class City {
         buildingChanged = true;
         x = xcoord;
         z = zcoord;
-        name = getName(capitalist, capitol);
         this.center = center;
         if(center == true)
         {
@@ -86,47 +85,7 @@ public class City {
         Debug.Log("City created at: " + xcoord + "," + zcoord + " named:" + name);
     }
 
-    public string getName(bool capitalist, bool capitol)
-    {
-        try
-        {
-            //Pass the file path and file name to the StreamReader constructorbase
-            if(capitalist == false)
-            {
-                int rand = 0;
-                string[] lines = System.IO.File.ReadAllLines(@"Assets/TextResources/communistCityNames.txt");
-                if(capitol == true)
-                {   
-                    rand = Random.Range(1, 5);
-                }
-                else
-                {   
-                    rand = Random.Range(6, lines.Length - 1);
-                }
-                return lines[rand];
-            }
-            else
-            {
-                int rand = 0;
-                string[] lines = System.IO.File.ReadAllLines(@"Assets/TextResource/capitalistCityNames.txt");
-                if (capitol == true)
-                {
-                    rand = Random.Range(1, 9);
-                }
-                else
-                {
-                    rand = Random.Range(10, lines.Length - 1);
-                }
-                return lines[rand];
-            }
-        }
-        catch(IOException e)
-        {
-            Debug.Log("Naming encountered an error");
-            Debug.Log(e.Message);
-            return "Sandersgrad";
-        }
-    }
+
 
     public bool addBuilding(Building b)
     {
