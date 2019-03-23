@@ -12,6 +12,9 @@ public class Player
     public double money;
     public bool communist;
 
+    public double exportTax;
+    public double importTax;
+
     public Player(int pid, GameObject canvas, bool communist)
     {
         id = pid;

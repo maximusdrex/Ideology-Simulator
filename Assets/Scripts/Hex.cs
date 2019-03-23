@@ -28,6 +28,9 @@ public class Hex
     public float moisture;
     public TerrainEnum.Terrain terrain;
     public Player owner;
+    public PlayerResource resourceType;
+    private City city;
+
     public Hex (int c, int r)
     {
         this.C = c;
@@ -205,14 +208,10 @@ public class Hex
         return new Hex(coordArray[0],coordArray[1]);
     }
 
-    public bool addOwner(Player p)
+    public void setCity(City c)
     {
-        if(owner == null)
-        {
-            owner = p;
-            return true;
-        }
-        return false;
+        city = c;
+        owner = c.owner;
     }
 
 }

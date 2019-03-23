@@ -20,6 +20,7 @@ public class City
 
     public float populationModifier;
     public List<Citizen> citizens;
+    public List<Citizen> unemployedCitizens;
     public List<Building> buildings;
     public List<Hex> ownedHexes;
     public static int maxRange = 2;
@@ -48,18 +49,20 @@ public class City
         }
         buildings = new List<Building>();
         citizens = new List<Citizen>();
+        unemployedCitizens = new List<Citizen>();
+
         if (center == true)
         {
             buildings.Add(new CityHall("City Hall"));
             Debug.Log("City Hall added");
         }
-        initializeResources();
+        this.resources = initializeResources();
     }
 
-    private void initializeResources()
+    public static List<PlayerResource> initializeResources()
     {
         //resources
-        resources = new List<PlayerResource>();
+        List<PlayerResource> resources =  new List<PlayerResource>();
         resources.Add(new PlayerResource("money"));
         resources.Add(new PlayerResource("food")); //1 million meals = 1
         resources.Add(new PlayerResource("lumber")); //1000 cubic meters = 1
@@ -75,6 +78,7 @@ public class City
         resources.Add(new PlayerResource("electronics")); //1:1 electronics required per transport, somewhat arbitrary 
         resources.Add(new PlayerResource("fuel")); //1000 barrels = 1
         resources.Add(new PlayerResource("plastic")); //1000 tons = 1
+        return resources;
     }
 
     public PlayerResource getResource(string name)
@@ -111,7 +115,7 @@ public class City
     {
         if (possibleHexes.Contains(h) && HexMap.hexes[h.C, h.R].owner == null)
         {
-            HexMap.hexes[h.C, h.R].addOwner(owner);
+            HexMap.hexes[h.C, h.R].setCity(this);
             ownedHexes.Add(h);
             return true;
         }
@@ -159,4 +163,18 @@ public class City
         }
         return hexes[cityX, cityY];
     }
+
+    public Citizen hireCitizen(int edNeeded)
+    {
+        unemployedCitizens.Sort(Citizen.educationComparison);
+        foreach(Citizen u in unemployedCitizens)
+        {
+            if(u.getEducation() >= edNeeded)
+            {
+                return u;
+            }
+        }
+        return null;
+    }
+
 }
