@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
         players.Add(new Player(0, canvas, Random.Range(0,1) > .5f));
         for (int i = 1; i < numPlayers; i++)
         {
-            players.Add(new AIPlayer(i, canvas));
+            players.Add(new AIPlayer(i, canvas, Random.Range(0, 1) > .5f));
 
         }
     }
@@ -31,17 +31,15 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Manager started");
         foreach (Player p in players)
         {
-            int cityX = Random.Range(0, 40);
-            int cityY = Random.Range(0, 40);
-            Hex h = HexMap.hexes[cityX, cityY];
-            City c = new City(h, cityX, cityY, true, true, p);
+            Hex[,] hexes = HexMap.hexes;
+            City c = new City(hexes, true, true, p);
             if (p.communist)
             {
-                c = new CommunistCity(h, cityX, cityY, true, true, p);
+                c = new CommunistCity(hexes, true, true, p);
             }
             else if (!p.communist)
             {
-                c = new CapitalistCity(h, cityX, cityY, true, true, p);
+                c = new CommunistCity(hexes, true, true, p);
             }
             p.cities.Add(c);
         }

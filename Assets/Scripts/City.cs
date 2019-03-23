@@ -59,17 +59,18 @@ public class City {
     public Player owner;
 
 
-    public City(Hex hex, float xcoord, float zcoord, bool center, bool capitol, Player owner)
+    public City(Hex[,] hexes, bool center, bool capitol, Player owner)
     {
+        baseHex = this.getStartingLocation(hexes);
+
         this.owner = owner;
         ownedHexes = new List<Hex>();
-        baseHex = hex;
         ownedHexes.Add(baseHex);
         possibleHexes = HexMap.hexesInRange(baseHex, maxRange);
 
         buildingChanged = true;
-        x = xcoord;
-        z = zcoord;
+        x = baseHex.x;
+        z = baseHex.z;
         this.center = center;
         if(center == true)
         {
@@ -82,7 +83,6 @@ public class City {
             buildings.Add(new CityHall ("City Hall"));
             Debug.Log("City Hall added");
         }
-        Debug.Log("City created at: " + xcoord + "," + zcoord + " named:" + name);
     }
 
 
@@ -133,7 +133,25 @@ public class City {
         c.GDP = (c.getDfood() * 2000000 + c.getDlumber() * 500000 + c.getDiron() * 1200000 + c.getDsteel() * 150000 + c.getDcoal() * 37000 + c.getDoil() * 60000 + c.getDstone() * 27500 + c.getDfuel() * 160000 + c.getDluxury() * 200000 + c.getDplastics() * 330000 + c.getAluminum() * 2100000 + c.getDelectronics()*200000 + c.getDuranium() * 200000 + c.getDtransport()*400000);
     }
 
-    //getters and setters for resources
+
+    public Hex getStartingLocation (Hex [,] hexes)
+    {
+        bool goodLocation = false;
+        int cityX = 0;
+        int cityY = 0;
+        while (goodLocation == false)
+        {
+            cityX = Random.Range(0, hexes.GetLength(0) - 1);
+            cityY = Random.Range(0, hexes.GetLength(1) - 1);
+            TerrainEnum.Terrain terrain = hexes[cityX, cityY].terrain;
+            if (terrain != TerrainEnum.Terrain.Ocean && terrain != TerrainEnum.Terrain.Mountain)
+            {
+                goodLocation = true;
+            }
+        }
+        return hexes[cityX, cityY];
+    }
+
     public double getMoney()
     {
         return money;
