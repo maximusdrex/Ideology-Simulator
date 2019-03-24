@@ -11,5 +11,79 @@ public class GlobalMarket {
         corporations = new List<Corporation>();
     }
 
-    
+
+    public static Improvement searchImprovementsForUnsold(List <Improvement> improvements, PlayerResource resourceType)
+    {
+        improvements.Sort(Improvement.amountComparison);
+        foreach (Improvement I in improvements)
+        {
+            if (I.resource.Equals(resourceType))
+            {
+                if (I.resource.getAmount() > 0)
+                {
+                    return I;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static Producer searchProducersForUnsold(List<Producer> producers, PlayerResource resourceType)
+    {
+        producers.Sort(Producer.amountComparison);
+        foreach (Producer p in producers)
+        {
+            if (p.producedResource.Equals(resourceType))
+            {
+                if (p.producedResource.getAmount() > 0)
+                {
+                    return p;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void startTurn(List<City> cities)
+    {
+        List<Producer> producers = new List<Producer>();
+        List<Improvement> improvements = new List<Improvement>();
+        List<Store> stores = new List<Store>();
+        foreach (Corporation c in corporations)
+        {
+            c.startTurn();
+            producers.AddRange(c.producersWithNeed);
+            improvements.AddRange(c.improvements);
+            stores.AddRange(c.stores);
+        }
+        foreach(Producer p in producers)
+        {
+            Improvement.P = p;
+            improvements.Sort(Improvement.priceCompare);
+            while (p.qouta > 0)
+            {
+                Improvement I = searchImprovementsForUnsold(improvements, p.neededResource);
+                double amountSold = I.resource.spendResource(p.qouta);
+                double cost = I.getHarvestCost(amountSold);
+                I.recieveMoney(cost);
+                p.qouta -= amountSold;
+                p.recieveResources(amountSold);
+            }
+        }
+
+        foreach (Store s in stores)
+        {
+            Producer.S = s;
+            improvements.Sort(Improvement.priceCompare);
+            while (s.qouta > 0)
+            {
+                Producer P = searchProducersForUnsold(producers, s.neededResource);
+                double amountSold = P.producedResource.spendResource(s.qouta);
+                double cost = P.getHarvestCost(amountSold);
+                P.recieveMoney(cost);
+                s.qouta -= amountSold;
+                s.recieveResources(amountSold);
+            }
+        }
+    }
 }

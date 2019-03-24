@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Improvement
@@ -23,6 +24,10 @@ public class Improvement
     private double performanceHitLE = .05;
     private double performanceHitHE = .02;
 
+    private double money;
+    public PlayerResource resource;
+    static public Producer P;
+
 
 
     public Improvement(City location, Corporation corp) {
@@ -30,6 +35,7 @@ public class Improvement
         corporation = corp;
         employees = new List<Citizen>();
         harvestCost = baseHex.resourceType.harvestCost;
+        resource = baseHex.resourceType;
 
     }
 
@@ -107,13 +113,45 @@ public class Improvement
         return 1f - performanceHitUE * Mathf.Abs(idealUE - numUE) - performanceHitLE * Mathf.Abs(idealLE - numLE) - performanceHitHE * Mathf.Abs(idealHE - numHE);
     }
 
-    public double harvestResource()
+    public void harvestResource()
     {
-        return getPerformance() * baseHex.resourceType.amount;
+
+        resource.setResource(getPerformance() * baseHex.resourceType.getAmount());
     }
 
-    public double getHarvestCost()
+    public double getHarvestCost(double amount)
     {
-        return harvestResource() * harvestCost;
+        return amount * harvestCost;
     }
+
+    public void recieveMoney(double amount)
+    {
+
+    }
+
+    public double getSalePrice(Producer P, double amount)
+    {
+        double harvestedCost = getHarvestCost(amount);
+        harvestedCost *= 1 + baseHex.owner.exportTax;
+        harvestedCost *= 1 + P.baseHex.owner.importTax;
+        return harvestedCost;
+    }
+
+    public double getSalePrice(City C, double amount)
+    {
+        double harvestedCost = getHarvestCost(amount);
+        harvestedCost *= 1 + baseHex.owner.exportTax;
+        return harvestedCost;
+    }
+
+    public static Comparison<Improvement> amountComparison = delegate (Improvement object1, Improvement object2)
+    {
+        return object1.resource.getAmount().CompareTo(object2.resource.getAmount());
+    };
+
+
+    public static Comparison<Improvement> priceCompare  = delegate (Improvement object1, Improvement object2)
+    {
+        return object1.getSalePrice(P, 1).CompareTo(object2.getSalePrice(P, 1));
+    };
 }

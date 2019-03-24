@@ -14,6 +14,7 @@ public class City
     public bool capitol;
     public bool capitalist;
     public string name;
+    public double money;
     public double GDP;
     public double tax;
     public List<PlayerResource> resources;
@@ -53,7 +54,7 @@ public class City
 
         if (center == true)
         {
-            buildings.Add(new CityHall("City Hall"));
+            buildings.Add(new CityHall("City Hall", this));
             Debug.Log("City Hall added");
         }
         this.resources = initializeResources();
@@ -63,7 +64,6 @@ public class City
     {
         //resources
         List<PlayerResource> resources =  new List<PlayerResource>();
-        resources.Add(new PlayerResource("money"));
         resources.Add(new PlayerResource("food")); //1 million meals = 1
         resources.Add(new PlayerResource("lumber")); //1000 cubic meters = 1
         resources.Add(new PlayerResource("iron")); //1000 tons = 1
@@ -177,4 +177,8 @@ public class City
         return null;
     }
 
+    public bool isConnected(City c)
+    {
+        return true;
+    }
 }

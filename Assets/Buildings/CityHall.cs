@@ -6,7 +6,7 @@ public class CityHall : Building
 
 {
 
-    public CityHall(string name) : base(name)
+    public CityHall(string name, City owner) : base(name, owner)
     {
         model = getModel();
         span = .2f;

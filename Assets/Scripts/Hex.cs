@@ -214,5 +214,10 @@ public class Hex
         owner = c.owner;
     }
 
+    public City getCity()
+    {
+        return city;
+    }
+
 }
 

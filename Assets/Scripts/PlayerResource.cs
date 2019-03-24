@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerResource 
 {
     public string resourceName;
-    public double amount;
+    private double amount;
     public double damount;
     public double harvestCost;
 
@@ -43,9 +43,16 @@ public class PlayerResource
         amount += toAdd;
     }
 
-    public void spendResource(double toSubtract)
+    public double spendResource(double toSubtract)
     {
+        if(toSubtract > amount)
+        {
+            double returnAmount = amount;
+            amount = 0;
+            return returnAmount;
+        }
         amount -= toSubtract;
+        return toSubtract;
     }
 
     public void changeDamount(double toAdd)
@@ -58,4 +65,8 @@ public class PlayerResource
         damount = toSet;
     }
 
+    public bool Equals(PlayerResource other)
+    {
+        return resourceName == other.resourceName;
+    }
 }

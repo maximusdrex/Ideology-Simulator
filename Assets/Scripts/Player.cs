@@ -35,7 +35,7 @@ public class Player
         {
             c.startTurn(c);
             GDP += c.GDP;
-            money += c.getResource("money").getDamount();
+            money += c.money;
         }
     }
 

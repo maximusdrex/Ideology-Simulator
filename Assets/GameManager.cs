@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private List<Player> players;
     public Player playing;
     public GameObject canvas;
+    public GlobalMarket g;
 
     //Called before other Starts()
     void Awake()
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
             }
             p.cities.Add(c);
         }
+        g = new GlobalMarket();
         playing = players[0];
         playing.StartTurn();
 
