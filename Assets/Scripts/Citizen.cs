@@ -14,9 +14,10 @@ public class Citizen
     public int age;
     public int timeAtCurrentJob;
     public Improvement currentJob;
+    public Building current
     //-1 female, 1 male, 0 nonbinary
     public int gender;
-    private float wealth;
+    private double wealth;
     static string[] firstlines = System.IO.File.ReadAllLines(@"Assets/TextResource/firstNames.txt");
     static string[] lastlines = System.IO.File.ReadAllLines(@"Assets/TextResource/lastNames.txt");
 
@@ -118,10 +119,10 @@ public class Citizen
         }
     }
 
-    public float recievePay(float pay, float tax)
+    public void recievePay(double pay, double tax)
     {
         wealth += pay * 1-tax;
-        return pay * tax;
+        livingIn.money += tax * pay;
     }
 
     public void takeMedicine (float healthToAdd)

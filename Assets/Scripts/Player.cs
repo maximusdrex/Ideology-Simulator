@@ -14,6 +14,8 @@ public class Player
 
     public double exportTax;
     public double importTax;
+    public double minimumWage;
+    public double wageTax;
 
     public Player(int pid, GameObject canvas, bool communist)
     {

@@ -27,6 +27,10 @@ public class City
     public static int maxRange = 2;
     public List<Hex> possibleHexes;
     public bool buildingChanged;
+    private double minimumWage = -1;
+    private double importTax = -1;
+    private double exportTax = -1;
+    private double wageTax = -1;
 
     public Player owner;
 
@@ -180,5 +184,42 @@ public class City
     public bool isConnected(City c)
     {
         return true;
+    }
+
+    //Checks if the city has set it's own minimum wage or i/e taxes
+    //otherwise defaults to the players
+    public double getMinimumWage()
+    {
+        if(minimumWage < 0)
+        {
+            return owner.minimumWage;
+        }
+        return minimumWage;
+
+    }
+
+    public double getImportTax()
+    {
+        if (importTax < 0)
+        {
+            return owner.importTax;
+        }
+        return importTax;
+    }
+    public double getExportTax()
+    {
+        if (exportTax < 0)
+        {
+            return owner.exportTax;
+        }
+        return exportTax;
+    }
+    public double getWageTax()
+    {
+        if (wageTax < 0)
+        {
+            return owner.wageTax;
+        }
+        return wageTax;
     }
 }

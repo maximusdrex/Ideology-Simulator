@@ -93,6 +93,11 @@ public class Corporation
                 storesWithNeed.Add(s);
             }
         }
+        foreach(Improvement I in improvements) {
+            money += I.cleanUp();
+        }
+
+
     }
 
 

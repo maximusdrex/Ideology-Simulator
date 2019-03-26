@@ -9,7 +9,11 @@ public class Store : Building
     public PlayerResource neededResource;
     public List<double> sales;
     public double qouta;
-    public double cost; 
+    public double cost;
+    public List<Citizen> employees;
+    private int numUE;
+    private int numLE;
+    private int numHE;
 
     public Store(string name, City owner) : base(name, owner)
     {
@@ -24,7 +28,7 @@ public class Store : Building
     }
     public void recieveResources(double amount)
     {
-        //write a sell function
+        neededResource.gainResource(amount);
     }
 
     public double generateQouta()
@@ -43,5 +47,34 @@ public class Store : Building
         {
             return sales[sales.Count - 1] * .9;
         }
+    }
+
+    public void levelEmployees()
+    {
+        foreach (Citizen e in employees)
+        {
+            e.timeAtCurrentJob++;
+        }
+    }
+
+    public void hireEmployee(Citizen c)
+    {
+        int ed = c.getEducation();
+        if (ed == 0)
+        {
+            numUE++;
+        }
+        else if (ed == 0)
+        {
+            numLE++;
+        }
+        else
+        {
+            numHE++;
+        }
+
+        c.currentJob = this;
+        c.timeAtCurrentJob = 0;
+        employees.Add(c);
     }
 }

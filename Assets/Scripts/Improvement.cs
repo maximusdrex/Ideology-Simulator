@@ -24,6 +24,7 @@ public class Improvement
     private double performanceHitLE = .05;
     private double performanceHitHE = .02;
 
+
     private double money;
     public PlayerResource resource;
     static public Producer P;
@@ -154,4 +155,47 @@ public class Improvement
     {
         return object1.getSalePrice(P, 1).CompareTo(object2.getSalePrice(P, 1));
     };
+
+
+    public bool payEmployees()
+    {
+        employees.Sort(Citizen.jobTimeComparison);
+        foreach(Citizen e in employees)
+        {
+            double wage = 0;
+            if (e.getEducation() == 0)
+            {
+                wage = location.getMinimumWage();
+            }
+            if (e.getEducation() == 1)
+            {
+                wage = location.getMinimumWage() * 1.5;
+            }
+            if (e.getEducation() == 2)
+            {
+                wage = location.getMinimumWage() * 2;
+            }
+            e.recievePay(wage, location.getWageTax());
+            money -= wage;
+            if(money <= 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public double cleanUp()
+    {
+       bool solvent = payEmployees();
+       if (solvent)
+        {
+            return money;
+        }
+        else
+        {
+            fireEmployee();
+        }
+    }
 }
