@@ -37,4 +37,25 @@ public class CapitalistCity : City
             return "Smithville";
         }
     }
+
+    //Checks if the city has set it's own minimum wage or i/e taxes
+    //otherwise defaults to the players
+    public double getMinimumWage()
+    {
+        if (minimumWage < 0)
+        {
+            return owner.minimumWage;
+        }
+        return minimumWage;
+
+    }
+
+    public double getWageTax()
+    {
+        if (wageTax < 0)
+        {
+            return owner.wageTax;
+        }
+        return wageTax;
+    }
 }
