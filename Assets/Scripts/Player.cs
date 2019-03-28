@@ -12,6 +12,10 @@ public class Player
     public double money;
     public bool communist;
     private List<Tech> playerTechTree;
+    public double exportTax;
+    public double importTax;
+    public double minimumWage;
+    public double wageTax;
 
     public Player(int pid, bool communist)
     {
@@ -34,9 +38,9 @@ public class Player
         //indicator.GetComponent<UnityEngine.UI.Toggle>().isOn = true;
         foreach(City c in cities)
         {
-            c.startTurn(c);
+            c.startTurn();
             GDP += c.GDP;
-            money += c.getResource("money").getDamount();
+            money += c.money;
         }
     }
 

@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private List<Player> players;
     public Player playing;
     public GameObject canvas;
+    public GlobalMarket g;
 
     //Called before other Starts()
     void Awake()
@@ -39,10 +40,11 @@ public class GameManager : MonoBehaviour
             }
             else if (!p.communist)
             {
-                c = new CommunistCity(hexes, true, true, p);
+                c = new CapitalistCity(hexes, true, true, p);
             }
             p.cities.Add(c);
         }
+        g = new GlobalMarket();
         playing = players[0];
         playing.StartTurn();
 
@@ -99,6 +101,7 @@ public class GameManager : MonoBehaviour
         if (playing.id == 0)
         {
             turn++;
+            g.startTurn();
         }
         playing.StartTurn();
     }

@@ -14,17 +14,23 @@ public class City : IInteractableObj
     public bool capitol;
     public bool capitalist;
     public string name;
+    public double money;
     public double GDP;
     public double tax;
     public List<PlayerResource> resources;
 
     public float populationModifier;
     public List<Citizen> citizens;
+    public List<Citizen> unemployedCitizens;
     public List<Building> buildings;
     public List<Hex> ownedHexes;
     public static int maxRange = 2;
     public List<Hex> possibleHexes;
     public bool buildingChanged;
+    private double minimumWage = -1;
+    private double importTax = -1;
+    private double exportTax = -1;
+    private double wageTax = -1;
 
     public Player owner;
 
@@ -48,21 +54,22 @@ public class City : IInteractableObj
         }
         buildings = new List<Building>();
         citizens = new List<Citizen>();
+        unemployedCitizens = new List<Citizen>();
+
         if (center == true)
         {
-            buildings.Add(new CityHall("City Hall"));
+            buildings.Add(new CityHall("City Hall", this));
             Debug.Log("City Hall added");
         }
-        initializeResources();
+        this.resources = initializeResources();
 
         baseHex.tileObjs.Add(this);
     }
 
-    private void initializeResources()
+    public static List<PlayerResource> initializeResources()
     {
         //resources
-        resources = new List<PlayerResource>();
-        resources.Add(new PlayerResource("money"));
+        List<PlayerResource> resources =  new List<PlayerResource>();
         resources.Add(new PlayerResource("food")); //1 million meals = 1
         resources.Add(new PlayerResource("lumber")); //1000 cubic meters = 1
         resources.Add(new PlayerResource("iron")); //1000 tons = 1
@@ -77,6 +84,7 @@ public class City : IInteractableObj
         resources.Add(new PlayerResource("electronics")); //1:1 electronics required per transport, somewhat arbitrary 
         resources.Add(new PlayerResource("fuel")); //1000 barrels = 1
         resources.Add(new PlayerResource("plastic")); //1000 tons = 1
+        return resources;
     }
 
     public PlayerResource getResource(string name)
@@ -118,34 +126,34 @@ public class City : IInteractableObj
     {
         if (possibleHexes.Contains(h) && HexMap.hexes[h.C, h.R].owner == null)
         {
-            HexMap.hexes[h.C, h.R].addOwner(owner);
+            HexMap.hexes[h.C, h.R].setCity(this);
             ownedHexes.Add(h);
             return true;
         }
         return false;
     }
 
-    public void startTurn(City c)
+    public void startTurn()
     {
         foreach (var resource in resources)
         {
             resource.setResource(resource.getAmount() + resource.getDamount());
         }
         //calculate GDP
-        c.GDP = (c.getResource("food").getDamount() * 2000000);
-        c.GDP += (c.getResource("lumber").getDamount() * 500000);
-        c.GDP += (c.getResource("iron").getDamount() * 1200000);
-        c.GDP += (c.getResource("steel").getDamount() * 150000);
-        c.GDP += (c.getResource("coal").getDamount() * 37000);
-        c.GDP += (c.getResource("oil").getDamount() * 60000);
-        c.GDP += (c.getResource("stone").getDamount() * 27500);
-        c.GDP += (c.getResource("fuel").getDamount() * 160000);
-        c.GDP += (c.getResource("luxury_metals").getDamount() * 200000);
-        c.GDP += (c.getResource("plastic").getDamount() * 330000);
-        c.GDP += (c.getResource("aluminum").getDamount() * 2100000);
-        c.GDP += (c.getResource("electronics").getDamount() * 200000);
-        c.GDP += (c.getResource("uranium").getDamount() * 200000);
-        c.GDP += (c.getResource("transport").getDamount() * 400000);
+        GDP = (getResource("food").getDamount() * 2000000);
+        GDP += (getResource("lumber").getDamount() * 500000);
+        GDP += (getResource("iron").getDamount() * 1200000);
+        GDP += (getResource("steel").getDamount() * 150000);
+        GDP += (getResource("oal").getDamount() * 37000);
+        GDP += (getResource("oil").getDamount() * 60000);
+        GDP += (getResource("stone").getDamount() * 27500);
+        GDP += (getResource("fuel").getDamount() * 160000);
+        GDP += (getResource("luxury_metals").getDamount() * 200000);
+        GDP += (getResource("plasti").getDamount() * 330000);
+        GDP += (getResource("aluminum").getDamount() * 2100000);
+        GDP += (getResource("eletronis")..getDamount() * 200000);
+        GDP += (getResource("uranium").getDamount() * 200000);
+        GDP += (getResource("transport").getDamount() * 400000);
     }
 
 
@@ -165,5 +173,65 @@ public class City : IInteractableObj
             }
         }
         return hexes[cityX, cityY];
+    }
+
+    public Citizen hireCitizen(int edNeeded)
+    {
+        unemployedCitizens.Sort(Citizen.educationComparison);
+        foreach(Citizen u in unemployedCitizens)
+        {
+            if(u.getEducation() >= edNeeded)
+            {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public bool isConnected(City c)
+    {
+        return true;
+    }
+
+    //Checks if the city has set it's own minimum wage or i/e taxes
+    //otherwise defaults to the players
+    public double getMinimumWage()
+    {
+        if(minimumWage < 0)
+        {
+            return owner.minimumWage;
+        }
+        return minimumWage;
+
+    }
+
+    public double getImportTax()
+    {
+        if (importTax < 0)
+        {
+            return owner.importTax;
+        }
+        return importTax;
+    }
+    public double getExportTax()
+    {
+        if (exportTax < 0)
+        {
+            return owner.exportTax;
+        }
+        return exportTax;
+    }
+    public double getWageTax()
+    {
+        if (wageTax < 0)
+        {
+            return owner.wageTax;
+        }
+        return wageTax;
+    }
+
+    public List <Building> findBuilding(string type)
+    {
+        return buildings.FindAll(x => x.type == type);
     }
 }
