@@ -18,10 +18,10 @@ public class GameManager : MonoBehaviour
         turn = 1;
         players = new List<Player>();
         int numPlayers = 5;
-        players.Add(new Player(0, canvas, Random.Range(0,1) > .5f));
+        players.Add(new Player(0, Random.Range(0,1) > .5f));
         for (int i = 1; i < numPlayers; i++)
         {
-            players.Add(new AIPlayer(i, canvas, Random.Range(0, 1) > .5f));
+            players.Add(new AIPlayer(i, Random.Range(0, 1) > .5f));
 
         }
     }

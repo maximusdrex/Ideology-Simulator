@@ -4,7 +4,7 @@ using System.IO;
 
 using UnityEngine;
 
-public class City
+public class City : IInteractableObj
 {
     public Hex baseHex;
     public float x;
@@ -54,6 +54,8 @@ public class City
             Debug.Log("City Hall added");
         }
         initializeResources();
+
+        baseHex.tileObjs.Add(this);
     }
 
     private void initializeResources()
@@ -88,6 +90,11 @@ public class City
         }
         //default just in case it failed
         return resources[0];
+    }
+
+    public GameObject GetUI()
+    {
+        return (GameObject) Resources.Load("CityCanvas");
     }
 
 
