@@ -218,6 +218,4 @@ public class Hex
     {
         return city;
     }
-
 }
-

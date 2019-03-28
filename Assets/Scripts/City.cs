@@ -4,7 +4,7 @@ using System.IO;
 
 using UnityEngine;
 
-public class City
+public class City : IInteractableObj
 {
     public Hex baseHex;
     public float x;
@@ -27,10 +27,8 @@ public class City
     public static int maxRange = 2;
     public List<Hex> possibleHexes;
     public bool buildingChanged;
-    private double minimumWage = -1;
     private double importTax = -1;
     private double exportTax = -1;
-    private double wageTax = -1;
 
     public Player owner;
 
@@ -62,6 +60,8 @@ public class City
             Debug.Log("City Hall added");
         }
         this.resources = initializeResources();
+
+        baseHex.tileObjs.Add(this);
     }
 
     public static List<PlayerResource> initializeResources()
@@ -98,6 +98,11 @@ public class City
         return resources[0];
     }
 
+    public GameObject GetUI()
+    {
+        return (GameObject) Resources.Load("CityCanvas");
+    }
+
 
 
     public bool addBuilding(Building b)
@@ -126,7 +131,7 @@ public class City
         return false;
     }
 
-    public void startTurn(City c)
+    public void startTurn()
     {
         GDP = 0;
         foreach (var resource in resources)
@@ -135,8 +140,6 @@ public class City
             //calculate GDP
             GDP += resource.harvestCost*resource.getDamount()*tax;
         }
-
-
     }
 
     public Hex getStartingLocation(Hex[,] hexes)
@@ -190,5 +193,10 @@ public class City
             return owner.exportTax;
         }
         return exportTax;
+    }
+
+    public List <Building> findBuilding(string type)
+    {
+        return buildings.FindAll(x => x.type == type);
     }
 }

@@ -17,9 +17,10 @@ public class Citizen
     public Building currentBuildingJob;
     //-1 female, 1 male, 0 nonbinary
     public int gender;
-    private double wealth;
+    public double wealth;
     static string[] firstlines = System.IO.File.ReadAllLines(@"Assets/TextResource/firstNames.txt");
     static string[] lastlines = System.IO.File.ReadAllLines(@"Assets/TextResource/lastNames.txt");
+    static double foodAmount = 2;
 
     public Citizen(City c) {
         health = 100;
@@ -126,12 +127,26 @@ public class Citizen
         livingIn.money += tax * pay;
     }
 
+    public void recieveFood(double food)
+    {
+        if (food >= (foodAmount)){
+
+        }
+    }
+
+
     public void takeMedicine (float healthToAdd)
     {
         //since health is a percentage, maximum is 100. 
         health = Mathf.Min(healthToAdd + health, 100);
     }
 
+    public double returnAppeal()
+    {
+        double healthFromAppeal = 40 * (health / 100);
+        return 0;
+
+    }
 
     public static Comparison<Citizen> educationComparison = delegate(Citizen object1, Citizen object2)
     {

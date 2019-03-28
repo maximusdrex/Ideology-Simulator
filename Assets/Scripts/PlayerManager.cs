@@ -7,12 +7,17 @@ public class PlayerManager : MonoBehaviour
     private Player player;
     private GameManager gm;
     public int playerId;
+    private Canvas playerGUI;
+
+    public GameObject defaultGUI;
 
     // Start is called before the first frame update
     void Start()
     {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         player = gm.GetPlayer(0);
+
+        setGUI(defaultGUI);
     }
 
     // Update is called once per frame
@@ -29,11 +34,31 @@ public class PlayerManager : MonoBehaviour
                 {
                     Hex hex = gm.gameMap.getHexFromObj(hit.transform.parent.gameObject);
                     Debug.Log(hex.ToString());
+                    List<IInteractableObj> hexList = hex.tileObjs;
+                    if(hexList.Count == 1)
+                    {
+                        setGUI(hexList[0].GetUI());
+                    } else
+                    {
+                        setGUI(defaultGUI);
+                    }
                 } else
                 {
                     Debug.Log("Did not hit");
+                    playerGUI = null;
                 }
             }
         }
+    }
+
+    private void setGUI(GameObject gui)
+    {
+        foreach(GameObject obj in GameObject.FindGameObjectsWithTag("GUI"))
+        {
+            GameObject.Destroy(obj);
+        }
+
+        GameObject newObj = Instantiate(gui);
+        newObj.tag = "GUI";
     }
 }

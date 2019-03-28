@@ -14,6 +14,7 @@ public class Corporation
     public List<PlayerResource> finalProducts;
     public double money;
     int turnsUnsold;
+    public bool nationalized;
 
     public Corporation(Improvement improvement)
     {

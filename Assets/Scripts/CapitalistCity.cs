@@ -3,6 +3,9 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 
+private double wageTax = -1;
+private double minimumWage = -1;
+
 public class CapitalistCity : City
 {
     public CapitalistCity(Hex[,] hexes, bool center, bool capitol, Player owner) :
@@ -57,5 +60,32 @@ public class CapitalistCity : City
             return owner.wageTax;
         }
         return wageTax;
+    }
+
+    public void setMinimumWage(double w)
+    {
+        this.MinimumWage = w;
+    }
+
+    public void setWageTax(double t)
+    {
+        this.wageTax = t;
+    }
+
+    public new void startTurn(){
+        base.startTurn();
+        citizens.Sort(Citizen.wealthComparison);
+        List<Building> stores = this.findBuilding("store");
+        foreach(Citizen c in citizens)
+        {
+            foreach(Building b in stores)
+            {
+                Store s = (Store)b;
+                if(c.wealth >=  s.getPrice())
+                {
+                    s = (Store)b;
+                }
+            }
+        }
     }
 }
