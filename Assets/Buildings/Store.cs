@@ -7,7 +7,7 @@ public class Store : Building
 
 {
     public Corporation corporation;
-    public PlayerResource neededResource;
+    public List<PlayerResource> neededResources;
     public List<double> sales;
     public double qouta;
     public double cost;
@@ -36,9 +36,13 @@ public class Store : Building
     {
         return (GameObject)Resources.Load("cityHall");
     }
-    public void recieveResources(double amount)
+    public void recieveResources(string name, double amount)
     {
-        neededResource.gainResource(amount);
+        neededResources.Find(x => x.resourceName == name).gainResource(amount);
+    }
+
+    public double getResourceCount(string name) {
+        return neededResources.Find(x => x.resourceName == name).getAmount();
     }
 
     public double generateQouta()
@@ -47,7 +51,7 @@ public class Store : Building
         {
             sales = new List<double>();
             sales.Add(0);
-            return owner.citizens.Count;
+            return owner.citizens.Count*neededResources.Count;
         }
         else if (sales[sales.Count - 1] > sales[sales.Count - 2])
         {

@@ -144,7 +144,7 @@ public class City
         GDP += (getResource("luxury_metals").getDamount() * 200000);
         GDP += (getResource("plasti").getDamount() * 330000);
         GDP += (getResource("aluminum").getDamount() * 2100000);
-        GDP += (getResource("eletronis")..getDamount() * 200000);
+        GDP += (getResource("eletronis").getDamount() * 200000);
         GDP += (getResource("uranium").getDamount() * 200000);
         GDP += (getResource("transport").getDamount() * 400000);
     }
@@ -226,5 +226,10 @@ public class City
     public List <Building> findBuilding(string type)
     {
         return buildings.FindAll(x => x.type == type);
+    }
+
+    public double appealHitFromWarWeariness()
+    {
+        return 0;
     }
 }

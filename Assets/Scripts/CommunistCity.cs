@@ -38,4 +38,27 @@ public class CommunistCity : City
             return "Sandersgrad";
         }
     }
+
+    public new void startTurn()
+    {
+        base.startTurn();
+        feedCitizens();
+    }
+
+    public void feedCitizens()
+    {
+        citizens.Sort(Citizen.wealthComparison);
+        List<Building> stores = this.findBuilding("store");
+        PlayerResource food = new PlayerResource("food");
+        double foodSum = 0;
+        foreach (Citizen c in citizens)
+        {
+            foreach (Building b in stores)
+            {
+                Store s = (Store)b;
+                foodSum += s.getResourceCount(food.resourceName);
+            }
+            c.recieveFood(foodSum / citizens.Count);
+        }
+    }
 }

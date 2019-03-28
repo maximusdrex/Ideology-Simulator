@@ -38,17 +38,37 @@ public class CapitalistCity : City
         }
     }
 
-    public new void startTurn(){
+    public new void startTurn()
+    {
         base.startTurn();
+        feedCitizens();
+    }
+
+    public void feedCitizens()
+    {
         citizens.Sort(Citizen.wealthComparison);
         List<Building> stores = this.findBuilding("store");
-        foreach(Citizen c in citizens)
+        PlayerResource food = new PlayerResource("food");
+        foreach (Citizen c in citizens)
         {
-            foreach(Building b in stores)
+            foreach (Building b in stores)
             {
                 Store s = (Store)b;
-                if(c.wealth >=  s.getPrice())
+                if (s.getResourceCount(food.resourceName) < 0)
+                {
+                    break;
+                }
+                if (c.wealth >= s.getPrice())
+                {
+                    c.wealth -= s.getPrice();
+                    c.recieveFood(Citizen.foodAmount);
+                    s.recieveResources(food.resourceName, -1*Citizen.foodAmount);
+                    s.money += s.getPrice();
+                    break;
+                }
+                break;
             }
         }
     }
+
 }
