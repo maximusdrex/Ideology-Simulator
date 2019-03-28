@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
             }
             else if (!p.communist)
             {
-                c = new CommunistCity(hexes, true, true, p);
+                c = new CapitalistCity(hexes, true, true, p);
             }
             p.cities.Add(c);
         }

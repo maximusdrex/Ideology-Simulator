@@ -126,27 +126,27 @@ public class City
         return false;
     }
 
-    public void startTurn(City c)
+    public void startTurn()
     {
         foreach (var resource in resources)
         {
             resource.setResource(resource.getAmount() + resource.getDamount());
         }
         //calculate GDP
-        c.GDP = (c.getResource("food").getDamount() * 2000000);
-        c.GDP += (c.getResource("lumber").getDamount() * 500000);
-        c.GDP += (c.getResource("iron").getDamount() * 1200000);
-        c.GDP += (c.getResource("steel").getDamount() * 150000);
-        c.GDP += (c.getResource("coal").getDamount() * 37000);
-        c.GDP += (c.getResource("oil").getDamount() * 60000);
-        c.GDP += (c.getResource("stone").getDamount() * 27500);
-        c.GDP += (c.getResource("fuel").getDamount() * 160000);
-        c.GDP += (c.getResource("luxury_metals").getDamount() * 200000);
-        c.GDP += (c.getResource("plastic").getDamount() * 330000);
-        c.GDP += (c.getResource("aluminum").getDamount() * 2100000);
-        c.GDP += (c.getResource("electronics").getDamount() * 200000);
-        c.GDP += (c.getResource("uranium").getDamount() * 200000);
-        c.GDP += (c.getResource("transport").getDamount() * 400000);
+        GDP = (getResource("food").getDamount() * 2000000);
+        GDP += (getResource("lumber").getDamount() * 500000);
+        GDP += (getResource("iron").getDamount() * 1200000);
+        GDP += (getResource("steel").getDamount() * 150000);
+        GDP += (getResource("oal").getDamount() * 37000);
+        GDP += (getResource("oil").getDamount() * 60000);
+        GDP += (getResource("stone").getDamount() * 27500);
+        GDP += (getResource("fuel").getDamount() * 160000);
+        GDP += (getResource("luxury_metals").getDamount() * 200000);
+        GDP += (getResource("plasti").getDamount() * 330000);
+        GDP += (getResource("aluminum").getDamount() * 2100000);
+        GDP += (getResource("eletronis")..getDamount() * 200000);
+        GDP += (getResource("uranium").getDamount() * 200000);
+        GDP += (getResource("transport").getDamount() * 400000);
     }
 
 
@@ -221,5 +221,10 @@ public class City
             return owner.wageTax;
         }
         return wageTax;
+    }
+
+    public List <Building> findBuilding(string type)
+    {
+        return buildings.FindAll(x => x.type == type);
     }
 }

@@ -69,6 +69,7 @@ public class GlobalMarket {
                 double cost = I.getHarvestCost(amountSold);
                 I.recieveMoney(cost);
                 p.qouta -= amountSold;
+                p.totalCost += cost;
                 p.recieveResources(amountSold);
             }
         }
@@ -83,6 +84,7 @@ public class GlobalMarket {
                 double amountSold = P.producedResource.spendResource(s.qouta);
                 double cost = P.getHarvestCost(amountSold);
                 P.recieveMoney(cost);
+                s.cost = cost;
                 s.qouta -= amountSold;
                 s.recieveResources(amountSold);
             }

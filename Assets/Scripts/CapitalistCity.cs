@@ -37,4 +37,18 @@ public class CapitalistCity : City
             return "Smithville";
         }
     }
+
+    public new void startTurn(){
+        base.startTurn();
+        citizens.Sort(Citizen.wealthComparison);
+        List<Building> stores = this.findBuilding("store");
+        foreach(Citizen c in citizens)
+        {
+            foreach(Building b in stores)
+            {
+                Store s = (Store)b;
+                if(c.wealth >=  s.getPrice())
+            }
+        }
+    }
 }

@@ -10,6 +10,7 @@ public class CityHall : Building
     {
         model = getModel();
         span = .2f;
+        type = "cityhall";
     }
 
     public GameObject getModel()

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Store : Building
 
@@ -20,11 +21,15 @@ public class Store : Building
     public int idealLE;
     public int idealHE;
 
+    public double priceModifier;
+
     public Store(string name, City owner) : base(name, owner)
     {
         model = getModel();
         span = .2f;
         corporation = new Corporation(this);
+        priceModifier = 1;
+        type = "store";
     }
 
     public GameObject getModel()
@@ -152,12 +157,24 @@ public class Store : Building
         bool solvent = payEmployees();
         if (solvent)
         {
+            priceModifier += .05;
             return money;
         }
         else
         {
             fireEmployee();
+            priceModifier -= .05;
             return 0;
         }
     }
+
+    public double getPrice()
+    {
+        return cost / qouta * priceModifier;
+    }
+
+    public static Comparison<Store> priceCompare = delegate (Store object1, Store object2)
+    {
+        return object1.getPrice().CompareTo(object2.getPrice());
+    };
 }

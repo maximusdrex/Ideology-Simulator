@@ -6,6 +6,7 @@ public class Building
 {
     public float span;
     public string name;
+    public string type;
     public GameObject model;
     public City owner;
 
