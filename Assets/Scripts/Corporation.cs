@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Corporation
 {
@@ -93,12 +94,45 @@ public class Corporation
                 storesWithNeed.Add(s);
             }
         }
-        foreach(Improvement I in improvements) {
-            money += I.cleanUp();
-        }
-
 
     }
 
+    public double totalCosts()
+    {
+        foreach (Improvement I in improvements)
+        {
+            money += I.cleanUp();
+        }
+        foreach (Producer P in producers)
+        {
+            money += P.cleanUp();
+        }
+        foreach (Store S in stores)
+        {
+            money += S.cleanUp();
+        }
+        return money;
+    }
+
+    public void sellTo(Corporation C)
+    {
+        foreach(Improvement I in improvements)
+        {
+            I.corporation = C;
+        }
+        foreach (Producer P in producers)
+        {
+            P.corporation = C;
+        }
+        foreach (Store S in stores)
+        {
+            S.corporation = C;
+        }
+    }
+
+    public static Comparison <Corporation> wealthComparison = delegate (Corporation object1, Corporation object2)
+    {
+        return object1.money.CompareTo(object2.money);
+    };
 
 }

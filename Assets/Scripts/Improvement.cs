@@ -20,9 +20,9 @@ public class Improvement
     private int numUE;
     private int numLE;
     private int numHE;
-    private double performanceHitUE = .1;
-    private double performanceHitLE = .05;
-    private double performanceHitHE = .02;
+    public static double performanceHitUE = .1;
+    public static double performanceHitLE = .05;
+    public static double performanceHitHE = .02;
 
 
     private double money;
@@ -196,6 +196,7 @@ public class Improvement
         else
         {
             fireEmployee();
+            return 0;
         }
     }
 }

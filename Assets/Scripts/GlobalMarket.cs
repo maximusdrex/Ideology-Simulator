@@ -5,6 +5,8 @@ using UnityEngine;
 public class GlobalMarket { 
 
     public List<Corporation> corporations;
+    float wealthShareToBuy = 5;
+
 
     public GlobalMarket()
     {
@@ -44,7 +46,7 @@ public class GlobalMarket {
         return null;
     }
 
-    public void startTurn(List<City> cities)
+    public void startTurn()
     {
         List<Producer> producers = new List<Producer>();
         List<Improvement> improvements = new List<Improvement>();
@@ -84,6 +86,31 @@ public class GlobalMarket {
                 s.qouta -= amountSold;
                 s.recieveResources(amountSold);
             }
+        }
+
+        foreach(Corporation c in corporations)
+        {
+            c.totalCosts();
+        }
+
+        corporations.Sort(Corporation.wealthComparison);
+        foreach (Corporation c in corporations)
+        {
+            for (int i = 0; i < corporations.Count; i++)
+            {
+                if(corporations[i].money < c.money * wealthShareToBuy)
+                {
+                    Corporation sold = corporations[i];
+                    corporations.Remove(sold);
+                    c.improvements.AddRange(sold.improvements);
+                    c.producers.AddRange(sold.producers);
+                    c.stores.AddRange(sold.stores);
+                    sold.sellTo(c);
+                    break;
+                }
+            }
+
+
         }
     }
 }

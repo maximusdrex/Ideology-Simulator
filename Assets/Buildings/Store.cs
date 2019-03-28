@@ -11,9 +11,14 @@ public class Store : Building
     public double qouta;
     public double cost;
     public List<Citizen> employees;
+    public double money;
+
     private int numUE;
     private int numLE;
     private int numHE;
+    public int idealUE;
+    public int idealLE;
+    public int idealHE;
 
     public Store(string name, City owner) : base(name, owner)
     {
@@ -73,8 +78,86 @@ public class Store : Building
             numHE++;
         }
 
-        c.currentJob = this;
+        c.currentBuildingJob = this;
         c.timeAtCurrentJob = 0;
         employees.Add(c);
+    }
+
+    public void fireEmployee()
+    {
+        int edToFire = 0;
+        double UEmissedPerformance = Improvement.performanceHitUE * Mathf.Abs(idealUE - numUE);
+        double LEmissedPerformance = Improvement.performanceHitLE * Mathf.Abs(idealLE - numLE);
+        double HEmissedPerformance = Improvement.performanceHitHE * Mathf.Abs(idealLE - numLE);
+
+        employees.Sort(Citizen.jobTimeComparison);
+        employees.Reverse();
+
+        if (UEmissedPerformance >= LEmissedPerformance && UEmissedPerformance >= HEmissedPerformance)
+        {
+            edToFire = 0;
+        }
+        else if (LEmissedPerformance >= UEmissedPerformance && LEmissedPerformance >= HEmissedPerformance)
+        {
+            edToFire = 1;
+        }
+        else
+        {
+            edToFire = 2;
+        }
+
+        foreach (Citizen e in employees)
+        {
+            if (e.getEducation() == edToFire)
+            {
+                e.getFired();
+                employees.Remove(e);
+                break;
+            }
+            break;
+        }
+    }
+
+    public bool payEmployees()
+    {
+        employees.Sort(Citizen.jobTimeComparison);
+        foreach (Citizen e in employees)
+        {
+            double wage = 0;
+            if (e.getEducation() == 0)
+            {
+                wage = owner.getMinimumWage();
+            }
+            if (e.getEducation() == 1)
+            {
+                wage = owner.getMinimumWage() * 1.5;
+            }
+            if (e.getEducation() == 2)
+            {
+                wage = owner.getMinimumWage() * 2;
+            }
+            e.recievePay(wage, owner.getWageTax());
+            money -= wage;
+            if (money <= 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public double cleanUp()
+    {
+        bool solvent = payEmployees();
+        if (solvent)
+        {
+            return money;
+        }
+        else
+        {
+            fireEmployee();
+            return 0;
+        }
     }
 }

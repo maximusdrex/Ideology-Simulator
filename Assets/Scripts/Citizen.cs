@@ -14,7 +14,7 @@ public class Citizen
     public int age;
     public int timeAtCurrentJob;
     public Improvement currentJob;
-    public Building current
+    public Building currentBuildingJob;
     //-1 female, 1 male, 0 nonbinary
     public int gender;
     private double wealth;
@@ -97,6 +97,7 @@ public class Citizen
         livingIn.unemployedCitizens.Add(this);
         timeAtCurrentJob = 0;
         currentJob = null;
+        currentBuildingJob = null;
     }
 
     public string[] getName()

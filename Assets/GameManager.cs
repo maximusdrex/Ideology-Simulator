@@ -101,6 +101,7 @@ public class GameManager : MonoBehaviour
         if (playing.id == 0)
         {
             turn++;
+            g.startTurn();
         }
         playing.StartTurn();
     }
