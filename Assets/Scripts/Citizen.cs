@@ -143,7 +143,8 @@ public class Citizen
 
     public double returnAppeal()
     {
-        double healthFromAppeal = 40*(health / 100);
+        double healthFromAppeal = 40 * (health / 100);
+        return 0;
 
     }
 

@@ -48,6 +48,9 @@ public class CapitalistCity : City
             {
                 Store s = (Store)b;
                 if(c.wealth >=  s.getPrice())
+                {
+                    s = (Store)b;
+                }
             }
         }
     }
