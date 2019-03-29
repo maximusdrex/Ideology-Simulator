@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 4535791643709471014}
   - component: {fileID: 4535791643709471013}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: GameDefaultUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -539,6 +539,7 @@ GameObject:
   - component: {fileID: 4535791644187592438}
   - component: {fileID: 4535791644187592437}
   - component: {fileID: 4535791644187592436}
+  - component: {fileID: 7124123846848097362}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -613,8 +614,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: nextTurnPressed
+      - m_Target: {fileID: 7124123846848097362}
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -622,7 +623,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -660,3 +661,15 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Next Turn
+--- !u!114 &7124123846848097362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4535791644187592442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4865fb3cf55ab254d8bf13895abda0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

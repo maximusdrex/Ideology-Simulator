@@ -109,6 +109,10 @@ public class CapitalistCity : City
                 break;
             }
         }
+        foreach (var resource in resources)
+        {
+            money += resource.harvestCost * resource.getDamount() * tax;
+        }
     }
 
 }
