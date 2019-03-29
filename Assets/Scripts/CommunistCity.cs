@@ -38,4 +38,9 @@ public class CommunistCity : City
             return "Sandersgrad";
         }
     }
+
+    public new void startTurn()
+    {
+        base.startTurn();
+    }
 }

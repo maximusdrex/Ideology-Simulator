@@ -53,5 +53,9 @@ public class CapitalistCity : City
                 }
             }
         }
+        foreach (var resource in resources)
+        {
+            money += resource.harvestCost * resource.getDamount() * tax;
+        }
     }
 }
