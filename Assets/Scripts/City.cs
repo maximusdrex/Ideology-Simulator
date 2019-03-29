@@ -151,7 +151,7 @@ public class City : IInteractableObj
         GDP += (getResource("luxury_metals").getDamount() * 200000);
         GDP += (getResource("plasti").getDamount() * 330000);
         GDP += (getResource("aluminum").getDamount() * 2100000);
-        GDP += (getResource("eletronics").getDamount() * 200000);
+        GDP += (getResource("electronics").getDamount() * 200000);
         GDP += (getResource("uranium").getDamount() * 200000);
         GDP += (getResource("transport").getDamount() * 400000);
     }

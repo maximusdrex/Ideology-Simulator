@@ -47,7 +47,10 @@ public class CapitalistCity : City
             foreach(Building b in stores)
             {
                 Store s = (Store)b;
-                //if(c.wealth >=  s.getPrice())
+                if(c.wealth >=  s.getPrice())
+                {
+                    s = (Store)b;
+                }
             }
         }
     }
