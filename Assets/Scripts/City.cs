@@ -56,6 +56,11 @@ public class City : IInteractableObj
         citizens = new List<Citizen>();
         unemployedCitizens = new List<Citizen>();
 
+        for(int i = 0; i < 10; i++)
+        {
+            citizens.Add(new Citizen(this));
+        }
+
         if (center == true)
         {
             buildings.Add(new CityHall("City Hall", this));

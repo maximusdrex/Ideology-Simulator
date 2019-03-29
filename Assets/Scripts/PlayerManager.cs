@@ -53,15 +53,23 @@ public class PlayerManager : MonoBehaviour
 
     private void setGUI(GameObject gui)
     {
+        bool exists = false;
         foreach(GameObject obj in GameObject.FindGameObjectsWithTag("GUI"))
         {
-            GameObject.Destroy(obj);
+            if(gui.name != obj.name)
+            {
+                GameObject.Destroy(obj);
+            } else
+            {
+                exists = true;
+            }
         }
 
-        if(gui != null)
+        if(gui != null && !exists)
         {
             GameObject newObj = Instantiate(gui);
             newObj.tag = "GUI";
+            newObj.name = gui.name;
         }
 
     }
