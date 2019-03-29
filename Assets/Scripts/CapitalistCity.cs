@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class CapitalistCity : City
 {
+
+    private double wageTax = -1;
+    private double minimumWage = -1;
+
+
     public CapitalistCity(Hex[,] hexes, bool center, bool capitol, Player owner) :
     base(hexes, center, capitol,  owner)
 
@@ -38,20 +43,72 @@ public class CapitalistCity : City
         }
     }
 
-    public new void startTurn(){
+    public new void startTurn()
+    {
         base.startTurn();
+        feedCitizens();
+    }
+
+    //Checks if the city has set it's own minimum wage or i/e taxes
+    //otherwise defaults to the players
+    public new double getMinimumWage()
+    {
+        if (minimumWage < 0)
+        {
+            return owner.minimumWage;
+        }
+        return minimumWage;
+
+    }
+
+    public new double getWageTax()
+    {
+        if (wageTax < 0)
+        {
+            return owner.wageTax;
+        }
+        return wageTax;
+    }
+
+    public new void setMinimumWage(double w)
+    {
+        this.minimumWage = w;
+    }
+
+    public new void setWageTax(double t)
+    {
+        this.wageTax = t;
+    }
+
+
+    public void feedCitizens(){
         citizens.Sort(Citizen.wealthComparison);
         List<Building> stores = this.findBuilding("store");
-        foreach(Citizen c in citizens)
+        PlayerResource food = new PlayerResource("food");
+        foreach (Citizen c in citizens)
         {
-            foreach(Building b in stores)
+            foreach (Building b in stores)
             {
                 Store s = (Store)b;
-                if(c.wealth >=  s.getPrice())
+                if (s.getResourceCount(food.resourceName) < 0)
                 {
-                    s = (Store)b;
+                    break;
                 }
+                if (c.wealth >= s.getPrice())
+                {
+                    c.wealth -= s.getPrice();
+                    c.recieveFood(Citizen.foodAmount);
+                    s.recieveResources(food.resourceName, -1*Citizen.foodAmount);
+                    s.money += s.getPrice();
+                    break;
+                }
+                break;
             }
         }
+        foreach (var resource in resources)
+        {
+            money += resource.harvestCost * resource.getDamount() * tax;
+        }
     }
+
 }

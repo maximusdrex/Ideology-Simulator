@@ -80,13 +80,16 @@ public class GlobalMarket {
             improvements.Sort(Improvement.priceCompare);
             while (s.qouta > 0)
             {
-                Producer P = searchProducersForUnsold(producers, s.neededResource);
-                double amountSold = P.producedResource.spendResource(s.qouta);
-                double cost = P.getHarvestCost(amountSold);
-                P.recieveMoney(cost);
-                s.cost = cost;
-                s.qouta -= amountSold;
-                s.recieveResources(amountSold);
+                foreach(PlayerResource p in s.neededResources)
+                {
+                    Producer P = searchProducersForUnsold(producers, p);
+                    double amountSold = P.producedResource.spendResource(s.qouta);
+                    double cost = P.getHarvestCost(amountSold);
+                    P.recieveMoney(cost);
+                    s.cost = cost;
+                    s.qouta -= amountSold;
+                    s.recieveResources(p.resourceName, amountSold);
+                }
             }
         }
 

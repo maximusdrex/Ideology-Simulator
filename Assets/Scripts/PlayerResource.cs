@@ -20,7 +20,34 @@ public class PlayerResource
     {
         resourceName = name;
         amount = 0;
-        harvestCost = 10;
+        if (name.Equals("food"))
+            this.harvestCost = 2000000;
+        else if (name.Equals("lumber"))
+            this.harvestCost = 500000;
+        else if (name.Equals("iron"))
+            this.harvestCost = 1200000;
+        else if (name.Equals("steel"))
+            this.harvestCost = 1500000;
+        else if (name.Equals("coal"))
+            this.harvestCost = 37000;
+        else if (name.Equals("oil"))
+            this.harvestCost = 60000;
+        else if (name.Equals("stone"))
+            this.harvestCost = 27500;
+        else if (name.Equals("fuel"))
+            this.harvestCost = 160000;
+        else if (name.Equals("luxury_metals"))
+            this.harvestCost = 200000;
+        else if (name.Equals("plastic"))
+            this.harvestCost = 330000;
+        else if (name.Equals("aluminum"))
+            this.harvestCost = 210000;
+        else if (name.Equals("electronics"))
+            this.harvestCost = 200000;
+        else if (name.Equals("uranium"))
+            this.harvestCost = 200000;
+        else if (name.Equals("transport"))
+            this.harvestCost = 400000;
     }
 
     public double getAmount()

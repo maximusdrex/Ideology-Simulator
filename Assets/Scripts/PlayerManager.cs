@@ -45,7 +45,7 @@ public class PlayerManager : MonoBehaviour
                 } else
                 {
                     Debug.Log("Did not hit");
-                    playerGUI = null;
+                    setGUI(defaultGUI);
                 }
             }
         }
@@ -53,12 +53,24 @@ public class PlayerManager : MonoBehaviour
 
     private void setGUI(GameObject gui)
     {
+        bool exists = false;
         foreach(GameObject obj in GameObject.FindGameObjectsWithTag("GUI"))
         {
-            GameObject.Destroy(obj);
+            if(gui.name != obj.name)
+            {
+                GameObject.Destroy(obj);
+            } else
+            {
+                exists = true;
+            }
         }
 
-        GameObject newObj = Instantiate(gui);
-        newObj.tag = "GUI";
+        if(gui != null && !exists)
+        {
+            GameObject newObj = Instantiate(gui);
+            newObj.tag = "GUI";
+            newObj.name = gui.name;
+        }
+
     }
 }

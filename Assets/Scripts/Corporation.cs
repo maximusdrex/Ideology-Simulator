@@ -14,7 +14,6 @@ public class Corporation
     public List<PlayerResource> finalProducts;
     public double money;
     int turnsUnsold;
-    public bool nationalized;
 
     public Corporation(Improvement improvement)
     {
@@ -55,6 +54,7 @@ public class Corporation
         {
             I.harvestResource();
         }
+
     }
 
 
@@ -82,17 +82,20 @@ public class Corporation
         }
         foreach(Store s in stores)
         {
-            Producer p = GlobalMarket.searchProducersForUnsold(producers, s.neededResource);
-            s.generateQouta();
-            double amountSold = p.resource.spendResource(s.qouta);
-            double cost = p.setSalePrice(s.owner, amountSold);
-            p.recieveMoney(cost);
-            s.qouta -= amountSold;
-            s.recieveResources(amountSold);
-            s.cost += cost;
-            if (s.qouta > 0)
+            foreach(PlayerResource pr in s.neededResources)
             {
-                storesWithNeed.Add(s);
+                Producer p = GlobalMarket.searchProducersForUnsold(producers, pr);
+                s.generateQouta();
+                double amountSold = p.resource.spendResource(s.qouta);
+                double cost = p.setSalePrice(s.owner, amountSold);
+                p.recieveMoney(cost);
+                s.qouta -= amountSold;
+                s.recieveResources(pr.resourceName, amountSold);
+                s.cost += cost;
+                if (s.qouta > 0)
+                {
+                    storesWithNeed.Add(s);
+                }
             }
         }
 
