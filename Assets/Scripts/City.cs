@@ -4,7 +4,7 @@ using System.IO;
 
 using UnityEngine;
 
-public class City
+public class City : IInteractableObj
 {
     public Hex baseHex;
     public float x;
@@ -15,7 +15,7 @@ public class City
     public bool capitalist;
     public string name;
     public double money;
-    public double GDP;
+    public double GDP; //.x, for a total cost of 1.x 
     public double tax;
     public List<PlayerResource> resources;
 
@@ -27,10 +27,8 @@ public class City
     public static int maxRange = 2;
     public List<Hex> possibleHexes;
     public bool buildingChanged;
-    private double minimumWage = -1;
     private double importTax = -1;
     private double exportTax = -1;
-    private double wageTax = -1;
 
     public Player owner;
 
@@ -62,6 +60,8 @@ public class City
             Debug.Log("City Hall added");
         }
         this.resources = initializeResources();
+
+        baseHex.tileObjs.Add(this);
     }
 
     public static List<PlayerResource> initializeResources()
@@ -98,6 +98,11 @@ public class City
         return resources[0];
     }
 
+    public GameObject GetUI()
+    {
+        return (GameObject) Resources.Load("CityCanvas");
+    }
+
 
 
     public bool addBuilding(Building b)
@@ -128,10 +133,14 @@ public class City
 
     public void startTurn()
     {
+        GDP = 0;
         foreach (var resource in resources)
         {
             resource.setResource(resource.getAmount() + resource.getDamount());
+            //calculate GDP
+            GDP += resource.harvestCost*resource.getDamount()*tax;
         }
+
         //calculate GDP
         GDP = (getResource("food").getDamount() * 2000000);
         GDP += (getResource("lumber").getDamount() * 500000);
@@ -142,13 +151,12 @@ public class City
         GDP += (getResource("stone").getDamount() * 27500);
         GDP += (getResource("fuel").getDamount() * 160000);
         GDP += (getResource("luxury_metals").getDamount() * 200000);
-        GDP += (getResource("plasti").getDamount() * 330000);
+        GDP += (getResource("plastic").getDamount() * 330000);
         GDP += (getResource("aluminum").getDamount() * 2100000);
-        GDP += (getResource("eletronis").getDamount() * 200000);
+        GDP += (getResource("eletronics").getDamount() * 200000);
         GDP += (getResource("uranium").getDamount() * 200000);
         GDP += (getResource("transport").getDamount() * 400000);
     }
-
 
     public Hex getStartingLocation(Hex[,] hexes)
     {
@@ -186,18 +194,6 @@ public class City
         return true;
     }
 
-    //Checks if the city has set it's own minimum wage or i/e taxes
-    //otherwise defaults to the players
-    public double getMinimumWage()
-    {
-        if(minimumWage < 0)
-        {
-            return owner.minimumWage;
-        }
-        return minimumWage;
-
-    }
-
     public double getImportTax()
     {
         if (importTax < 0)
@@ -214,21 +210,13 @@ public class City
         }
         return exportTax;
     }
-    public double getWageTax()
-    {
-        if (wageTax < 0)
-        {
-            return owner.wageTax;
-        }
-        return wageTax;
-    }
 
     public List <Building> findBuilding(string type)
     {
         return buildings.FindAll(x => x.type == type);
     }
 
-    public double appealHitFromWarWeariness()
+    public double satisfactionHitFromWarWeariness()
     {
         return 0;
     }

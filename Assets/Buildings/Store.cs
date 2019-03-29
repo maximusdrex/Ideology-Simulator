@@ -36,6 +36,7 @@ public class Store : Building
     {
         return (GameObject)Resources.Load("cityHall");
     }
+
     public void recieveResources(string name, double amount)
     {
         neededResources.Find(x => x.resourceName == name).gainResource(amount);
@@ -133,19 +134,20 @@ public class Store : Building
         foreach (Citizen e in employees)
         {
             double wage = 0;
+            CapitalistCity location = (CapitalistCity)this.owner;
             if (e.getEducation() == 0)
             {
-                wage = owner.getMinimumWage();
+                wage = location.getMinimumWage();
             }
             if (e.getEducation() == 1)
             {
-                wage = owner.getMinimumWage() * 1.5;
+                wage = location.getMinimumWage() * 1.5;
             }
             if (e.getEducation() == 2)
             {
-                wage = owner.getMinimumWage() * 2;
+                wage = location.getMinimumWage() * 2;
             }
-            e.recievePay(wage, owner.getWageTax());
+            e.recievePay(wage, location.getWageTax());
             money -= wage;
             if (money <= 0)
             {

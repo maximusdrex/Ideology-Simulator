@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class CapitalistCity : City
 {
+
+    private double wageTax = -1;
+    private double minimumWage = -1;
+
+
     public CapitalistCity(Hex[,] hexes, bool center, bool capitol, Player owner) :
     base(hexes, center, capitol,  owner)
 
@@ -44,8 +49,39 @@ public class CapitalistCity : City
         feedCitizens();
     }
 
-    public void feedCitizens()
+    //Checks if the city has set it's own minimum wage or i/e taxes
+    //otherwise defaults to the players
+    public double getMinimumWage()
     {
+        if (minimumWage < 0)
+        {
+            return owner.minimumWage;
+        }
+        return minimumWage;
+
+    }
+
+    public double getWageTax()
+    {
+        if (wageTax < 0)
+        {
+            return owner.wageTax;
+        }
+        return wageTax;
+    }
+
+    public void setMinimumWage(double w)
+    {
+        this.minimumWage = w;
+    }
+
+    public void setWageTax(double t)
+    {
+        this.wageTax = t;
+    }
+
+
+    public void feedCitizens(){
         citizens.Sort(Citizen.wealthComparison);
         List<Building> stores = this.findBuilding("store");
         PlayerResource food = new PlayerResource("food");

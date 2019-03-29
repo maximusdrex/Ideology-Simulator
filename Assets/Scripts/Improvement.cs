@@ -109,7 +109,7 @@ public class Improvement
     {
         double performance = 0;
         foreach(Citizen e in employees) {
-            performance += e.returnAppeal();
+            performance += e.returnSatisfaction();
         }
         performance = performance / employees.Count;
         if ((numUE + numLE + numHE) < minEmployees)
@@ -167,6 +167,7 @@ public class Improvement
         employees.Sort(Citizen.jobTimeComparison);
         foreach(Citizen e in employees)
         {
+            CapitalistCity location = (CapitalistCity)this.location;
             double wage = 0;
             if (e.getEducation() == 0)
             {

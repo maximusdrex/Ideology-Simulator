@@ -23,7 +23,7 @@ public class Citizen
     private static string[] lastlines = null;
     public static double foodAmount = 2;
 
-    public double appeal;
+    public double satisfaction;
 
     public Citizen(City c) {
         health = 100;
@@ -150,44 +150,45 @@ public class Citizen
     }
 
 
+
     public void takeMedicine (float healthToAdd)
     {
         //since health is a percentage, maximum is 100. 
         health = Mathf.Min(healthToAdd + (float)health, 100);
     }
 
-    public double returnAppeal()
+    public double returnSatisfaction()
     {
-        double appealFromHealth = 40*(health / 100);
-        double appealFromBasic = 0;
+        double satisfactionFromHealth = 40*(health / 100);
+        double satisfactionFromBasic = 0;
         if(turnsSinceFed == 0 && turnsSinceHoused == 0)
         {
-            appealFromBasic = 30;
+            satisfactionFromBasic = 30;
         }
-        double appealFromEducation = 15 * (getEducation() / maxEducation);
-        double appealFromLuxuries = 15 * (buyLuxuries());
-        appeal = appealFromBasic + appealFromHealth + appealFromLuxuries + appealFromEducation;
-        appeal -= livingIn.appealHitFromWarWeariness();
-        if(appeal >= 85)
+        double satisfactionFromEducation = 15 * (getEducation() / maxEducation);
+        double satisfactionFromLuxuries = 15 * (buyLuxuries());
+        satisfaction = satisfactionFromBasic + satisfactionFromHealth + satisfactionFromLuxuries + satisfactionFromEducation;
+        satisfaction -= livingIn.satisfactionHitFromWarWeariness();
+        if(satisfaction >= 85)
         {
             return 1f;
         }
-        if (appeal < 85 && appeal >=70)
+        if (satisfaction < 85 && satisfaction >=70)
         {
             return .75f;
         }
-        if(appeal < 70)
+        if(satisfaction < 70)
         {
             return .5f;
         }
         return 0;
     }
 
-
     public int buyLuxuries()
     {
         return 1;
     }
+
     public static Comparison<Citizen> educationComparison = delegate(Citizen object1, Citizen object2)
     {
         return object1.education.CompareTo(object2.education);

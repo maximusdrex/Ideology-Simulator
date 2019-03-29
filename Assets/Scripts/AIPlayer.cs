@@ -6,7 +6,7 @@ public class AIPlayer : Player
 {
 
 
-    public AIPlayer(int pid, GameObject canvas, bool communist) : base(pid, canvas, communist)
+    public AIPlayer(int pid, bool communist) : base(pid,  communist)
     {
 
     }

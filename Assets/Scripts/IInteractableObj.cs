@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IInteractableObj
 {
     //
-    
+    GameObject GetUI();
 }
