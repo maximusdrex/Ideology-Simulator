@@ -51,7 +51,7 @@ public class CapitalistCity : City
 
     //Checks if the city has set it's own minimum wage or i/e taxes
     //otherwise defaults to the players
-    public double getMinimumWage()
+    public new double getMinimumWage()
     {
         if (minimumWage < 0)
         {
@@ -61,7 +61,7 @@ public class CapitalistCity : City
 
     }
 
-    public double getWageTax()
+    public new double getWageTax()
     {
         if (wageTax < 0)
         {
@@ -70,12 +70,12 @@ public class CapitalistCity : City
         return wageTax;
     }
 
-    public void setMinimumWage(double w)
+    public new void setMinimumWage(double w)
     {
         this.minimumWage = w;
     }
 
-    public void setWageTax(double t)
+    public new void setWageTax(double t)
     {
         this.wageTax = t;
     }

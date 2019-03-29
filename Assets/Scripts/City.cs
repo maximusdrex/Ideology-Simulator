@@ -18,6 +18,8 @@ public class City : IInteractableObj
     public double GDP; //.x, for a total cost of 1.x 
     public double tax;
     public List<PlayerResource> resources;
+    private double wageTax = -1;
+    private double minimumWage = -1;
 
     public float populationModifier;
     public List<Citizen> citizens;
@@ -209,6 +211,37 @@ public class City : IInteractableObj
             return owner.exportTax;
         }
         return exportTax;
+    }
+
+    //Checks if the city has set it's own minimum wage or i/e taxes
+    //otherwise defaults to the players
+    public double getMinimumWage()
+    {
+        if (minimumWage < 0)
+        {
+            return owner.minimumWage;
+        }
+        return minimumWage;
+
+    }
+
+    public double getWageTax()
+    {
+        if (wageTax < 0)
+        {
+            return owner.wageTax;
+        }
+        return wageTax;
+    }
+
+    public void setMinimumWage(double w)
+    {
+        this.minimumWage = w;
+    }
+
+    public void setWageTax(double t)
+    {
+        this.wageTax = t;
     }
 
     public List <Building> findBuilding(string type)
