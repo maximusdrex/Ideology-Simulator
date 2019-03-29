@@ -107,11 +107,16 @@ public class Improvement
 
     public double getPerformance()
     {
-        if((numUE + numLE + numHE) < minEmployees)
+        double performance = 0;
+        foreach(Citizen e in employees) {
+            performance += e.returnSatisfaction();
+        }
+        performance = performance / employees.Count;
+        if ((numUE + numLE + numHE) < minEmployees)
         {
             return 0;
         }
-        return 1f - performanceHitUE * Mathf.Abs(idealUE - numUE) - performanceHitLE * Mathf.Abs(idealLE - numLE) - performanceHitHE * Mathf.Abs(idealHE - numHE);
+        return performance - performanceHitUE * Mathf.Abs(idealUE - numUE) - performanceHitLE * Mathf.Abs(idealLE - numLE) - performanceHitHE * Mathf.Abs(idealHE - numHE);
     }
 
     public void harvestResource()
@@ -162,6 +167,7 @@ public class Improvement
         employees.Sort(Citizen.jobTimeComparison);
         foreach(Citizen e in employees)
         {
+            CapitalistCity location = (CapitalistCity)this.location;
             double wage = 0;
             if (e.getEducation() == 0)
             {

@@ -9,7 +9,8 @@ public class Citizen
     public string firstName;
     public string lastName;
     public int turnsSinceFed;
-    private float health;
+    public int turnsSinceHoused;
+    private double health;
     private int education;
     public int age;
     public int timeAtCurrentJob;
@@ -18,9 +19,11 @@ public class Citizen
     //-1 female, 1 male, 0 nonbinary
     public int gender;
     public double wealth;
-    static string[] firstlines = System.IO.File.ReadAllLines(@"Assets/TextResource/firstNames.txt");
-    static string[] lastlines = System.IO.File.ReadAllLines(@"Assets/TextResource/lastNames.txt");
-    static double foodAmount = 2;
+    private static string[] firstlines = null;
+    private static string[] lastlines = null;
+    public static double foodAmount = 2;
+
+    public double satisfaction;
 
     public Citizen(City c) {
         health = 100;
@@ -28,11 +31,16 @@ public class Citizen
         wealth = 0;
         age = 18;
         float genderRand = UnityEngine.Random.Range(0, 100);
+        if (firstlines == null)
+        {
+            firstlines  = System.IO.File.ReadAllLines(@"Assets/TextResources/firstNames.txt");
+            lastlines = System.IO.File.ReadAllLines(@"Assets/TextResource/lastNames.txt");
+        }
         string [] names = getName();
         firstName = names[0];
         lastName = names[1];
         livingIn = c;
-    }
+}
 
     public Citizen createChild()
     {
@@ -129,23 +137,56 @@ public class Citizen
 
     public void recieveFood(double food)
     {
+        Debug.Log("recieveFood called");
         if (food >= (foodAmount)){
-
+            turnsSinceFed = 0;
+        }
+        else
+        {
+            turnsSinceFed++;
+            health -= 20 * (food / foodAmount);
+            Debug.Log("Citizen" + firstName + " " + lastName + " is starving!");
         }
     }
+
 
 
     public void takeMedicine (float healthToAdd)
     {
         //since health is a percentage, maximum is 100. 
-        health = Mathf.Min(healthToAdd + health, 100);
+        health = Mathf.Min(healthToAdd + (float)health, 100);
     }
 
-    public double returnAppeal()
+    public double returnSatisfaction()
     {
-        double healthFromAppeal = 40 * (health / 100);
+        double satisfactionFromHealth = 40*(health / 100);
+        double satisfactionFromBasic = 0;
+        if(turnsSinceFed == 0 && turnsSinceHoused == 0)
+        {
+            satisfactionFromBasic = 30;
+        }
+        double satisfactionFromEducation = 15 * (getEducation() / maxEducation);
+        double satisfactionFromLuxuries = 15 * (buyLuxuries());
+        satisfaction = satisfactionFromBasic + satisfactionFromHealth + satisfactionFromLuxuries + satisfactionFromEducation;
+        satisfaction -= livingIn.satisfactionHitFromWarWeariness();
+        if(satisfaction >= 85)
+        {
+            return 1f;
+        }
+        if (satisfaction < 85 && satisfaction >=70)
+        {
+            return .75f;
+        }
+        if(satisfaction < 70)
+        {
+            return .5f;
+        }
         return 0;
+    }
 
+    public int buyLuxuries()
+    {
+        return 1;
     }
 
     public static Comparison<Citizen> educationComparison = delegate(Citizen object1, Citizen object2)

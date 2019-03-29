@@ -45,7 +45,7 @@ public class PlayerManager : MonoBehaviour
                 } else
                 {
                     Debug.Log("Did not hit");
-                    playerGUI = null;
+                    setGUI(defaultGUI);
                 }
             }
         }
@@ -58,7 +58,11 @@ public class PlayerManager : MonoBehaviour
             GameObject.Destroy(obj);
         }
 
-        GameObject newObj = Instantiate(gui);
-        newObj.tag = "GUI";
+        if(gui != null)
+        {
+            GameObject newObj = Instantiate(gui);
+            newObj.tag = "GUI";
+        }
+
     }
 }

@@ -142,6 +142,22 @@ public class City : IInteractableObj
             GDP += resource.harvestCost*resource.getDamount()*(1+tax);
             Debug.Log(money);
         }
+
+        //calculate GDP
+        GDP = (getResource("food").getDamount() * 2000000);
+        GDP += (getResource("lumber").getDamount() * 500000);
+        GDP += (getResource("iron").getDamount() * 1200000);
+        GDP += (getResource("steel").getDamount() * 150000);
+        GDP += (getResource("oal").getDamount() * 37000);
+        GDP += (getResource("oil").getDamount() * 60000);
+        GDP += (getResource("stone").getDamount() * 27500);
+        GDP += (getResource("fuel").getDamount() * 160000);
+        GDP += (getResource("luxury_metals").getDamount() * 200000);
+        GDP += (getResource("plastic").getDamount() * 330000);
+        GDP += (getResource("aluminum").getDamount() * 2100000);
+        GDP += (getResource("eletronics").getDamount() * 200000);
+        GDP += (getResource("uranium").getDamount() * 200000);
+        GDP += (getResource("transport").getDamount() * 400000);
     }
 
     public Hex getStartingLocation(Hex[,] hexes)
@@ -231,5 +247,10 @@ public class City : IInteractableObj
     public List <Building> findBuilding(string type)
     {
         return buildings.FindAll(x => x.type == type);
+    }
+
+    public double satisfactionHitFromWarWeariness()
+    {
+        return 0;
     }
 }
