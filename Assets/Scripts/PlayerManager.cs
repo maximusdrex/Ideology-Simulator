@@ -32,7 +32,11 @@ public class PlayerManager : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit))
                 {
-                    Hex hex = gm.gameMap.getHexFromObj(hit.transform.parent.gameObject);
+                    Hex hex = clickHex(hit.transform);
+                    if(hex == null)
+                    {
+                        Debug.Log("forest tile");
+                    }
                     Debug.Log(hex.ToString());
                     List<IInteractableObj> hexList = hex.tileObjs;
                     if(hexList.Count == 1)
@@ -48,6 +52,25 @@ public class PlayerManager : MonoBehaviour
                     setGUI(defaultGUI);
                 }
             }
+        }
+    }
+
+    private Hex clickHex(Transform hitT)
+    {
+        GameObject hexMap = gm.gameMap.gameObject;
+        if(hitT.parent != null)
+        {
+            Debug.Log(hitT.gameObject.name);
+            if (hitT.parent.gameObject == hexMap)
+            {
+                return (gm.gameMap.getHexFromObj(hitT.gameObject));
+            } else
+            {
+                return clickHex(hitT.parent.transform);
+            }
+        } else
+        {
+            return null;
         }
     }
 
