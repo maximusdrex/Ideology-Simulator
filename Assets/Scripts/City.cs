@@ -103,10 +103,12 @@ public class City : IInteractableObj
 
     public GameObject GetUI()
     {
-        return (GameObject) Resources.Load("CityCanvas");
+        GameObject temp =  (GameObject) Resources.Load("CityCanvas");
+        temp.GetComponent<CityCanvasDisplayer>().ownedBy = this;
+        temp.GetComponent<CityCanvasDisplayer>().setCityNameText(name);
+        temp.GetComponent<CityCanvasDisplayer>().displayResources(resources);
+        return temp;
     }
-
-
 
     public bool addBuilding(Building b)
     {
