@@ -30,6 +30,8 @@ public class Store : Building
         corporation = new Corporation(this);
         priceModifier = 1;
         type = "store";
+        neededResources = new List<PlayerResource>();
+        neededResources.Add(new PlayerResource("food"));
     }
 
     public GameObject getModel()
