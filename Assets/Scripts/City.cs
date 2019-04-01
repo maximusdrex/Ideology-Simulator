@@ -260,7 +260,7 @@ public class City : IInteractableObj
         return 0;
     }
 
-    public void feedCitizens()
+    public virtual void feedCitizens()
     {
         Debug.Log("Default feed citizens called");
     }
