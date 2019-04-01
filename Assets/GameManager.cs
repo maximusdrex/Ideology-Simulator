@@ -90,7 +90,6 @@ public class GameManager : MonoBehaviour
         placedObject.transform.position = gameMap.getHexObj(x, z).transform.position;
         placedObject.transform.SetParent(gameMap.getHexObj(x, z).transform);
         placedObject.transform.localPosition = new Vector3(0, 0, span);
-        Debug.Log(span);
         return true;
     }
 

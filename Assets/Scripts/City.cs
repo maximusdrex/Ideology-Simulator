@@ -164,6 +164,7 @@ public class City : IInteractableObj
         {
             c.startTurn();
         }
+        cleanUpBodies();
     }
 
     public Hex getStartingLocation(Hex[,] hexes)
@@ -263,5 +264,17 @@ public class City : IInteractableObj
     public virtual void feedCitizens()
     {
         Debug.Log("Default feed citizens called");
+    }
+
+    public void cleanUpBodies()
+    {
+        for (int i = 0; i < citizens.Count; i ++)
+        {
+            Citizen c = citizens[i];
+            if (c.isDead())
+            {
+                citizens.Remove(c);
+            }
+        }
     }
 }
