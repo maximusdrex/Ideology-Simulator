@@ -17,6 +17,10 @@ public class CapitalistCity : City
 
         name = getName(capitol);
         Debug.Log("City created at: " + x + "," + z + " named:" + name);
+        for (int i = 0; i < 10; i++)
+        {
+            citizens.Add(new Citizen(this));
+        }
     }
 
     public string getName(bool capitol)
@@ -24,7 +28,7 @@ public class CapitalistCity : City
         try
         {
             int rand = 0;
-            string[] lines = File.ReadAllLines(@"Assets/TextResource/capitalistCityNames.txt");
+            string[] lines = File.ReadAllLines(@"Assets/TextResources/capitalistCityNames.txt");
             if (capitol == true)
             {
                 rand = Random.Range(1, 9);
@@ -81,7 +85,7 @@ public class CapitalistCity : City
     }
 
 
-    public void feedCitizens(){
+    public override void feedCitizens(){
         citizens.Sort(Citizen.wealthComparison);
         List<Building> stores = this.findBuilding("store");
         PlayerResource food = new PlayerResource("food");
@@ -104,6 +108,7 @@ public class CapitalistCity : City
                 }
                 break;
             }
+            c.recieveFood(0);
         }
         foreach (var resource in resources)
         {

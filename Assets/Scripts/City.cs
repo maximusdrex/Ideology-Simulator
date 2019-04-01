@@ -56,6 +56,7 @@ public class City : IInteractableObj
         citizens = new List<Citizen>();
         unemployedCitizens = new List<Citizen>();
 
+
         if (center == true)
         {
             buildings.Add(new CityHall("City Hall", this));
@@ -105,6 +106,8 @@ public class City : IInteractableObj
         return (GameObject) Resources.Load("CityCanvas");
     }
 
+
+
     public bool addBuilding(Building b)
     {
         if (buildings.Count == maxBuildings)
@@ -131,7 +134,6 @@ public class City : IInteractableObj
         return false;
     }
 
-    //START OF TURN
     public void startTurn()
     {
         GDP = 0;
@@ -139,8 +141,7 @@ public class City : IInteractableObj
         {
             resource.setResource(resource.getAmount() + resource.getDamount());
             //calculate GDP
-            GDP += resource.harvestCost*resource.getDamount()*(1+tax);
-            Debug.Log(money);
+            GDP += resource.harvestCost*resource.getDamount()*tax;
         }
 
         //calculate GDP
@@ -158,6 +159,12 @@ public class City : IInteractableObj
         GDP += (getResource("eletronics").getDamount() * 200000);
         GDP += (getResource("uranium").getDamount() * 200000);
         GDP += (getResource("transport").getDamount() * 400000);
+        feedCitizens();
+        foreach (Citizen c in citizens)
+        {
+            c.startTurn();
+        }
+        cleanUpBodies();
     }
 
     public Hex getStartingLocation(Hex[,] hexes)
@@ -252,5 +259,22 @@ public class City : IInteractableObj
     public double satisfactionHitFromWarWeariness()
     {
         return 0;
+    }
+
+    public virtual void feedCitizens()
+    {
+        Debug.Log("Default feed citizens called");
+    }
+
+    public void cleanUpBodies()
+    {
+        for (int i = 0; i < citizens.Count; i ++)
+        {
+            Citizen c = citizens[i];
+            if (c.isDead())
+            {
+                citizens.Remove(c);
+            }
+        }
     }
 }

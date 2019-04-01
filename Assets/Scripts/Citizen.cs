@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections;
 using UnityEngine;
 
@@ -19,8 +20,8 @@ public class Citizen
     //-1 female, 1 male, 0 nonbinary
     public int gender;
     public double wealth;
-    private static string[] firstlines = null;
-    private static string[] lastlines = null;
+    private static string[] firstlines;
+    private static string[] lastlines;
     public static double foodAmount = 2;
 
     public double satisfaction;
@@ -33,13 +34,16 @@ public class Citizen
         float genderRand = UnityEngine.Random.Range(0, 100);
         if (firstlines == null)
         {
-            firstlines  = System.IO.File.ReadAllLines(@"Assets/TextResources/firstNames.txt");
-            lastlines = System.IO.File.ReadAllLines(@"Assets/TextResource/lastNames.txt");
+            firstlines  = File.ReadAllLines(@"Assets/TextResources/firstNames.txt");
+            lastlines = File.ReadAllLines(@"Assets/TextResources/lastNames.txt");
+            Debug.Log(firstlines);
+
         }
         string [] names = getName();
-        firstName = names[0];
-        lastName = names[1];
+        firstName = names[0].Trim();
+        lastName = names[1].Trim();
         livingIn = c;
+        Debug.Log("Citizen born: " + firstName + " " + lastName + " living in " + livingIn.name);
 }
 
     public Citizen createChild()
@@ -50,10 +54,11 @@ public class Citizen
         return c;
     }
 
-    public void startTurn(float pay, float tax)
+    public void startTurn()
     {
         age += 1;
-        recievePay(pay, tax);
+        checkFood();
+        haveHealthEmergency();
     }
 
 
@@ -112,7 +117,9 @@ public class Citizen
     public string[] getName()
     {
         string first = firstlines[UnityEngine.Random.Range(0, firstlines.Length-1)];
-        string last = lastlines[UnityEngine.Random.Range(0, firstlines.Length - 1)];
+        string last = lastlines[UnityEngine.Random.Range(0, lastlines.Length - 1)];
+        first.Replace(" ", string.Empty);
+        last.Replace(" ", string.Empty);
         return new string[] { first, last };
     }
 
@@ -137,16 +144,39 @@ public class Citizen
 
     public void recieveFood(double food)
     {
-        Debug.Log("recieveFood called");
         if (food >= (foodAmount)){
             turnsSinceFed = 0;
         }
         else
         {
             turnsSinceFed++;
-            health -= 20 * (food / foodAmount);
-            Debug.Log("Citizen" + firstName + " " + lastName + " is starving!");
         }
+    }
+
+    public void checkFood()
+    {
+        if(turnsSinceFed > 0)
+        {
+            health -= 10 * turnsSinceFed;
+            if (isDead())
+            {
+                Debug.Log("Citizen " + firstName + " " + lastName + " has died.");
+
+            }
+            else
+            {
+                Debug.Log("Citizen " + firstName + " " + lastName + " is starving! Health is " + health);
+            }
+        }
+    }
+
+    public bool isDead()
+    {
+        if(health < 0)
+        {
+            return true;
+        }
+        return false;
     }
 
 
