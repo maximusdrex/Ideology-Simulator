@@ -25,6 +25,7 @@ public class City : IInteractableObj
     public List<Citizen> citizens;
     public List<Citizen> unemployedCitizens;
     public List<Building> buildings;
+    public List<Improvement> nationalizedImprovements;
     public List<Hex> ownedHexes;
     public static int maxRange = 2;
     public List<Hex> possibleHexes;
@@ -61,6 +62,8 @@ public class City : IInteractableObj
         {
             buildings.Add(new CityHall("City Hall", this));
             Debug.Log("City Hall added");
+            buildings.Add(new Store("Store", this));
+            Debug.Log("Store added");
         }
         this.resources = initializeResources();
 
@@ -139,13 +142,19 @@ public class City : IInteractableObj
     public void startTurn()
     {
         GDP = 0;
+
+        foreach(Improvement n in nationalizedImprovements)
+        {
+            n.harvestResource();
+            string improvementName = n.resource.resourceName;
+            findResource(improvementName).changeDamount(n.resource.getAmount());
+        }
         foreach (var resource in resources)
         {
             resource.setResource(resource.getAmount() + resource.getDamount());
             //calculate GDP
-            GDP += resource.harvestCost*resource.getDamount()*tax;
+            GDP += resource.harvestCost * resource.getDamount() * tax;
         }
-
         //calculate GDP
         GDP = (getResource("food").getDamount() * 2000000);
         GDP += (getResource("lumber").getDamount() * 500000);
@@ -166,6 +175,7 @@ public class City : IInteractableObj
         {
             c.startTurn();
         }
+        cleanUpBodies();
     }
 
     public Hex getStartingLocation(Hex[,] hexes)
@@ -257,6 +267,10 @@ public class City : IInteractableObj
         return buildings.FindAll(x => x.type == type);
     }
 
+    public PlayerResource findResource(string name)
+    {
+        return resources.Find(x => x.resourceName == name);
+    }
     public double satisfactionHitFromWarWeariness()
     {
         return 0;
@@ -265,5 +279,17 @@ public class City : IInteractableObj
     public virtual void feedCitizens()
     {
         Debug.Log("Default feed citizens called");
+    }
+
+    public void cleanUpBodies()
+    {
+        for (int i = 0; i < citizens.Count; i ++)
+        {
+            Citizen c = citizens[i];
+            if (c.isDead())
+            {
+                citizens.Remove(c);
+            }
+        }
     }
 }
