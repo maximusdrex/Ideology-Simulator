@@ -54,10 +54,11 @@ public class Citizen
         return c;
     }
 
-    public void startTurn(float pay, float tax)
+    public void startTurn()
     {
         age += 1;
-        recievePay(pay, tax);
+        checkFood();
+        haveHealthEmergency();
     }
 
 
@@ -117,6 +118,8 @@ public class Citizen
     {
         string first = firstlines[UnityEngine.Random.Range(0, firstlines.Length-1)];
         string last = lastlines[UnityEngine.Random.Range(0, lastlines.Length - 1)];
+        first.Replace(" ", string.Empty);
+        last.Replace(" ", string.Empty);
         return new string[] { first, last };
     }
 
@@ -148,11 +151,17 @@ public class Citizen
         else
         {
             turnsSinceFed++;
-            health -= 20 * (food / foodAmount);
-            Debug.Log("Citizen" + firstName + " " + lastName + " is starving!");
         }
     }
 
+    public void checkFood()
+    {
+        if(turnsSinceFed > 0)
+        {
+            health -= 10 * turnsSinceFed;
+            Debug.Log("Citizen" + firstName + " " + lastName + " is starving!");
+        }
+    }
 
 
     public void takeMedicine (float healthToAdd)

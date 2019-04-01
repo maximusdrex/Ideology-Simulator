@@ -24,7 +24,7 @@ public class CommunistCity : City
         try
         {
             int rand = 0;
-            string[] lines = File.ReadAllLines(@"Assets/TextResources/communistCityNames.txt");
+            string[] lines = File.ReadAllLines(@"/Users/cayden/Documents/unityRepo/Assets/TextResources/communistCityNames.txt");
             if (capitol == true)
             {
                 rand = Random.Range(1, 9);
@@ -49,7 +49,7 @@ public class CommunistCity : City
         feedCitizens();
     }
 
-    public void feedCitizens()
+    public new void feedCitizens()
     {
         citizens.Sort(Citizen.wealthComparison);
         List<Building> stores = this.findBuilding("store");
