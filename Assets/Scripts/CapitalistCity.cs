@@ -108,6 +108,7 @@ public class CapitalistCity : City
                 }
                 break;
             }
+            c.recieveFood(0);
         }
         foreach (var resource in resources)
         {

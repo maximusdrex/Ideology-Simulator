@@ -34,8 +34,8 @@ public class Citizen
         float genderRand = UnityEngine.Random.Range(0, 100);
         if (firstlines == null)
         {
-            firstlines  = File.ReadAllLines(@"/Users/cayden/Documents/unityRepo/Assets/TextResources/firstNames.txt");
-            lastlines = File.ReadAllLines(@"/Users/cayden/Documents/unityRepo/Assets/TextResources/lastNames.txt");
+            firstlines  = File.ReadAllLines(@"Assets/TextResources/firstNames.txt");
+            lastlines = File.ReadAllLines(@"Assets/TextResources/lastNames.txt");
             Debug.Log(firstlines);
 
         }
