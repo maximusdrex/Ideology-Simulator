@@ -82,11 +82,11 @@ public class GameManager : MonoBehaviour
                 placeOnHex(model, c.baseHex.C, c.baseHex.R, b.span);
             }
             else if(buildingNum % 2 == 1) {
-                placeOnHex(model, c.baseHex.C, c.baseHex.R, b.span, -.4f, Quaternion.Euler(0,0,0));
+                placeOnHex(model, c.baseHex.C, c.baseHex.R, b.span, -.4f, Quaternion.Euler(0,90,0));
             }
             else
             {
-                placeOnHex(model, c.baseHex.C, c.baseHex.R, b.span, .4f, Quaternion.Euler(0,0, 0));
+                placeOnHex(model, c.baseHex.C, c.baseHex.R, b.span, .4f, Quaternion.Euler(0,-90, 0));
             }
 
              
@@ -114,10 +114,13 @@ public class GameManager : MonoBehaviour
 
     public bool placeOnHex(GameObject obj, int x, int z, float span, float horizontalDisp, Quaternion q)
     {
-        GameObject placedObject = Instantiate(obj, new Vector3(0,0,0), Quaternion.identity);
+        GameObject placedObject = Instantiate(obj, Vector3.zero, Quaternion.identity);
+        Debug.Log("Hex: " + x + " " + z);
         placedObject.transform.position = gameMap.getHexObj(x, z).transform.position;
+        Debug.Log(gameMap.getHexObj(x, z).transform.position);
         placedObject.transform.SetParent(gameMap.getHexObj(x, z).transform);
         placedObject.transform.localPosition = new Vector3(horizontalDisp, 0, span);
+        Debug.Log(gameMap.getHexObj(x, z).transform.position+ new Vector3(horizontalDisp, 0, span));
         placedObject.transform.localRotation = q;
         return true;
     }
