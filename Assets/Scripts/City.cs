@@ -29,7 +29,7 @@ public class City : IInteractableObj
     public List<Hex> ownedHexes;
     public static int maxRange = 2;
     public List<Hex> possibleHexes;
-    public bool buildingChanged;
+    public int buildingChanged;
     private double importTax = -1;
     private double exportTax = -1;
 
@@ -45,7 +45,7 @@ public class City : IInteractableObj
         ownedHexes.Add(baseHex);
         possibleHexes = HexMap.hexesInRange(baseHex, maxRange);
 
-        buildingChanged = true;
+        buildingChanged = 0;
         x = baseHex.x;
         z = baseHex.z;
         this.center = center;
@@ -64,6 +64,8 @@ public class City : IInteractableObj
             Debug.Log("City Hall added");
             buildings.Add(new Store("Store", this));
             Debug.Log("Store added");
+            buildingChanged+=2;
+
         }
         this.resources = initializeResources();
 
@@ -123,7 +125,7 @@ public class City : IInteractableObj
         else
         {
             buildings.Add(b);
-            buildingChanged = true;
+            buildingChanged++;
             return true;
         }
     }
@@ -194,6 +196,11 @@ public class City : IInteractableObj
             }
         }
         return hexes[cityX, cityY];
+    }
+
+    public void endTurn()
+    {
+        buildingChanged = 0;
     }
 
     public Citizen hireCitizen(int edNeeded)

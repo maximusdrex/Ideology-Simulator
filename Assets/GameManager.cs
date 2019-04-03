@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         {
             foreach (City c in p.cities)
             {
-                if (c.buildingChanged == true)
+                if (c.buildingChanged >0 )
                 {
                     instantiateBuilding(c);
                 }
@@ -71,11 +71,27 @@ public class GameManager : MonoBehaviour
 
     public void instantiateBuilding(City c)
     {
-        Building b = c.buildings[c.buildings.Count - 1];
-        GameObject model = b.model;
-        float span = b.span;
-        placeOnHex(model, c.baseHex.C, c.baseHex.R, b.span);
-        c.buildingChanged = false;
+        for(int i = 0; i < c.buildingChanged; i++)
+        {
+            int buildingNum = c.buildings.Count - 1 - i;
+            Building b = c.buildings[buildingNum];
+            GameObject model = b.model;
+            float span = b.span;
+            if(buildingNum == 0)
+            {
+                placeOnHex(model, c.baseHex.C, c.baseHex.R, b.span);
+            }
+            else if(buildingNum % 2 == 1) {
+                placeOnHex(model, c.baseHex.C, c.baseHex.R, b.span, -.4f, Quaternion.Euler(0,0,0));
+            }
+            else
+            {
+                placeOnHex(model, c.baseHex.C, c.baseHex.R, b.span, .4f, Quaternion.Euler(0,0, 0));
+            }
+
+             
+        }
+        c.buildingChanged = 0;
     }
 
     public bool placeOnHex(GameObject obj, int x, int z)
@@ -86,10 +102,23 @@ public class GameManager : MonoBehaviour
 
     public bool placeOnHex(GameObject obj, int x, int z, float span)
     {
-        GameObject placedObject = Instantiate(obj);
+        placeOnHex(obj, x, z, span, Quaternion.Euler(0, 0, 0));
+        return true;
+    }
+
+    public bool placeOnHex(GameObject obj, int x, int z, float span, Quaternion q)
+    {
+        placeOnHex(obj, x, z, span, 0, q);
+        return true;
+    }
+
+    public bool placeOnHex(GameObject obj, int x, int z, float span, float horizontalDisp, Quaternion q)
+    {
+        GameObject placedObject = Instantiate(obj, new Vector3(0,0,0), Quaternion.identity);
         placedObject.transform.position = gameMap.getHexObj(x, z).transform.position;
         placedObject.transform.SetParent(gameMap.getHexObj(x, z).transform);
-        placedObject.transform.localPosition = new Vector3(0, 0, span);
+        placedObject.transform.localPosition = new Vector3(horizontalDisp, 0, span);
+        placedObject.transform.localRotation = q;
         return true;
     }
 

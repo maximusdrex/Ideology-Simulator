@@ -36,7 +36,7 @@ public class Store : Building
 
     public GameObject getModel()
     {
-        return (GameObject)Resources.Load("cityHall");
+        return (GameObject)Resources.Load("store");
     }
 
     public void recieveResources(string name, double amount)
