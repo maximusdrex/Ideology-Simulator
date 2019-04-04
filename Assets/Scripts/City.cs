@@ -64,12 +64,15 @@ public class City : IInteractableObj
             Debug.Log("City Hall added");
             buildings.Add(new Store("Store", this));
             Debug.Log("Store added");
-            buildingChanged+=2;
+            buildings.Add(new Apartment("Apartment", this));
+            Debug.Log("Apartment added");
+            buildingChanged += 3;
 
         }
         this.resources = initializeResources();
 
         baseHex.tileObjs.Add(this);
+        nationalizedImprovements = new List<Improvement>();
     }
 
     public static List<PlayerResource> initializeResources()
