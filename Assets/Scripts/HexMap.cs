@@ -417,7 +417,7 @@ public class HexMap : MonoBehaviour
 
     public void allocateTerrain()
     {
-
+        //base it off of moisture, set it based of naturally found resources.
         foreach (Hex h in hexes)
         {
             float height = h.height;
@@ -428,7 +428,6 @@ public class HexMap : MonoBehaviour
                 if (temp >= .75f)
                 {
                     h.terrain = TerrainEnum.Terrain.Rainforest;
-
                 }
                 if (temp < .75f && temp >= .3f)
                 {

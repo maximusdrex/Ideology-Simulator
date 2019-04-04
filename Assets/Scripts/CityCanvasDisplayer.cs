@@ -27,7 +27,7 @@ public class CityCanvasDisplayer : MonoBehaviour
 
     public void setCityNameText(string name)
     {
-        cityName.text = "  CITY: " + name;
+        cityName.text = "  <b>CITY: " + name + "</b>";
     }
 
     public void displayResources(List<PlayerResource> resources)

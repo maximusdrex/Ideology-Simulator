@@ -71,7 +71,7 @@ public class Corporation
             p.qouta = p.generateQouta();
             double amountSold = I.resource.spendResource(p.qouta);
             double cost = I.getHarvestCost(amountSold);
-            I.recieveMoney(cost);
+            I.receiveMoney(cost);
             p.qouta -= amountSold;
             p.recieveResources(amountSold);
             p.updateCost(cost);
@@ -88,7 +88,7 @@ public class Corporation
                 s.generateQouta();
                 double amountSold = p.resource.spendResource(s.qouta);
                 double cost = p.setSalePrice(s.owner, amountSold);
-                p.recieveMoney(cost);
+                p.receiveMoney(cost);
                 s.qouta -= amountSold;
                 s.recieveResources(pr.resourceName, amountSold);
                 s.cost += cost;
