@@ -57,8 +57,9 @@ public class GameManager : MonoBehaviour
         {
             foreach (City c in p.cities)
             {
-                if (c.buildingChanged >0 )
+                if (c.buildingChanged > 0 )
                 {
+                    Debug.Log("instantiating buildings");
                     instantiateBuilding(c);
                 }
                 else

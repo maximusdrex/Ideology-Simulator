@@ -98,7 +98,6 @@ public class Corporation
                 }
             }
         }
-
     }
 
     public double totalCosts()

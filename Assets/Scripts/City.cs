@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-
 using UnityEngine;
 
 public class City : IInteractableObj
@@ -20,6 +19,9 @@ public class City : IInteractableObj
     public List<PlayerResource> resources;
     private double wageTax = -1;
     private double minimumWage = -1;
+    public double transport = 0;
+    //Calculated by amount a car can transport in one year if driving for 8 hours per day, 300 days per year (As of 2010 this would be 24)
+    public double transport_mod = 1;
 
     public float populationModifier;
     public List<Citizen> citizens;
@@ -64,12 +66,15 @@ public class City : IInteractableObj
             Debug.Log("City Hall added");
             buildings.Add(new Store("Store", this));
             Debug.Log("Store added");
-            buildingChanged+=2;
+            buildings.Add(new Apartment("Apartment", this));
+            Debug.Log("Apartment added");
+            buildingChanged += 3;
 
         }
         this.resources = initializeResources();
 
         baseHex.tileObjs.Add(this);
+        nationalizedImprovements = new List<Improvement>();
     }
 
     public static List<PlayerResource> initializeResources()
@@ -144,34 +149,30 @@ public class City : IInteractableObj
     public void startTurn()
     {
         GDP = 0;
-
-        foreach(Improvement n in nationalizedImprovements)
-        {
-            n.harvestResource();
-            string improvementName = n.resource.resourceName;
-            findResource(improvementName).changeDamount(n.resource.getAmount());
-        }
+        transport = 0;
+        //foreach(Improvement n in nationalizedImprovements)
+        //{
+        //    n.harvestResource();
+        //   string improvementName = n.resource.resourceName;
+        //    findResource(improvementName).changeDamount(n.resource.getAmount());
+        //}
         foreach (var resource in resources)
         {
             resource.setResource(resource.getAmount() + resource.getDamount());
             //calculate GDP
-            GDP += resource.harvestCost * resource.getDamount() * tax;
+            GDP += resource.harvestCost*resource.getDamount();
         }
         //calculate GDP
-        GDP = (getResource("food").getDamount() * 2000000);
-        GDP += (getResource("lumber").getDamount() * 500000);
-        GDP += (getResource("iron").getDamount() * 1200000);
-        GDP += (getResource("steel").getDamount() * 150000);
-        GDP += (getResource("oal").getDamount() * 37000);
-        GDP += (getResource("oil").getDamount() * 60000);
-        GDP += (getResource("stone").getDamount() * 27500);
-        GDP += (getResource("fuel").getDamount() * 160000);
-        GDP += (getResource("luxury_metals").getDamount() * 200000);
-        GDP += (getResource("plastic").getDamount() * 330000);
-        GDP += (getResource("aluminum").getDamount() * 2100000);
-        GDP += (getResource("eletronics").getDamount() * 200000);
-        GDP += (getResource("uranium").getDamount() * 200000);
-        GDP += (getResource("transport").getDamount() * 400000);
+        GDP = 0;
+        foreach (PlayerResource r in resources)
+        {
+            GDP += (r.getDamount() * r.harvestCost);
+            if (r.resourceName.Equals("transport"))
+            {
+                transport = r.getDamount() * transport_mod;
+            }
+            Debug.Log("Transportation: " + transport);
+        }
         feedCitizens();
         foreach (Citizen c in citizens)
         {
@@ -298,5 +299,11 @@ public class City : IInteractableObj
                 citizens.Remove(c);
             }
         }
+    }
+
+    //Changable by techs etc
+    public void setTransportMod(double transport_mod)
+    {
+        this.transport_mod = transport_mod;
     }
 }

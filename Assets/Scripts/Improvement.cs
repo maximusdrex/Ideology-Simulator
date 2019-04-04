@@ -14,7 +14,6 @@ public class Improvement
     public int idealUE;
     public int idealLE;
     public int idealHE;
-
     public int minEmployees;
 
     private int numUE;
@@ -127,7 +126,6 @@ public class Improvement
 
     public virtual void harvestResource()
     {
-
         resource.setResource(getPerformance() * baseHex.resourceType.getDamount());
     }
 
