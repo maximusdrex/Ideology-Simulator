@@ -62,7 +62,7 @@ public class Player
         //indicator.GetComponent<UnityEngine.UI.Toggle>().isOn = false;
         foreach(City c in cities)
         {
-           //c.buildingChanged = false;
+            c.endTurn();
         }
     }
 
