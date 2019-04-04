@@ -9,7 +9,6 @@ public class CapitalistCity : City
     private double wageTax = -1;
     private double minimumWage = -1;
 
-
     public CapitalistCity(Hex[,] hexes, bool center, bool capitol, Player owner) :
     base(hexes, center, capitol,  owner)
 
@@ -51,6 +50,11 @@ public class CapitalistCity : City
     {
         base.startTurn();
         feedCitizens();
+        foreach(PlayerResource r in resources)
+        {
+            money += System.Math.Abs(r.minusAmount * r.harvestCost * tax);
+        }
+        Debug.Log(money);
     }
 
     //Checks if the city has set it's own minimum wage or i/e taxes

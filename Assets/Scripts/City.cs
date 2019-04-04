@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-
 using UnityEngine;
 
 public class City : IInteractableObj
@@ -141,24 +140,15 @@ public class City : IInteractableObj
         {
             resource.setResource(resource.getAmount() + resource.getDamount());
             //calculate GDP
-            GDP += resource.harvestCost*resource.getDamount()*tax;
+            GDP += resource.harvestCost*resource.getDamount();
         }
 
         //calculate GDP
-        GDP = (getResource("food").getDamount() * 2000000);
-        GDP += (getResource("lumber").getDamount() * 500000);
-        GDP += (getResource("iron").getDamount() * 1200000);
-        GDP += (getResource("steel").getDamount() * 150000);
-        GDP += (getResource("oal").getDamount() * 37000);
-        GDP += (getResource("oil").getDamount() * 60000);
-        GDP += (getResource("stone").getDamount() * 27500);
-        GDP += (getResource("fuel").getDamount() * 160000);
-        GDP += (getResource("luxury_metals").getDamount() * 200000);
-        GDP += (getResource("plastic").getDamount() * 330000);
-        GDP += (getResource("aluminum").getDamount() * 2100000);
-        GDP += (getResource("eletronics").getDamount() * 200000);
-        GDP += (getResource("uranium").getDamount() * 200000);
-        GDP += (getResource("transport").getDamount() * 400000);
+        GDP = 0;
+        foreach (PlayerResource r in resources)
+        {
+            GDP += (r.getDamount() * r.harvestCost);
+        }
         feedCitizens();
         foreach (Citizen c in citizens)
         {

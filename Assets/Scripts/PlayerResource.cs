@@ -6,7 +6,8 @@ public class PlayerResource
 {
     public string resourceName;
     private double amount;
-    public double damount;
+    public double plusAmount;
+    public double minusAmount;
     public double harvestCost;
 
     public PlayerResource(string name, double startingAmount, double harvestCost)
@@ -57,7 +58,7 @@ public class PlayerResource
 
     public double getDamount()
     {
-        return damount;
+        return plusAmount - minusAmount;
     }
 
     public void setResource(double toSet)
