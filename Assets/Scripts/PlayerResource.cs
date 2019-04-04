@@ -9,6 +9,7 @@ public class PlayerResource
     public double plusAmount;
     public double minusAmount;
     public double harvestCost;
+    public double damount;
 
     public PlayerResource(string name, double startingAmount, double harvestCost)
     {

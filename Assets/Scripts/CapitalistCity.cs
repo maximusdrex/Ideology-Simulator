@@ -54,7 +54,7 @@ public class CapitalistCity : City
         {
             money += System.Math.Abs(r.minusAmount * r.harvestCost * tax);
         }
-        Debug.Log(money);
+        Debug.Log("Money:" + money);
     }
 
     //Checks if the city has set it's own minimum wage or i/e taxes

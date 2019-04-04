@@ -19,15 +19,17 @@ public class City : IInteractableObj
     public List<PlayerResource> resources;
     private double wageTax = -1;
     private double minimumWage = -1;
+    public double transport;
 
     public float populationModifier;
     public List<Citizen> citizens;
     public List<Citizen> unemployedCitizens;
     public List<Building> buildings;
+    public List<Improvement> nationalizedImprovements;
     public List<Hex> ownedHexes;
     public static int maxRange = 2;
     public List<Hex> possibleHexes;
-    public bool buildingChanged;
+    public int buildingChanged;
     private double importTax = -1;
     private double exportTax = -1;
 
@@ -43,7 +45,7 @@ public class City : IInteractableObj
         ownedHexes.Add(baseHex);
         possibleHexes = HexMap.hexesInRange(baseHex, maxRange);
 
-        buildingChanged = true;
+        buildingChanged = 0;
         x = baseHex.x;
         z = baseHex.z;
         this.center = center;
@@ -60,6 +62,10 @@ public class City : IInteractableObj
         {
             buildings.Add(new CityHall("City Hall", this));
             Debug.Log("City Hall added");
+            buildings.Add(new Store("Store", this));
+            Debug.Log("Store added");
+            buildingChanged+=2;
+
         }
         this.resources = initializeResources();
 
@@ -102,10 +108,12 @@ public class City : IInteractableObj
 
     public GameObject GetUI()
     {
-        return (GameObject) Resources.Load("CityCanvas");
+        GameObject temp =  (GameObject) Resources.Load("CityCanvas");
+        temp.GetComponent<CityCanvasDisplayer>().ownedBy = this;
+        temp.GetComponent<CityCanvasDisplayer>().setCityNameText(name);
+        temp.GetComponent<CityCanvasDisplayer>().displayResources(resources);
+        return temp;
     }
-
-
 
     public bool addBuilding(Building b)
     {
@@ -117,7 +125,7 @@ public class City : IInteractableObj
         else
         {
             buildings.Add(b);
-            buildingChanged = true;
+            buildingChanged++;
             return true;
         }
     }
@@ -136,24 +144,35 @@ public class City : IInteractableObj
     public void startTurn()
     {
         GDP = 0;
+        transport = 0;
+        //foreach(Improvement n in nationalizedImprovements)
+        //{
+        //    n.harvestResource();
+        //   string improvementName = n.resource.resourceName;
+        //    findResource(improvementName).changeDamount(n.resource.getAmount());
+        //}
         foreach (var resource in resources)
         {
             resource.setResource(resource.getAmount() + resource.getDamount());
             //calculate GDP
             GDP += resource.harvestCost*resource.getDamount();
         }
-
         //calculate GDP
         GDP = 0;
         foreach (PlayerResource r in resources)
         {
             GDP += (r.getDamount() * r.harvestCost);
+            if (r.resourceName.Equals("transport"))
+            {
+                transport = r.getDamount() * 29.2;
+            }
         }
         feedCitizens();
         foreach (Citizen c in citizens)
         {
             c.startTurn();
         }
+        cleanUpBodies();
     }
 
     public Hex getStartingLocation(Hex[,] hexes)
@@ -172,6 +191,11 @@ public class City : IInteractableObj
             }
         }
         return hexes[cityX, cityY];
+    }
+
+    public void endTurn()
+    {
+        buildingChanged = 0;
     }
 
     public Citizen hireCitizen(int edNeeded)
@@ -245,6 +269,10 @@ public class City : IInteractableObj
         return buildings.FindAll(x => x.type == type);
     }
 
+    public PlayerResource findResource(string name)
+    {
+        return resources.Find(x => x.resourceName == name);
+    }
     public double satisfactionHitFromWarWeariness()
     {
         return 0;
@@ -253,5 +281,17 @@ public class City : IInteractableObj
     public virtual void feedCitizens()
     {
         Debug.Log("Default feed citizens called");
+    }
+
+    public void cleanUpBodies()
+    {
+        for (int i = 0; i < citizens.Count; i ++)
+        {
+            Citizen c = citizens[i];
+            if (c.isDead())
+            {
+                citizens.Remove(c);
+            }
+        }
     }
 }

@@ -22,7 +22,7 @@ public class Citizen
     public double wealth;
     private static string[] firstlines;
     private static string[] lastlines;
-    public static double foodAmount = 2;
+    public static double foodAmount = 1;
 
     public double satisfaction;
 
@@ -40,10 +40,10 @@ public class Citizen
 
         }
         string [] names = getName();
-        firstName = names[0];
-        lastName = names[1];
+        firstName = names[0].Trim();
+        lastName = names[1].Trim();
         livingIn = c;
-        Debug.Log("Citizen born: " + firstName + " " + lastName + " living in" + livingIn.name);
+        Debug.Log("Citizen born: " + firstName + " " + lastName + " living in " + livingIn.name);
 }
 
     public Citizen createChild()
@@ -144,7 +144,6 @@ public class Citizen
 
     public void recieveFood(double food)
     {
-        Debug.Log("recieveFood called");
         if (food >= (foodAmount)){
             turnsSinceFed = 0;
         }
@@ -159,9 +158,27 @@ public class Citizen
         if(turnsSinceFed > 0)
         {
             health -= 10 * turnsSinceFed;
-            Debug.Log("Citizen" + firstName + " " + lastName + " is starving!");
+            if (isDead())
+            {
+                Debug.Log("Citizen " + firstName + " " + lastName + " has died.");
+
+            }
+            else
+            {
+                Debug.Log("Citizen " + firstName + " " + lastName + " is starving! Health is " + health);
+            }
         }
     }
+
+    public bool isDead()
+    {
+        if(health < 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
 
 
     public void takeMedicine (float healthToAdd)
