@@ -19,7 +19,7 @@ public class City : IInteractableObj
     public List<PlayerResource> resources;
     private double wageTax = -1;
     private double minimumWage = -1;
-    public double transport;
+    public double transport = 0;
     //Calculated by amount a car can transport in one year if driving for 8 hours per day, 300 days per year (As of 2010 this would be 24)
     public double transport_mod = 1;
 
@@ -168,6 +168,7 @@ public class City : IInteractableObj
             {
                 transport = r.getDamount() * transport_mod;
             }
+            Debug.Log("Transportation: " + transport);
         }
         feedCitizens();
         foreach (Citizen c in citizens)
