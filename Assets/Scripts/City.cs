@@ -20,6 +20,8 @@ public class City : IInteractableObj
     private double wageTax = -1;
     private double minimumWage = -1;
     public double transport;
+    //Calculated by amount a car can transport in one year if driving for 8 hours per day, 300 days per year (As of 2010 this would be 24)
+    public double transport_mod = 1;
 
     public float populationModifier;
     public List<Citizen> citizens;
@@ -164,7 +166,7 @@ public class City : IInteractableObj
             GDP += (r.getDamount() * r.harvestCost);
             if (r.resourceName.Equals("transport"))
             {
-                transport = r.getDamount() * 29.2;
+                transport = r.getDamount() * transport_mod;
             }
         }
         feedCitizens();
@@ -293,5 +295,11 @@ public class City : IInteractableObj
                 citizens.Remove(c);
             }
         }
+    }
+
+    //Changable by techs etc
+    public void setTransportMod(double transport_mod)
+    {
+        this.transport_mod = transport_mod;
     }
 }
