@@ -126,8 +126,7 @@ public class Improvement
 
     public virtual void harvestResource()
     {
-
-        resource.setResource(getPerformance() * baseHex.resourceType.getAmount());
+        resource.setResource(getPerformance() * baseHex.resourceType.getDamount());
     }
 
     public double getHarvestCost(double amount)
@@ -135,7 +134,7 @@ public class Improvement
         return amount * harvestCost;
     }
 
-    public void recieveMoney(double amount)
+    public void receiveMoney(double amount)
     {
 
     }

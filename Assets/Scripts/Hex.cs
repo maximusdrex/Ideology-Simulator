@@ -218,4 +218,10 @@ public class Hex
     {
         return city;
     }
+
+    public void setResource(PlayerResource resource)
+    {
+        resourceType = resource;
+        
+    }
 }

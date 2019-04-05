@@ -38,7 +38,7 @@ public class Player
         //indicator.GetComponent<UnityEngine.UI.Toggle>().isOn = true;
         if (communist)
         {
-            foreach(CommunistCity com in cities)
+            foreach (CommunistCity com in cities)
             {
                 com.startTurn();
                 GDP += com.GDP;
@@ -46,12 +46,14 @@ public class Player
             }
         }
         else
+        {
             foreach (CapitalistCity cap in cities)
             {
                 cap.startTurn();
                 GDP += cap.GDP;
                 money += cap.money;
             }
+        }
     }
 
     public void EndTurn()
