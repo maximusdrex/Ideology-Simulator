@@ -6,21 +6,15 @@ using UnityEngine;
 public class HexMap : MonoBehaviour
 {
     //FOR DEBUG REENABLE HEX TEXT ON 126 AND 80
-    public Material rainforest;
-    public Material savannah;
-    public Material desert;
-    public Material marsh;
-    public Material forest;
-    public Material grassland;
-    public Material tundra;
-    public Material steppe;
-    public Material ice;
-    public Material ocean;
 
-    public GameObject HexModel;
+    public GameObject GrasslandModel;
+    public GameObject OceanModel;
+    public GameObject SavannahModel;
+    public GameObject DesertModel;
     public GameObject MountainModel;
     public GameObject ForestModel;
-    public GameObject RiverModel;
+    public GameObject IceModel;
+
     readonly static int numRows = 54;
     readonly static int numCollumns = 84;
     readonly float heightAdd = .33f;
@@ -71,8 +65,8 @@ public class HexMap : MonoBehaviour
 
     void Start()
     {
-       
-        foreach(KeyValuePair<Hex, GameObject> hexGo in hexToGameObject)
+
+        foreach (KeyValuePair<Hex, GameObject> hexGo in hexToGameObject)
         {
             hexGo.Value.GetComponentInChildren<TextMesh>().text = hexGo.Key.C + " " + hexGo.Key.R;
 
@@ -128,12 +122,11 @@ public class HexMap : MonoBehaviour
             {
                 hexes[col, row] = new Hex(col, row);
                 Vector3 position = hexes[col, row].updatePosition(cameraPosition, numCollumns);
-                GameObject hexObject = (GameObject)Instantiate(HexModel, position, Quaternion.identity, this.transform);
+                GameObject hexObject = (GameObject)Instantiate(OceanModel, position, Quaternion.identity, this.transform);
                 hexToGameObject.Add(hexes[col, row], hexObject);
                 hexObject.GetComponentInChildren<TextMesh>().text = col + " , " + row;
                 hexObject.GetComponentInChildren<TextMesh>().text = "";
                 MeshRenderer mr = hexObject.GetComponentInChildren<MeshRenderer>();
-                mr.material = ocean;
             }
         }
 
@@ -183,7 +176,7 @@ public class HexMap : MonoBehaviour
 
     public void nextLakeTile(Hex h, int numSteps)
     {
-            if (numSteps <= 0)
+        if (numSteps <= 0)
         {
             return;
         }
@@ -278,17 +271,18 @@ public class HexMap : MonoBehaviour
 
     public Hex getHexFromObj(GameObject obj)
     {
-        if(hexToGameObject.ContainsValue(obj))
+        if (hexToGameObject.ContainsValue(obj))
         {
-            foreach(KeyValuePair<Hex, GameObject> kv in hexToGameObject)
+            foreach (KeyValuePair<Hex, GameObject> kv in hexToGameObject)
             {
-                if(kv.Value == obj)
+                if (kv.Value == obj)
                 {
                     return kv.Key;
                 }
             }
             return null;
-        } else
+        }
+        else
         {
             return null;
         }
@@ -489,16 +483,14 @@ public class HexMap : MonoBehaviour
             }
         }
     }
-    public GameObject instantiateTerrain(KeyValuePair<Hex, GameObject> hexGo, GameObject model, Material material, Vector3 cameraPosition)
+    public GameObject instantiateTerrain(KeyValuePair<Hex, GameObject> hexGo, GameObject model, Vector3 cameraPosition)
     {
 
         Destroy(hexGo.Value);
         Vector3 position = hexGo.Key.updatePosition(cameraPosition, numCollumns);
         GameObject hexObject = (GameObject)Instantiate(model, position, Quaternion.identity, this.transform);
-        MeshRenderer hexMR = hexObject.GetComponentInChildren<MeshRenderer>();
-        hexMR.material = material;
-        // rotation = getRandomRotation();
-        hexObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        float rotation = getRandomRotation();
+        hexObject.transform.rotation = Quaternion.Euler(0f, rotation, 0f);
         return hexObject;
     }
 
@@ -512,56 +504,34 @@ public class HexMap : MonoBehaviour
         {
             Hex h = hexes[hexGo.Key.C, hexGo.Key.R];
             MeshRenderer mr = hexGo.Value.GetComponentInChildren<MeshRenderer>();
-            if (h.terrain == TerrainEnum.Terrain.River)
-            {
-                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, RiverModel, savannah, cameraPosition));
-            }
             if (h.terrain == TerrainEnum.Terrain.Forest)
             {
-                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, ForestModel, forest, cameraPosition));
-            }
-            if (h.terrain == TerrainEnum.Terrain.Tundra)
-            {
-                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, ForestModel, tundra, cameraPosition));
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, ForestModel, cameraPosition));
             }
             if (h.terrain == TerrainEnum.Terrain.Mountain)
             {
-                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, MountainModel, forest, cameraPosition));
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, MountainModel, cameraPosition));
             }
             else if (h.terrain == TerrainEnum.Terrain.Ocean)
             {
-                mr.material = ocean;
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, OceanModel, cameraPosition));
             }
             else if (h.terrain == TerrainEnum.Terrain.Ice)
             {
-                mr.material = ice;
-            }
-            else if (h.terrain == TerrainEnum.Terrain.Rainforest)
-            {
-                mr.material = rainforest;
-
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, IceModel, cameraPosition));
             }
             else if (h.terrain == TerrainEnum.Terrain.Desert)
             {
-                mr.material = desert;
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, DesertModel, cameraPosition));
             }
             else if (h.terrain == TerrainEnum.Terrain.Grassland)
             {
-                mr.material = grassland;
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, GrasslandModel, cameraPosition));
             }
             else if (h.terrain == TerrainEnum.Terrain.Savannah)
             {
-                mr.material = savannah;
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, SavannahModel, cameraPosition));
             }
-            else if (h.terrain == TerrainEnum.Terrain.Ocean)
-            {
-                mr.material = ocean;
-            }
-            else if (h.terrain == TerrainEnum.Terrain.Steppe)
-            {
-                mr.material = steppe;
-            }
-
         }
         foreach (KeyValuePair<Hex, GameObject> misfit in islandOfMisfitTiles)
         {

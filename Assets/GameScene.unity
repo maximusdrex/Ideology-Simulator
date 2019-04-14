@@ -331,7 +331,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!114 &1492405270
 MonoBehaviour:
@@ -345,23 +345,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bac28ba3281840eba310209fe0ce0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rainforest: {fileID: 2100000, guid: 97cf73a9d4110432f92c309d31d3c739, type: 2}
-  savannah: {fileID: 2100000, guid: e585c0a657677433d9200ff993881851, type: 2}
-  desert: {fileID: 2100000, guid: 137000a436a8e4de4acad52eccd8febf, type: 2}
-  marsh: {fileID: 2100000, guid: 208d18170a05a404584ffb4c56f077f1, type: 2}
-  forest: {fileID: 2100000, guid: 55693419cf62f4fe6a984646ed90aa4b, type: 2}
-  grassland: {fileID: 2100000, guid: 8fcbbc8307cec40a3a243ed4dd5644b6, type: 2}
-  tundra: {fileID: 2100000, guid: 1d8417cadd1fb455b89ec09e852da9c8, type: 2}
-  steppe: {fileID: 2100000, guid: c4e4d3d07c05b45ed9498754ba67a543, type: 2}
-  ice: {fileID: 2100000, guid: e78c613c042214bc898c82afc2a99639, type: 2}
-  ocean: {fileID: 2100000, guid: 7b4a98b85d9fa4db286e170f25f0564f, type: 2}
-  HexModel: {fileID: 6188751399001136934, guid: 1f7359c85095e4c0b8742375cacf3587,
+  GrasslandModel: {fileID: 6188751399001136934, guid: 1f7359c85095e4c0b8742375cacf3587,
+    type: 3}
+  OceanModel: {fileID: 2041967281673111508, guid: ed2b03995f0004eb9903efbe02133362,
+    type: 3}
+  SavannahModel: {fileID: 6620853538829764572, guid: fc0de24edea6e4ccc9578a692b1b8244,
+    type: 3}
+  DesertModel: {fileID: 6939897827958946446, guid: b76e121978c6f4492a5dd5c4a13cdb83,
     type: 3}
   MountainModel: {fileID: 9186117828343838436, guid: 5708f7f4dc09649c6b778d7c00082afe,
     type: 3}
   ForestModel: {fileID: 4070181540814893159, guid: a28d0a2a0beda4970ac2d34658cf9964,
     type: 3}
-  RiverModel: {fileID: 225609403953614499, guid: e035997fd806b4b39af39154723ca66b,
+  IceModel: {fileID: 2041967281673111508, guid: eab9620535fe44225885a2c5b9aa6cc5,
     type: 3}
 --- !u!4 &1492405271
 Transform:
@@ -404,13 +400,13 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.9622642, g: 0.92302376, b: 0.41304737, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
