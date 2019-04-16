@@ -60,6 +60,7 @@ public class GlobalMarket {
         }
         foreach(Producer p in producers)
         {
+
             Improvement.P = p;
             improvements.Sort(Improvement.priceCompare);
             while (p.qouta > 0)
@@ -67,7 +68,7 @@ public class GlobalMarket {
                 Improvement I = searchImprovementsForUnsold(improvements, p.neededResource);
                 double amountSold = I.resource.spendResource(p.qouta);
                 double cost = I.getHarvestCost(amountSold);
-                I.recieveMoney(cost);
+                I.receiveMoney(cost);
                 p.qouta -= amountSold;
                 p.totalCost += cost;
                 p.recieveResources(amountSold);
@@ -85,7 +86,7 @@ public class GlobalMarket {
                     Producer P = searchProducersForUnsold(producers, p);
                     double amountSold = P.producedResource.spendResource(s.qouta);
                     double cost = P.getHarvestCost(amountSold);
-                    P.recieveMoney(cost);
+                    P.receiveMoney(cost);
                     s.cost = cost;
                     s.qouta -= amountSold;
                     s.recieveResources(p.resourceName, amountSold);

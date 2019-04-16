@@ -47,11 +47,11 @@ public class CameraMotion : MonoBehaviour
         {
             pos.x += panSpeed * Time.deltaTime;
         }
-        if (Input.GetKey("q"))
+        if (Input.GetKey("q") && pos.y > 1.7f)
         {
             pos.y -= panSpeed * Time.deltaTime;
         }
-        if (Input.GetKey("e"))
+        if (Input.GetKey("e") && pos.y < 7f)
         {
             pos.y += panSpeed * Time.deltaTime;
         }

@@ -17,4 +17,5 @@ public class AIPlayer : Player
         GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         gm.nextTurnPressed();
     }
+
 }

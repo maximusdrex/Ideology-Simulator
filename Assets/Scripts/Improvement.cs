@@ -14,7 +14,6 @@ public class Improvement
     public int idealUE;
     public int idealLE;
     public int idealHE;
-
     public int minEmployees;
 
     private int numUE;
@@ -29,16 +28,22 @@ public class Improvement
     public PlayerResource resource;
     static public Producer P;
 
+    bool nationalized;
 
 
-    public Improvement(City location, Corporation corp) {
+
+    public Improvement(bool nationalized, Hex baseHex) {
+        if (!nationalized)
+        {
+            corporation = new Corporation(this);
+        }
+        location = baseHex.getCity();
         owner = location.owner;
-        corporation = corp;
         employees = new List<Citizen>();
         harvestCost = baseHex.resourceType.harvestCost;
         resource = baseHex.resourceType;
-
     }
+
 
 
     public void levelEmployees()
@@ -119,10 +124,9 @@ public class Improvement
         return performance - performanceHitUE * Mathf.Abs(idealUE - numUE) - performanceHitLE * Mathf.Abs(idealLE - numLE) - performanceHitHE * Mathf.Abs(idealHE - numHE);
     }
 
-    public void harvestResource()
+    public virtual void harvestResource()
     {
-
-        resource.setResource(getPerformance() * baseHex.resourceType.getAmount());
+        resource.setResource(getPerformance() * baseHex.resourceType.getDamount());
     }
 
     public double getHarvestCost(double amount)
@@ -130,7 +134,7 @@ public class Improvement
         return amount * harvestCost;
     }
 
-    public void recieveMoney(double amount)
+    public void receiveMoney(double amount)
     {
 
     }

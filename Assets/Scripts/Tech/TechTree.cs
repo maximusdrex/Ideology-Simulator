@@ -9,7 +9,7 @@ public class TechTree
         
     }
 
-    public void Add(Tech tech, int level)
+    public void Add(Tech tech)
     {
         
     }

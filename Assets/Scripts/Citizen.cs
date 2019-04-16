@@ -22,7 +22,7 @@ public class Citizen
     public double wealth;
     private static string[] firstlines;
     private static string[] lastlines;
-    public static double foodAmount = 2;
+    public static double foodAmount = 1;
 
     public double satisfaction;
 
@@ -43,7 +43,7 @@ public class Citizen
         firstName = names[0].Trim();
         lastName = names[1].Trim();
         livingIn = c;
-        Debug.Log("Citizen born: " + firstName + " " + lastName + " living in " + livingIn.name);
+        //Debug.Log("Citizen born: " + firstName + " " + lastName + " living in " + livingIn.name);
 }
 
     public Citizen createChild()
