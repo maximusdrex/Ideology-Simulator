@@ -423,15 +423,18 @@ public class HexMap : MonoBehaviour
                 {
                     h.terrain = TerrainEnum.Terrain.Rainforest;
                 }
-                if (temp < .75f && temp >= .3f)
+                if (temp < .75f)
                 {
                     h.terrain = TerrainEnum.Terrain.Forest;
                 }
-                if (temp < .3f)
+                if (temp < .5f && temp >= .33f)
                 {
-                    h.terrain = TerrainEnum.Terrain.Tundra;
+                    h.terrain = TerrainEnum.Terrain.Forest;
                 }
-
+                if (temp < .33f)
+                {
+                    h.terrain = TerrainEnum.Terrain.Ice;
+                }
             }
             if (moisture < .66f && moisture >= .33f)
             {
@@ -443,13 +446,13 @@ public class HexMap : MonoBehaviour
                 {
                     h.terrain = TerrainEnum.Terrain.Grassland;
                 }
-                if (temp < .5f && temp >= .25f)
-                {
+                 if (temp < .5f && temp >= .33f)                
+                 {
                     h.terrain = TerrainEnum.Terrain.Forest;
                 }
-                if (temp < .25f)
+                if (temp < .33f)
                 {
-                    h.terrain = TerrainEnum.Terrain.Steppe;
+                    h.terrain = TerrainEnum.Terrain.Ice;
                 }
             }
             if (moisture < .33f)
