@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
             p.cities.Add(c);
         }
         g = new GlobalMarket();
+        Camera cam = FindObjectOfType<Camera>();
+        gameMap.colorHexes(cam.transform.position);
         playing = players[0];
         playing.StartTurn();
 

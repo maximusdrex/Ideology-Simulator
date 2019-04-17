@@ -14,6 +14,7 @@ public class HexMap : MonoBehaviour
     public GameObject MountainModel;
     public GameObject ForestModel;
     public GameObject IceModel;
+    public GameObject BlankModel;
 
     readonly static int numRows = 54;
     readonly static int numCollumns = 84;
@@ -507,6 +508,10 @@ public class HexMap : MonoBehaviour
         {
             Hex h = hexes[hexGo.Key.C, hexGo.Key.R];
             MeshRenderer mr = hexGo.Value.GetComponentInChildren<MeshRenderer>();
+            if (h.terrain == TerrainEnum.Terrain.Blank)
+            {
+                islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, BlankModel, cameraPosition));
+            }
             if (h.terrain == TerrainEnum.Terrain.Forest)
             {
                 islandOfMisfitTiles.Add(h, instantiateTerrain(hexGo, ForestModel, cameraPosition));
