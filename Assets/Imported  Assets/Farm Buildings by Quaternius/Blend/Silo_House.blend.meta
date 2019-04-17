@@ -3,6 +3,20 @@ guid: c673045a6bbc342898a2ebe64f1b1af5
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
+    100000: //RootNode
+    400000: //RootNode
+    2100000: LightRed
+    2100002: Grey
+    2100004: DarkRed
+    2100006: Brown
+    2100008: White
+    2100010: DarkGrey
+    2100012: Black
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Silo_House
+    7400000: Default Take
+    9500000: //RootNode
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
@@ -57,7 +71,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

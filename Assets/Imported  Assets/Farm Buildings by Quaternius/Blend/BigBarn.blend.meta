@@ -3,6 +3,39 @@ guid: a5c7064d0079445b194504e2a99c2060
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
+    100000: //RootNode
+    100002: BigBarn
+    100004: BigBarn_Door
+    100006: BigBarn_Door2
+    100008: BigBarn_Window
+    100010: BigBarn_Window2
+    400000: //RootNode
+    400002: BigBarn
+    400004: BigBarn_Door
+    400006: BigBarn_Door2
+    400008: BigBarn_Window
+    400010: BigBarn_Window2
+    2100000: LightRed
+    2100002: DarkRed
+    2100004: White
+    2100006: RoofBlack
+    2300000: BigBarn
+    2300002: BigBarn_Door
+    2300004: BigBarn_Door2
+    2300006: BigBarn_Window
+    2300008: BigBarn_Window2
+    3300000: BigBarn
+    3300002: BigBarn_Door
+    3300004: BigBarn_Door2
+    3300006: BigBarn_Window
+    3300008: BigBarn_Window2
+    4300000: BigBarn
+    4300002: BigBarn_Door
+    4300004: BigBarn_Door2
+    4300006: BigBarn_Window
+    4300008: BigBarn_Window2
+    7400000: Default Take
+    9500000: //RootNode
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
@@ -57,7 +90,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

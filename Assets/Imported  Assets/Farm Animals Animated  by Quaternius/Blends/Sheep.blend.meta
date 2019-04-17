@@ -3,6 +3,72 @@ guid: d1e4722d79d8b4324b58ae9e7e0ce050
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
+    100000: Armature
+    100002: Back
+    100004: BackFoot_L
+    100006: BackFoot_R
+    100008: BackLeg_L
+    100010: BackLeg_R
+    100012: BackLowLeg_L
+    100014: BackLowLeg_R
+    100016: BackUpLeg_L
+    100018: BackUpLeg_R
+    100020: Body
+    100022: FrontFoot_L
+    100024: FrontFoot_R
+    100026: FrontLeg_L
+    100028: FrontLeg_R
+    100030: FrontLowLeg_L
+    100032: FrontLowLeg_R
+    100034: FrontUpLeg_L
+    100036: FrontUpLeg_R
+    100038: Head
+    100040: Hips
+    100042: Neck
+    100044: root
+    100046: //RootNode
+    100048: Sheep
+    100050: Shoulders
+    100052: Torso
+    400000: Armature
+    400002: Back
+    400004: BackFoot_L
+    400006: BackFoot_R
+    400008: BackLeg_L
+    400010: BackLeg_R
+    400012: BackLowLeg_L
+    400014: BackLowLeg_R
+    400016: BackUpLeg_L
+    400018: BackUpLeg_R
+    400020: Body
+    400022: FrontFoot_L
+    400024: FrontFoot_R
+    400026: FrontLeg_L
+    400028: FrontLeg_R
+    400030: FrontLowLeg_L
+    400032: FrontLowLeg_R
+    400034: FrontUpLeg_L
+    400036: FrontUpLeg_R
+    400038: Head
+    400040: Hips
+    400042: Neck
+    400044: root
+    400046: //RootNode
+    400048: Sheep
+    400050: Shoulders
+    400052: Torso
+    2100000: White
+    2100002: Black
+    4300000: Sheep
+    7400000: Default Take
+    7400002: Death
+    7400004: Idle
+    7400006: Jump
+    7400008: Run
+    7400010: Walk
+    7400012: WalkSlow
+    9500000: //RootNode
+    13700000: Sheep
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
@@ -57,7 +123,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

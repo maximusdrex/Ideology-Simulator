@@ -3,6 +3,22 @@ guid: 4976f9fbd39c34a02a3bb6032948a10a
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
+    100000: //RootNode
+    100002: Windmill
+    100004: Windmill_Blades
+    400000: //RootNode
+    400002: Windmill
+    400004: Windmill_Blades
+    2100000: Brown
+    2100002: Grey
+    2300000: Windmill
+    2300002: Windmill_Blades
+    3300000: Windmill
+    3300002: Windmill_Blades
+    4300000: Windmill
+    4300002: Windmill_Blades
+    7400000: Default Take
+    9500000: //RootNode
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
@@ -57,7 +73,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

@@ -435,6 +435,7 @@ GameObject:
   - component: {fileID: 5843176972698635780}
   - component: {fileID: 511395290940798958}
   - component: {fileID: 2898542730860776364}
+  - component: {fileID: 7983084679981080389}
   m_Layer: 0
   m_Name: hextile
   m_TagString: Untagged
@@ -502,6 +503,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &7983084679981080389
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6006596335868404329}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: 1663da5c3fd4f45fea18571045d476e9, type: 3}
 --- !u!1 &7952331793470700416
 GameObject:
   m_ObjectHideFlags: 0

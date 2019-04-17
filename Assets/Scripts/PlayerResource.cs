@@ -18,10 +18,22 @@ public class PlayerResource
         this.harvestCost = harvestCost;
     }
 
+    public PlayerResource(string name, double startingAmount)
+    {
+        resourceName = name;
+        amount = startingAmount;
+        setHarvestCost(name);
+    }
+
     public PlayerResource(string name)
     {
         resourceName = name;
         amount = 0;
+        setHarvestCost(name);
+    }
+
+    public void setHarvestCost(string name)
+    {
         if (name.Equals("food"))
             this.harvestCost = 2000000;
         else if (name.Equals("lumber"))

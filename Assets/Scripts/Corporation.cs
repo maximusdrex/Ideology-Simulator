@@ -82,6 +82,7 @@ public class Corporation
         }
         foreach(Store s in stores)
         {
+
             foreach(PlayerResource pr in s.neededResources)
             {
                 Producer p = GlobalMarket.searchProducersForUnsold(producers, pr);

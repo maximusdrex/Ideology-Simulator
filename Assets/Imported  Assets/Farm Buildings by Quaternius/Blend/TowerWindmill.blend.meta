@@ -3,6 +3,27 @@ guid: 681bcf4759441475291a88b53bc7d0cc
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
+    100000: //RootNode
+    100002: TowerWindmill
+    100004: TowerWindmill_Blades
+    400000: //RootNode
+    400002: TowerWindmill
+    400004: TowerWindmill_Blades
+    2100000: DarkGrey
+    2100002: RoofBlack
+    2100004: LightBrown
+    2100006: White
+    2100008: Black
+    2100010: Grey
+    2100012: DarkBrown
+    2300000: TowerWindmill
+    2300002: TowerWindmill_Blades
+    3300000: TowerWindmill
+    3300002: TowerWindmill_Blades
+    4300000: TowerWindmill
+    4300002: TowerWindmill_Blades
+    7400000: Default Take
+    9500000: //RootNode
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
@@ -57,7 +78,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

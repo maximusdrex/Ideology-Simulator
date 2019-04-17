@@ -3,6 +3,80 @@ guid: 13fa4ac2ea4f148ac8a4ea982f7f90d1
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
+    100000: Armature
+    100002: Back
+    100004: BackFoot_L
+    100006: BackFoot_R
+    100008: BackLeg_L
+    100010: BackLeg_R
+    100012: BackLowLeg_L
+    100014: BackLowLeg_R
+    100016: BackUpLeg_L
+    100018: BackUpLeg_R
+    100020: Body
+    100022: FrontFoot_L
+    100024: FrontFoot_R
+    100026: FrontLeg_L
+    100028: FrontLeg_R
+    100030: FrontLowLeg_L
+    100032: FrontLowLeg_R
+    100034: FrontUpLeg_L
+    100036: FrontUpLeg_R
+    100038: Head
+    100040: Hips
+    100042: Neck
+    100044: root
+    100046: Shoulders
+    100048: Tail1
+    100050: Tail2
+    100052: Tail3
+    100054: Tail4
+    100056: Torso
+    100058: //RootNode
+    100060: Zebra
+    400000: Armature
+    400002: Back
+    400004: BackFoot_L
+    400006: BackFoot_R
+    400008: BackLeg_L
+    400010: BackLeg_R
+    400012: BackLowLeg_L
+    400014: BackLowLeg_R
+    400016: BackUpLeg_L
+    400018: BackUpLeg_R
+    400020: Body
+    400022: FrontFoot_L
+    400024: FrontFoot_R
+    400026: FrontLeg_L
+    400028: FrontLeg_R
+    400030: FrontLowLeg_L
+    400032: FrontLowLeg_R
+    400034: FrontUpLeg_L
+    400036: FrontUpLeg_R
+    400038: Head
+    400040: Hips
+    400042: Neck
+    400044: root
+    400046: Shoulders
+    400048: Tail1
+    400050: Tail2
+    400052: Tail3
+    400054: Tail4
+    400056: Torso
+    400058: Zebra
+    400060: //RootNode
+    2100000: Black
+    2100002: White
+    4300000: Zebra
+    7400000: Default Take
+    7400002: Death
+    7400004: Idle
+    7400006: Jump
+    7400008: Run
+    7400010: Walk
+    7400012: WalkSlow
+    9500000: //RootNode
+    13700000: Zebra
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
@@ -57,7 +131,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

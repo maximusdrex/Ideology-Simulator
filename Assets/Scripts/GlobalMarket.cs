@@ -60,6 +60,7 @@ public class GlobalMarket {
         }
         foreach(Producer p in producers)
         {
+
             Improvement.P = p;
             improvements.Sort(Improvement.priceCompare);
             while (p.qouta > 0)
