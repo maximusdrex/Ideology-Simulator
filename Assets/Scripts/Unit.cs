@@ -6,13 +6,18 @@ public class Unit: IInteractableObj {
 
     public Hex hex { get; protected set; }
 
+    public string type;
     public string name;
     public int manPower;
     public int baseStrength;
     public int movement = 2;
     public int movementRemaining = 2;
-    public GameObject mesh;
+    public GameObject model;
 
+    public Unit(string type)
+    {
+        this.type = type;
+}
     public Hex getHex()
     {
         return this.hex;

@@ -16,14 +16,14 @@ public class HexMap : MonoBehaviour
     public GameObject IceModel;
     public GameObject BlankModel;
 
-    readonly static int numRows = 54;
-    readonly static int numCollumns = 84;
+    public static int numRows = 54;
+    public static int numCollumns = 84;
     readonly float heightAdd = .33f;
-    readonly float heightMinus = .35f;
+    //readonly float heightMinus = .35f;
     readonly float heightDropOff = .6f;
     readonly float globalSeaLevel = .5f;
     readonly float mountainHeight = .8f;
-    readonly float moistureDropOff = 1.5f;
+    //readonly float moistureDropOff = 1.5f;
     readonly int numLakes = 4;
     readonly int waterRange = 3;
     float seed = 100;
@@ -677,4 +677,9 @@ public class HexMap : MonoBehaviour
         }
     }
 
+
+    public void moveUnits()
+    {
+
+    }
 }

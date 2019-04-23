@@ -18,6 +18,12 @@ public class PlayerManager : MonoBehaviour
         player = gm.GetPlayer(0);
         units = new List<Unit>();
         setGUI(defaultGUI);
+        City c = player.cities[0];
+        Hex[] neighbors = c.baseHex.getNeighbors(HexMap.numCollumns, HexMap.numRows);
+        Hex neighbor = neighbors[Random.Range(0, 5)];
+        Worker w = new Worker(100);
+        spawnUnit(w, neighbor.C, neighbor.R);
+        Debug.Log("Unit spawned " + neighbor.C + " " + neighbor.R);
     }
 
     // Update is called once per frame
@@ -61,7 +67,8 @@ public class PlayerManager : MonoBehaviour
                     if(hexList.Count == 1)
                     {
                         setGUI(hexList[0].GetUI());
-                    } else
+                    } 
+                    else
                     {
                         setGUI(defaultGUI);
                     }
@@ -119,6 +126,7 @@ public class PlayerManager : MonoBehaviour
     public void spawnUnit (Unit u, int q, int r)
     {
         units.Add(u);
+        player.units.Add(u);
         gm.spawnUnit(u, q, r);
     }
     public void moveUnit(Unit u, Hex nextHex)
