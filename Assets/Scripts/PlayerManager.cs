@@ -39,12 +39,12 @@ public class PlayerManager : MonoBehaviour
                     }
                     //if (Input.GetKeyDown("space"))
                     //{
-                    if(!hex.improvement)
+                    if(hex.improvement == null)
                     {
                         GameObject obj = (GameObject)Resources.Load("farm");
                         gm.placeOnHex(obj, hex.C, hex.R);
                         Debug.Log("new farm");
-                        hex.improvement = true;
+                        hex.improvement = new Improvement(true, hex, player);
                     }
                     else
                     {
