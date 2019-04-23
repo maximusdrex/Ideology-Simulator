@@ -195,6 +195,7 @@ public class City : IInteractableObj
             {
                 goodLocation = true;
             }
+            hexes[cityX, cityY].terrain = TerrainEnum.Terrain.Blank;
         }
         return hexes[cityX, cityY];
     }
