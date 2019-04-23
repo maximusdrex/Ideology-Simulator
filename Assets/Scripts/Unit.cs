@@ -29,8 +29,7 @@ public class Unit: IInteractableObj {
     }
 
     public GameObject GetUI()
-    { 
-        return null;
+    {
+        return (GameObject)Resources.Load("UnitUI");
     }
 }
-
