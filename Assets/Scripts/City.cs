@@ -37,7 +37,6 @@ public class City : IInteractableObj
 
     public Player owner;
 
-
     public City(Hex[,] hexes, bool center, bool capitol, Player owner)
     {
         baseHex = getStartingLocation(hexes);
@@ -162,6 +161,8 @@ public class City : IInteractableObj
             n.harvestResource();
             string improvementName = n.resource.resourceName;
             findResource(improvementName).changeDamount(n.resource.getAmount());
+            Debug.Log("Food I think: " + n.resource.getAmount());
+            foreach(PlayerResource in resources)
 
         }
 
@@ -176,14 +177,6 @@ public class City : IInteractableObj
                 {
                     s.recieveResources(resource.resourceName, resource.damount);
                 }
-            }
-        }
-        //Gather resources
-        foreach (var hex in ownedHexes)
-        {
-            if(hex.improvement != null)
-            {
-                
             }
         }
 
