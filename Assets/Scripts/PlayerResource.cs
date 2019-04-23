@@ -101,7 +101,7 @@ public class PlayerResource
 
     public void changeDamount(double toAdd)
     {
-        damount += toAdd;
+        plusAmount += toAdd;
     }
 
     public void setDResource(double toSet)
