@@ -1,2 +1,5 @@
-Science 10 Industrialization
-Technology 20 Science
+Industrialization,0
+Science,10,Industrialization
+Technology,20,Science
+Nuclear Power,30,Industrialization
+Nuclear Bomb,50,Nuclear Power
