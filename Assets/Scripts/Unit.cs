@@ -15,7 +15,7 @@ public class Unit: IInteractableObj {
 
     public Hex getHex()
     {
-        return hex;
+        return this.hex;
     }
 
     public void SetHex(Hex newHex)

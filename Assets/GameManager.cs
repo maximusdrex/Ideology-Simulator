@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public Player playing;
     public GameObject canvas;
     public GlobalMarket g;
+    public Dictionary<Unit, GameObject> unitToGameObject;
 
     //Called before other Starts()
     void Awake()
@@ -72,9 +73,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void spawnUnit(GameObject unit, int q, int r)
+    public void spawnUnit(Unit u, int q, int r)
     {
-       placeOnHex(unit,q,r);
+        GameObject unitModel = u.mesh;
+        unitToGameObject.Add(u, unitModel);
+        placeOnHex(unitModel,q,r);
+    }
+
+    public void moveUnit(Unit u)
+    {
+        Hex nextHex = u.hex;
+        GameObject unitModel = unitToGameObject[u];
+        unitModel.transform.position = new Vector3(nextHex.x, 0, nextHex.z);
+
     }
 
     public void instantiateBuilding(City c)
@@ -149,4 +160,6 @@ public class GameManager : MonoBehaviour
     {
         return players[id];
     }
+
+ 
 }
