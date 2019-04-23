@@ -169,10 +169,14 @@ public class City : IInteractableObj
 
         foreach (PlayerResource resource in resources)
         {
+            if (resource.resourceName == "food")
+            {
+                Debug.Log("City has " + resource.getAmount() + " food");
+            }
             resource.setResource(resource.getAmount() + resource.getDamount());
             if(resource.resourceName == "food")
             {
-                Debug.Log("City has " + resource.getAmount() + " food");
+                Debug.Log("City now has " + resource.getAmount() + " food");
             }
             //calculate GDP
             GDP += resource.harvestCost*resource.getDamount();
@@ -181,9 +185,9 @@ public class City : IInteractableObj
                 foreach (Store s in findBuilding("store"))
                 {
                     s.recieveResources(resource.resourceName, resource.getAmount());
-                    resource.setResource(0);
                 }
             }
+
         }
         //calculate GDP
         GDP = 0;
@@ -195,6 +199,8 @@ public class City : IInteractableObj
                 transport = r.getDamount() * transport_mod;
             }
             //Debug.Log("Transportation: " + transport);
+            r.setDResource(0);
+            r.setResource(0);
         }
         feedCitizens();
         foreach (Citizen c in citizens)

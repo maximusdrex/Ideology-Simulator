@@ -47,8 +47,6 @@ public class Store : Building
         }
         PlayerResource pr = neededResources.Find(x => x.resourceName == name);
         pr.gainResource(amount);
-        Debug.Log(pr);
-        Debug.Log(amount);
     }
 
     public double getResourceCount(string name) {
