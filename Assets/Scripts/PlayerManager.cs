@@ -8,7 +8,7 @@ public class PlayerManager : MonoBehaviour
     private GameManager gm;
     public int playerId;
     private Canvas playerGUI;
-
+    public List<Unit> units;
     public GameObject defaultGUI;
 
     // Start is called before the first frame update
@@ -16,7 +16,7 @@ public class PlayerManager : MonoBehaviour
     {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         player = gm.GetPlayer(0);
-
+        units = new List<Unit>();
         setGUI(defaultGUI);
     }
 
@@ -100,4 +100,16 @@ public class PlayerManager : MonoBehaviour
         }
 
     }
+
+    public void spawnUnit (Unit u, int q, int r)
+    {
+        units.Add(u);
+        gm.spawnUnit(u, q, r);
+    }
+    public void moveUnit(Unit u, Hex nextHex)
+    {
+        u.SetHex(nextHex);
+        gm.moveUnit(u);
+    }
 }
+
