@@ -63,6 +63,14 @@ public class PlayerManager : MonoBehaviour
                     setGUI(defaultGUI);
                 }
             }
+
+            if (Input.GetKey("F"))
+            {
+                foreach(Worker w in units)
+                {
+                    w.buildFarm();
+                }
+            }
         }
     }
 

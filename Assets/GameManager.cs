@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
         GameObject placedObject = Instantiate(obj, Vector3.zero, Quaternion.identity);
         placedObject.transform.position = gameMap.getHexObj(x, z).transform.position;
         placedObject.transform.SetParent(gameMap.getHexObj(x, z).transform);
-        placedObject.transform.localPosition = new Vector3(horizontalDisp, 0, span);
+        placedObject.transform.localPosition = new Vector3(horizontalDisp, .2f, span);
         placedObject.transform.localRotation = q;
         return true;
     }
