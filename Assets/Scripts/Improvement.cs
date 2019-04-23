@@ -39,6 +39,7 @@ public class Improvement
             corporation = new Corporation(this);
         }
         location = baseHex.getCity();
+        location.nationalizedImprovements.Add(this);
         owner = player;
         employees = new List<Citizen>();
         if(baseHex.resourceType != null)
@@ -52,6 +53,34 @@ public class Improvement
             harvestCost = 2000000;
         }
         
+    }
+
+    public void startTurn()
+    {
+        //Debug.Log("numUE " + numUE + " idealUE" + idealUE);
+        //if(idealUE > numUE) {
+        //    Debug.Log("need more uneducated workers");
+        //    Citizen e = location.hireCitizen(0);
+        //    Debug.Log(e.firstName);
+        //    hireEmployee(e);
+        //}
+        //if (idealHE >= numHE)
+        //{
+        //    Citizen e = location.hireCitizen(1);
+        //    hireEmployee(e);
+        //}
+        //if (idealLE > numLE)
+        //{
+        //    Citizen e = location.hireCitizen(2);
+        //    hireEmployee(e);
+        //}
+        //Debug.Log("NEXT MESSAGE IS WORKERS");
+        //foreach(Citizen e in employees)
+        //{
+        //    Debug.Log(e.firstName);
+        //}
+
+
     }
 
 
@@ -122,8 +151,13 @@ public class Improvement
 
     public double getPerformance()
     {
+        return 1;
         double performance = 0;
-        foreach(Citizen e in employees) {
+        if(employees.Count == 0)
+        {
+            return 0;
+        }
+        foreach (Citizen e in employees) {
             performance += e.returnSatisfaction();
         }
         performance = performance / employees.Count;
@@ -131,12 +165,12 @@ public class Improvement
         {
             return 0;
         }
-        return performance - performanceHitUE * Mathf.Abs(idealUE - numUE) - performanceHitLE * Mathf.Abs(idealLE - numLE) - performanceHitHE * Mathf.Abs(idealHE - numHE);
+        //return performance - performanceHitUE * Mathf.Abs(idealUE - numUE) - performanceHitLE * Mathf.Abs(idealLE - numLE) - performanceHitHE * Mathf.Abs(idealHE - numHE);
     }
 
     public virtual void harvestResource()
     {
-        resource.setResource(getPerformance() * baseHex.resourceType.getDamount());
+        resource.setResource(baseHex.resourceType.getDamount());
     }
 
     public double getHarvestCost(double amount)

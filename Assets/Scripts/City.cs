@@ -60,7 +60,7 @@ public class City : IInteractableObj
         buildings = new List<Building>();
         citizens = new List<Citizen>();
         unemployedCitizens = new List<Citizen>();
-
+        unemployedCitizens.AddRange(citizens);
 
         if (center == true)
         {
@@ -152,17 +152,27 @@ public class City : IInteractableObj
     {
         GDP = 0;
         transport = 0;
-        //foreach(Improvement n in nationalizedImprovements)
-        //{
-        //    n.harvestResource();
-        //   string improvementName = n.resource.resourceName;
-        //    findResource(improvementName).changeDamount(n.resource.getAmount());
-        //}
-        foreach (var resource in resources)
+        foreach(Improvement n in nationalizedImprovements)
+        {
+            n.startTurn();
+            n.harvestResource();
+            string improvementName = n.resource.resourceName;
+            findResource(improvementName).changeDamount(n.resource.getAmount());
+
+        }
+
+        foreach (PlayerResource resource in resources)
         {
             resource.setResource(resource.getAmount() + resource.getDamount());
             //calculate GDP
             GDP += resource.harvestCost*resource.getDamount();
+            if(resource.getAmount() > 0)
+            {
+                foreach (Store s in findBuilding("store"))
+                {
+                    s.recieveResources(resource.resourceName, resource.damount);
+                }
+            }
         }
         //Gather resources
         foreach (var hex in ownedHexes)
@@ -182,7 +192,7 @@ public class City : IInteractableObj
             {
                 transport = r.getDamount() * transport_mod;
             }
-            Debug.Log("Transportation: " + transport);
+            //Debug.Log("Transportation: " + transport);
         }
         feedCitizens();
         foreach (Citizen c in citizens)

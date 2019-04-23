@@ -15,6 +15,7 @@ public class PlayerResource
     {
         resourceName = name;
         amount = startingAmount;
+        damount = 0;
         this.harvestCost = harvestCost;
     }
 
@@ -22,6 +23,7 @@ public class PlayerResource
     {
         resourceName = name;
         amount = startingAmount;
+        damount = 0;
         setHarvestCost(name);
     }
 
@@ -29,6 +31,7 @@ public class PlayerResource
     {
         resourceName = name;
         amount = 0;
+        damount = 0;
         setHarvestCost(name);
     }
 
@@ -109,5 +112,10 @@ public class PlayerResource
     public bool Equals(PlayerResource other)
     {
         return resourceName == other.resourceName;
+    }
+
+    public override string ToString()
+    {
+        return resourceName + " :" + amount;
     }
 }
