@@ -10,7 +10,7 @@ public class Farm : Improvement
     static public GameObject model;
 
 
-    public Farm(Hex baseHex, Corporation corp, bool nationalized) : base(nationalized, baseHex)
+    public Farm(Hex baseHex, Corporation corp, Player player, bool nationalized) : base(nationalized, baseHex, player)
     {
 
         if(baseHex.moisture  >= .66f)

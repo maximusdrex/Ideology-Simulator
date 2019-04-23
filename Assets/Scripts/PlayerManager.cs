@@ -43,6 +43,21 @@ public class PlayerManager : MonoBehaviour
                     {
                         Debug.Log("forest tile");
                     }
+                    //if (Input.GetKeyDown("space"))
+                    //{
+                    if(hex.improvement == null)
+                    {
+                        GameObject obj = (GameObject)Resources.Load("farm");
+                        gm.placeOnHex(obj, hex.C, hex.R);
+                        Debug.Log("new farm");
+                        hex.improvement = new Improvement(true, hex, player);
+                    }
+                    else
+                    {
+                        Debug.Log("exists");
+                    }
+                        
+                    //}
                     Debug.Log(hex.ToString());
                     if (hex.resourceType != null)
                     {
