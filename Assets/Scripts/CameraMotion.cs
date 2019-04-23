@@ -15,7 +15,7 @@ public class CameraMotion : MonoBehaviour
         lastPosition = this.transform.position;
         hasMoved = true;
         magnitude = 10;
-        panSpeed = 10;
+        panSpeed = 20;
     }
 
     // Update is called once per frame

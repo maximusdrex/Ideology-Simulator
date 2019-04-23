@@ -16,10 +16,6 @@ public class CapitalistCity : City
 
         name = getName(capitol);
         Debug.Log("City created at: " + baseHex.C + "," + baseHex.R + " named:" + name);
-        for (int i = 0; i < 10; i++)
-        {
-            citizens.Add(new Citizen(this));
-        }
     }
 
     public string getName(bool capitol)
