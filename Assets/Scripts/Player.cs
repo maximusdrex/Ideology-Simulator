@@ -16,6 +16,7 @@ public class Player
     public double importTax;
     public double minimumWage;
     public double wageTax;
+    public List<Unit> units;
 
     public Player(int pid, bool communist)
     {
@@ -30,6 +31,7 @@ public class Player
         cities = new List<City>();
         this.communist = communist;
         LoadTechs();
+        units = new List<Unit>();
     }
 
     public virtual void StartTurn()

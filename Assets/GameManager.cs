@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         gameMap.colorHexes(cam.transform.position);
         playing = players[0];
         playing.StartTurn();
-
+        unitToGameObject = new Dictionary<Unit, GameObject>();
     }
 
 
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
 
     public void spawnUnit(Unit u, int q, int r)
     {
-        GameObject unitModel = u.mesh;
+        GameObject unitModel = u.model;
         unitToGameObject.Add(u, unitModel);
         placeOnHex(unitModel,q,r);
     }
@@ -134,12 +134,9 @@ public class GameManager : MonoBehaviour
     public bool placeOnHex(GameObject obj, int x, int z, float span, float horizontalDisp, Quaternion q)
     {
         GameObject placedObject = Instantiate(obj, Vector3.zero, Quaternion.identity);
-        Debug.Log("Hex: " + x + " " + z);
         placedObject.transform.position = gameMap.getHexObj(x, z).transform.position;
-        Debug.Log(gameMap.getHexObj(x, z).transform.position);
         placedObject.transform.SetParent(gameMap.getHexObj(x, z).transform);
         placedObject.transform.localPosition = new Vector3(horizontalDisp, 0, span);
-        Debug.Log(gameMap.getHexObj(x, z).transform.position+ new Vector3(horizontalDisp, 0, span));
         placedObject.transform.localRotation = q;
         return true;
     }
