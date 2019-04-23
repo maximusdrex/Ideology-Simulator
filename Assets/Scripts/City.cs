@@ -162,20 +162,27 @@ public class City : IInteractableObj
             string improvementName = n.resource.resourceName;
             findResource(improvementName).changeDamount(n.resource.getAmount());
             Debug.Log("Food I think: " + n.resource.getAmount());
-            foreach(PlayerResource in resources)
+            PlayerResource pr = findResource(improvementName);
+            pr.changeDamount(n.resource.getAmount());
+            Debug.Log("Farm produced :" + n.resource.getAmount());
 
         }
 
         foreach (PlayerResource resource in resources)
         {
             resource.setResource(resource.getAmount() + resource.getDamount());
+            if(resource.resourceName == "food")
+            {
+                Debug.Log("City has " + resource.getAmount() + " food");
+            }
             //calculate GDP
             GDP += resource.harvestCost*resource.getDamount();
             if(resource.getAmount() > 0)
             {
                 foreach (Store s in findBuilding("store"))
                 {
-                    s.recieveResources(resource.resourceName, resource.damount);
+                    s.recieveResources(resource.resourceName, resource.getAmount());
+                    resource.setResource(0);
                 }
             }
         }

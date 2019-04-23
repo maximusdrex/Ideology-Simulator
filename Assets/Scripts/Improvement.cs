@@ -57,7 +57,7 @@ public class Improvement
 
     public void startTurn()
     {
-        Debug.Log("numUE " + numUE + " idealUE" + idealUE);
+
         if(idealUE > numUE) {
             Citizen e = location.hireCitizen(0);
             hireEmployee(e);
@@ -72,12 +72,6 @@ public class Improvement
             Citizen e = location.hireCitizen(2);
             hireEmployee(e);
         }
-        Debug.Log("NEXT MESSAGE IS WORKERS");
-        foreach(Citizen e in employees)
-        {
-            Debug.Log(e.firstName);
-        }
-
 
     }
 
@@ -149,7 +143,6 @@ public class Improvement
 
     public double getPerformance()
     {
-        return 1;
         double performance = 0;
         if(employees.Count == 0)
         {
