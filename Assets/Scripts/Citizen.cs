@@ -22,7 +22,7 @@ public class Citizen
     public double wealth;
     private static string[] firstlines;
     private static string[] lastlines;
-    public static double foodAmount = 1;
+    public static double foodAmount = 2;
 
     public double satisfaction;
 

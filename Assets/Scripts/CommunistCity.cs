@@ -58,6 +58,7 @@ public class CommunistCity : City
             {
                 Store s = (Store)b;
                 foodSum += s.getResourceCount(food.resourceName);
+                s.giveResources(food.resourceName);
             }
             c.recieveFood(foodSum / citizens.Count);
         }

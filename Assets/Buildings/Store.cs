@@ -49,6 +49,15 @@ public class Store : Building
         pr.gainResource(amount);
     }
 
+    public double giveResources(string name)
+    {
+        PlayerResource pr = neededResources.Find(x => x.resourceName == name);
+        double amount = pr.getAmount();
+        pr.setResource(0);
+        return amount;
+
+    }
+
     public double getResourceCount(string name) {
         return neededResources.Find(x => x.resourceName == name).getAmount();
     }

@@ -160,11 +160,8 @@ public class City : IInteractableObj
             n.startTurn();
             n.harvestResource();
             string improvementName = n.resource.resourceName;
-            findResource(improvementName).changeDamount(n.resource.getAmount());
-            Debug.Log("Food I think: " + n.resource.getAmount());
             PlayerResource pr = findResource(improvementName);
             pr.changeDamount(n.resource.getAmount());
-            Debug.Log("Farm produced :" + n.resource.getAmount());
 
         }
 
