@@ -20,12 +20,13 @@ public class GameManager : MonoBehaviour
         turn = 1;
         players = new List<Player>();
         int numPlayers = 1;
-        players.Add(new Player(0, Random.Range(0,1) > .5f));
+        players.Add(new Player(0, true));
         for (int i = 1; i < numPlayers; i++)
         {
             players.Add(new AIPlayer(i, Random.Range(0, 1) > .5f));
 
         }
+        unitToGameObject = new Dictionary<Unit, GameObject>();
     }
 
     void Start()

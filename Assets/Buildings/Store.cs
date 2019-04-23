@@ -41,7 +41,14 @@ public class Store : Building
 
     public void recieveResources(string name, double amount)
     {
-        neededResources.Find(x => x.resourceName == name).gainResource(amount);
+        if(name == null)
+        {
+            return;
+        }
+        PlayerResource pr = neededResources.Find(x => x.resourceName == name);
+        Debug.Log(pr);
+        Debug.Log(amount);
+        pr.gainResource(amount);
     }
 
     public double getResourceCount(string name) {

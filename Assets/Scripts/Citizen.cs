@@ -36,7 +36,6 @@ public class Citizen
         {
             firstlines  = File.ReadAllLines(@"Assets/TextResources/firstNames.txt");
             lastlines = File.ReadAllLines(@"Assets/TextResources/lastNames.txt");
-            Debug.Log(firstlines);
 
         }
         string [] names = getName();
@@ -211,7 +210,7 @@ public class Citizen
         {
             return .5f;
         }
-        return 0;
+        return 1;
     }
 
     public int buyLuxuries()
