@@ -72,6 +72,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void spawnUnit(GameObject unit, int q, int r)
+    {
+       placeOnHex(unit,q,r);
+    }
+
     public void instantiateBuilding(City c)
     {
         for(int i = 0; i < c.buildingChanged; i++)
