@@ -15,6 +15,7 @@ public class Improvement
     public int idealLE;
     public int idealHE;
     public int minEmployees;
+    public string type;
 
     private int numUE;
     private int numLE;
@@ -32,16 +33,25 @@ public class Improvement
 
 
 
-    public Improvement(bool nationalized, Hex baseHex) {
+    public Improvement(bool nationalized, Hex baseHex, Player player) {
         if (!nationalized)
         {
             corporation = new Corporation(this);
         }
         location = baseHex.getCity();
-        owner = location.owner;
+        owner = player;
         employees = new List<Citizen>();
-        harvestCost = baseHex.resourceType.harvestCost;
-        resource = baseHex.resourceType;
+        if(baseHex.resourceType != null)
+        {
+            resource = baseHex.resourceType;
+            harvestCost = baseHex.resourceType.harvestCost;
+        }
+        else
+        {
+            resource = new PlayerResource("food");
+            harvestCost = 2000000;
+        }
+        
     }
 
 

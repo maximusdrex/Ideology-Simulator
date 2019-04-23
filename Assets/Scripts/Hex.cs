@@ -30,6 +30,7 @@ public class Hex
     public Player owner;
     public PlayerResource resourceType;
     private City city;
+    public Improvement improvement;
 
     public Hex (int c, int r)
     {

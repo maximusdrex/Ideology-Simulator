@@ -1,41 +1,47 @@
 fileFormatVersion: 2
-guid: 12e5ffa7a48564b45a0e5af7245edb8d
+guid: 42acd98e8675e478e88a966d64460ee1
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: Circle
     100002: Cube
     100004: Cube.001
-    100006: Cylinder
-    100008: Sphere
-    100010: //RootNode
+    100006: Cube.002
+    100008: Cylinder
+    100010: Sphere
+    100012: //RootNode
     400000: Circle
     400002: Cube
     400004: Cube.001
-    400006: Cylinder
-    400008: Sphere
-    400010: //RootNode
+    400006: Cube.002
+    400008: Cylinder
+    400010: Sphere
+    400012: //RootNode
     2100000: Material.001
     2100002: Material
     2100004: Material.005
     2100006: Material.002
     2100008: Material.004
     2100010: Material.003
+    2100012: Material.007
     2300000: Circle
     2300002: Cube
     2300004: Cube.001
-    2300006: Cylinder
-    2300008: Sphere
+    2300006: Cube.002
+    2300008: Cylinder
+    2300010: Sphere
     3300000: Circle
     3300002: Cube
     3300004: Cube.001
-    3300006: Cylinder
-    3300008: Sphere
+    3300006: Cube.002
+    3300008: Cylinder
+    3300010: Sphere
     4300000: Cube
     4300002: Sphere
     4300004: Circle
     4300006: Cube.001
     4300008: Cylinder
+    4300010: Cube.002
   externalObjects: {}
   materials:
     importMaterials: 1
