@@ -79,13 +79,13 @@ public class PlayerManager : MonoBehaviour
                 }
             }
 
-            if (Input.GetKey("F"))
-            {
-                foreach(Worker w in units)
-                {
-                    w.buildFarm();
-                }
-            }
+            //if (Input.GetKey("F"))
+            //{
+            //    foreach(Worker w in units)
+            //    {
+            //        w.buildFarm();
+            //    }
+            //}
         }
     }
 
