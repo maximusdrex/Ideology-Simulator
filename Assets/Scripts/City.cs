@@ -44,9 +44,11 @@ public class City : IInteractableObj
 
         this.owner = owner;
         ownedHexes = new List<Hex>();
-        ownedHexes.Add(baseHex);
-        possibleHexes = HexMap.hexesInRange(baseHex, maxRange);
-
+        ownedHexes.AddRange(HexMap.hexesInRange(baseHex, maxRange));
+        foreach(Hex h in ownedHexes)
+        {
+            h.setCity(this);
+        }
         buildingChanged = 0;
         x = baseHex.x;
         z = baseHex.z;
