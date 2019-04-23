@@ -38,7 +38,7 @@ public class PlayerResource
     public void setHarvestCost(string name)
     {
         if (name.Equals("food"))
-            this.harvestCost = 2000000;
+            this.harvestCost = 20000;
         else if (name.Equals("lumber"))
             this.harvestCost = 500000;
         else if (name.Equals("iron"))
