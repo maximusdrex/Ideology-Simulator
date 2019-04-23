@@ -76,22 +76,25 @@ public class Player
 
     private void LoadTechs()
     {
-        playerTechTree.Add(new Tech("Industrialization", 0, null));
         TextAsset fullTechs = (TextAsset) Resources.Load("Techs");
         string[] Techs = fullTechs.text.Split('\n');
         foreach(string tech in Techs)
         {
-            string[] techDetails = tech.Split(' ');
+            string[] techDetails = tech.Split(',');
             if(techDetails.Length == 3)
             {
                 try
                 {
-                    playerTechTree.Add(new Tech(techDetails[0], int.Parse(techDetails[1]), getTech(techDetails[2])));
+                    playerTechTree.Add(new Tech(techDetails[0].Trim(), int.Parse(techDetails[1]), getTech(techDetails[2].Trim())));
                 } catch
                 {
                     Debug.Log("Did not add: " + techDetails[0] + "; " + techDetails[2]);
                 }
-            } else
+            } else if(techDetails.Length == 2)
+            {
+                playerTechTree.Add(new Tech(techDetails[0].Trim(), int.Parse(techDetails[1]), null));
+            }
+            else
             {
                 Debug.Log("Did not add tech");
             }
@@ -104,19 +107,34 @@ public class Player
     {
         foreach(Tech tech in playerTechTree)
         {
-            Debug.Log(tech.name + " : " + tech.GetCost().ToString());
+            if(tech.GetPrereq() == null)
+            {
+                Debug.Log(tech.name + " : " + null);
+            } else
+            {
+                Debug.Log(tech.name + " : " + tech.GetPrereq().name);
+            }
         }
     }
 
-    private Tech getTech(string techName)
+    public Tech getTech(string techName)
     {
         foreach (Tech tech in playerTechTree)
         {
-            if(tech.name == techName)
+            if (tech.name == techName)
             {
+                //Debug.Log(tech.name + " == " + techName);
                 return tech;
             }
+            //Debug.Log("--" + tech.name + " : " + tech.name.GetHashCode().ToString() + " : " + tech.name.Length.ToString() + " != " + techName + " : " + techName.GetHashCode().ToString() + " : " + techName.Length.ToString() + "--");
+
         }
+        //Debug.Log("COULD NOT FIND: " + techName);
         return null;
+    }
+
+    public List<Tech> GetTechTree()
+    {
+        return playerTechTree;
     }
 }

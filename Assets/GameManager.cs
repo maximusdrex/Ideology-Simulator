@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Game Manager started");
+        //Debug.Log("Game Manager started");
         foreach (Player p in players)
         {
             Hex[,] hexes = HexMap.hexes;

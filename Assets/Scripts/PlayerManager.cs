@@ -74,7 +74,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void setGUI(GameObject gui)
+    public void setGUI(GameObject gui)
     {
         bool exists = false;
         foreach(GameObject obj in GameObject.FindGameObjectsWithTag("GUI"))

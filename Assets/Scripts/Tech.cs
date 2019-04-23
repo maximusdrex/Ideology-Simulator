@@ -8,6 +8,7 @@ public class Tech
     private int progress;
     private int cost;
     private Tech prereq;
+    private List<Tech> children;
 
     public Tech(string nm, int tcost, Tech req)
     {
@@ -15,6 +16,7 @@ public class Tech
         name = nm;
         prereq = req;
         cost = tcost;
+        children = new List<Tech>();
     }
 
     public int GetProgress()
@@ -34,5 +36,23 @@ public class Tech
     public int GetCost()
     {
         return cost;
+    }
+
+    public List<Tech> GetChildren()
+    {
+        return children;
+    }
+
+    public Tech GetPrereq()
+    {
+        return prereq;
+    }
+
+    public void AddChild(Tech tech)
+    {
+        if(!children.Contains(tech))
+        {
+            children.Add(tech);
+        }
     }
 }
