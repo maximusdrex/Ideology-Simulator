@@ -40,7 +40,7 @@ public class City : IInteractableObj
 
     public City(Hex[,] hexes, bool center, bool capitol, Player owner)
     {
-        baseHex = this.getStartingLocation(hexes);
+        baseHex = getStartingLocation(hexes);
 
         this.owner = owner;
         ownedHexes = new List<Hex>();
@@ -60,6 +60,10 @@ public class City : IInteractableObj
         buildings = new List<Building>();
         citizens = new List<Citizen>();
         unemployedCitizens = new List<Citizen>();
+        for (int i = 0; i < 10; i++)
+        {
+            citizens.Add(new Citizen(this));
+        }
         unemployedCitizens.AddRange(citizens);
 
         if (center == true)
@@ -229,10 +233,12 @@ public class City : IInteractableObj
     public Citizen hireCitizen(int edNeeded)
     {
         unemployedCitizens.Sort(Citizen.educationComparison);
+        unemployedCitizens.Reverse();
         foreach(Citizen u in unemployedCitizens)
         {
             if(u.getEducation() >= edNeeded)
             {
+                unemployedCitizens.Remove(u);
                 return u;
             }
         }

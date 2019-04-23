@@ -57,28 +57,26 @@ public class Improvement
 
     public void startTurn()
     {
-        //Debug.Log("numUE " + numUE + " idealUE" + idealUE);
-        //if(idealUE > numUE) {
-        //    Debug.Log("need more uneducated workers");
-        //    Citizen e = location.hireCitizen(0);
-        //    Debug.Log(e.firstName);
-        //    hireEmployee(e);
-        //}
-        //if (idealHE >= numHE)
-        //{
-        //    Citizen e = location.hireCitizen(1);
-        //    hireEmployee(e);
-        //}
-        //if (idealLE > numLE)
-        //{
-        //    Citizen e = location.hireCitizen(2);
-        //    hireEmployee(e);
-        //}
-        //Debug.Log("NEXT MESSAGE IS WORKERS");
-        //foreach(Citizen e in employees)
-        //{
-        //    Debug.Log(e.firstName);
-        //}
+        Debug.Log("numUE " + numUE + " idealUE" + idealUE);
+        if(idealUE > numUE) {
+            Citizen e = location.hireCitizen(0);
+            hireEmployee(e);
+        }
+        if (idealHE > numHE)
+        {
+            Citizen e = location.hireCitizen(1);
+            hireEmployee(e);
+        }
+        if (idealLE > numLE)
+        {
+            Citizen e = location.hireCitizen(2);
+            hireEmployee(e);
+        }
+        Debug.Log("NEXT MESSAGE IS WORKERS");
+        foreach(Citizen e in employees)
+        {
+            Debug.Log(e.firstName);
+        }
 
 
     }
@@ -155,6 +153,7 @@ public class Improvement
         double performance = 0;
         if(employees.Count == 0)
         {
+            Debug.Log("No employees");
             return 0;
         }
         foreach (Citizen e in employees) {
@@ -165,7 +164,7 @@ public class Improvement
         {
             return 0;
         }
-        //return performance - performanceHitUE * Mathf.Abs(idealUE - numUE) - performanceHitLE * Mathf.Abs(idealLE - numLE) - performanceHitHE * Mathf.Abs(idealHE - numHE);
+        return performance - performanceHitUE * Mathf.Abs(idealUE - numUE) - performanceHitLE * Mathf.Abs(idealLE - numLE) - performanceHitHE * Mathf.Abs(idealHE - numHE);
     }
 
     public virtual void harvestResource()
