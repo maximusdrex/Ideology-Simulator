@@ -15,6 +15,7 @@ public class Improvement
     public int idealLE;
     public int idealHE;
     public int minEmployees;
+    public string type;
 
     private int numUE;
     private int numLE;
