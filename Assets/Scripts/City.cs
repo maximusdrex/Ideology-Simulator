@@ -162,6 +162,15 @@ public class City : IInteractableObj
             //calculate GDP
             GDP += resource.harvestCost*resource.getDamount();
         }
+        //Gather resources
+        foreach (var hex in ownedHexes)
+        {
+            if(hex.improvement != null)
+            {
+                
+            }
+        }
+
         //calculate GDP
         GDP = 0;
         foreach (PlayerResource r in resources)
