@@ -52,7 +52,8 @@ public class PlayerManager : MonoBehaviour
                     if(hexList.Count == 1)
                     {
                         setGUI(hexList[0].GetUI());
-                    } else
+                    } 
+                    else
                     {
                         setGUI(defaultGUI);
                     }
