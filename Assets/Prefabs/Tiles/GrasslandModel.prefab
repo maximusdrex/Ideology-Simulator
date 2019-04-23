@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!64 &8965315121011016288
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2179064524806995471}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 1e2abd7d893af4ece914902f0306ff84, type: 3}
 --- !u!1 &6188751399001136934
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,7 +58,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7477073548517455287}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 25.68}
   m_Children: []
   m_Father: {fileID: 6188751399001136935}
@@ -249,17 +235,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6838262641904320153, guid: 60b5fc4f235f1481c85d1a0e7083c9a9,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60b5fc4f235f1481c85d1a0e7083c9a9, type: 3}
 --- !u!4 &5056538639787248014 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4838391222947052528, guid: 60b5fc4f235f1481c85d1a0e7083c9a9,
-    type: 3}
-  m_PrefabInstance: {fileID: 362825868943176318}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2179064524806995471 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1960354015743609969, guid: 60b5fc4f235f1481c85d1a0e7083c9a9,
     type: 3}
   m_PrefabInstance: {fileID: 362825868943176318}
   m_PrefabAsset: {fileID: 0}

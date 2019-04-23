@@ -11,15 +11,21 @@ public class Unit: IInteractableObj {
     public int baseStrength;
     public int movement = 2;
     public int movementRemaining = 2;
+    public GameObject mesh;
 
-    public void SetHex(Hex hex)
+    public Hex getHex()
     {
-        if(hex != null)
+        return this.hex;
+    }
+
+    public void SetHex(Hex newHex)
+    {
+        if(this.hex != null)
         {
-            hex.tileObjs.Remove(this);
+            this.hex.tileObjs.Remove(this);
         }
-        this.hex = hex;
-        hex.tileObjs.Add(this);
+        this.hex = newHex;
+        newHex.tileObjs.Add(this);
     }
 
     public GameObject GetUI()
