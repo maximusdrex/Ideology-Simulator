@@ -44,6 +44,10 @@ public class PlayerManager : MonoBehaviour
                         Debug.Log("forest tile");
                     }
                     Debug.Log(hex.ToString());
+                    if (hex.resourceType != null)
+                    {
+                        Debug.Log(hex.resourceType.resourceName + ": " + hex.resourceType.getAmount());
+                    }
                     List<IInteractableObj> hexList = hex.tileObjs;
                     if(hexList.Count == 1)
                     {

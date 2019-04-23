@@ -69,9 +69,15 @@ public class HexMap : MonoBehaviour
 
         foreach (KeyValuePair<Hex, GameObject> hexGo in hexToGameObject)
         {
-            hexGo.Value.GetComponentInChildren<TextMesh>().text = hexGo.Key.C + " " + hexGo.Key.R;
-
-
+            //hexGo.Value.GetComponentInChildren<TextMesh>().text = hexGo.Key.C + " " + hexGo.Key.R;
+            if (hexGo.Key.resourceType != null)
+            {
+                hexGo.Value.GetComponentInChildren<TextMesh>().text = hexGo.Key.resourceType.resourceName + " " + hexGo.Key.resourceType.getAmount();
+            }
+            else
+            {
+                hexGo.Value.GetComponentInChildren<TextMesh>().text = "";
+            }
         }
     }
 
@@ -424,40 +430,40 @@ public class HexMap : MonoBehaviour
                 {
                     h.terrain = TerrainEnum.Terrain.Rainforest;
                     int chance = Random.Range(0, 100);
-                    int factor = Random.Range(3, 10);
+                    int factor = Random.Range(4, 30);
                     if (chance < 5)
                     {
-                        h.setResource(new PlayerResource("luxury_metals", 10*factor));
+                        h.setResource(new PlayerResource("luxury_metals", factor));
                     }
                 }
                 if (temp < .75f)
                 {
                     h.terrain = TerrainEnum.Terrain.Forest;
                     int chance = Random.Range(0, 100);
-                    int factor = Random.Range(3, 10);
+                    int factor = Random.Range(4, 30);
                     if (chance < 5)
                     {
-                        h.setResource(new PlayerResource("coal", 1000 * factor));
+                        h.setResource(new PlayerResource("coal", factor));
                     }
                 }
                 if (temp < .5f && temp >= .33f)
                 {
                     h.terrain = TerrainEnum.Terrain.Forest;
                     int chance = Random.Range(0, 100);
-                    int factor = Random.Range(3, 10);
+                    int factor = Random.Range(4, 30);
                     if (chance < 5)
                     {
-                        h.setResource(new PlayerResource("coal", 1000 * factor));
+                        h.setResource(new PlayerResource("coal", factor));
                     }
                 }
                 if (temp < .33f)
                 {
                     h.terrain = TerrainEnum.Terrain.Ice;
                     int chance = Random.Range(0, 100);
-                    int factor = Random.Range(3, 10);
+                    int factor = Random.Range(4, 30);
                     if (chance < 10)
                     {
-                        h.setResource(new PlayerResource("oil", 1000 * factor));
+                        h.setResource(new PlayerResource("oil", factor));
                     }
                 }
             }
@@ -467,29 +473,29 @@ public class HexMap : MonoBehaviour
                 {
                     h.terrain = TerrainEnum.Terrain.Savannah;
                     int chance = Random.Range(0, 100);
-                    int factor = Random.Range(3, 10);
+                    int factor = Random.Range(4, 30);
                     if (chance < 1)
                     {
                         h.setResource(new PlayerResource("uranium", factor));
                     }
                     else if (chance < 2)
                     {
-                        h.setResource(new PlayerResource("aluminum", 1000 * factor));
+                        h.setResource(new PlayerResource("aluminum", factor));
                     }
                     else if (chance < 3)
                     {
-                        h.setResource(new PlayerResource("iron", 1000 * factor));
+                        h.setResource(new PlayerResource("iron", factor));
                     }
                     else if (chance < 5)
                     {
-                        h.setResource(new PlayerResource("oil", 1000 * factor));
+                        h.setResource(new PlayerResource("oil", factor));
                     }
                 }
                 if (temp < .66f && temp >= .5f)
                 {
                     h.terrain = TerrainEnum.Terrain.Grassland;
                     int chance = Random.Range(0, 100);
-                    int factor = Random.Range(3, 10);
+                    int factor = Random.Range(4, 30);
                     if (chance < 7)
                     {
                         h.setResource(new PlayerResource("uranium", factor));
@@ -499,20 +505,20 @@ public class HexMap : MonoBehaviour
                 {
                    h.terrain = TerrainEnum.Terrain.Forest;
                    int chance = Random.Range(0, 100);
-                   int factor = Random.Range(3, 10);
+                   int factor = Random.Range(4, 30);
                    if (chance < 10)
                    {
-                       h.setResource(new PlayerResource("coal", 1000 * factor));
+                       h.setResource(new PlayerResource("coal", factor));
                    }
                 }
                 if (temp < .33f)
                 {
                     h.terrain = TerrainEnum.Terrain.Ice;
                     int chance = Random.Range(0, 100);
-                    int factor = Random.Range(3, 10);
+                    int factor = Random.Range(4, 30);
                     if (chance < 10)
                     {
-                        h.setResource(new PlayerResource("oil", 1000 * factor));
+                        h.setResource(new PlayerResource("oil", factor));
                     }
                 }
             }
@@ -522,17 +528,17 @@ public class HexMap : MonoBehaviour
                 {
                     h.terrain = TerrainEnum.Terrain.Desert;
                     int chance = Random.Range(0, 100);
-                    int factor = Random.Range(3, 10);
+                    int factor = Random.Range(4, 30);
                     if (chance < 5)
                     {
-                        h.setResource(new PlayerResource("oil", 1000 * factor));
+                        h.setResource(new PlayerResource("oil", factor));
                     }
                 }
                 if (temp < .75f && temp >= .25f)
                 {
                     h.terrain = TerrainEnum.Terrain.Grassland;
                     int chance = Random.Range(0, 100);
-                    int factor = Random.Range(3, 10);
+                    int factor = Random.Range(4, 30);
                     if (chance < 2)
                     {
                         h.setResource(new PlayerResource("uranium", factor));
@@ -542,10 +548,10 @@ public class HexMap : MonoBehaviour
                 {
                     h.terrain = TerrainEnum.Terrain.Ice;
                     int chance = Random.Range(0, 100);
-                    int factor = Random.Range(3, 10);
+                    int factor = Random.Range(4, 30);
                     if (chance < 10)
                     {
-                        h.setResource(new PlayerResource("oil", 1000 * factor));
+                        h.setResource(new PlayerResource("oil", factor));
                     }
                 }
             }
@@ -555,14 +561,14 @@ public class HexMap : MonoBehaviour
                 h.moisture = 1f;
                 h.terrain = TerrainEnum.Terrain.Ocean;
                 int chance = Random.Range(0, 100);
-                int factor = Random.Range(3, 10);
+                int factor = Random.Range(3, 40);
                 if (chance < 2)
                 {
-                    h.setResource(new PlayerResource("oil", 1000 * factor));
+                    h.setResource(new PlayerResource("oil", factor));
                 }
                 else if (chance < 3)
                 {
-                    h.setResource(new PlayerResource("luxury_metals", 10 * factor));
+                    h.setResource(new PlayerResource("luxury_metals", factor));
                 }
             }
             if (temp < .07f)
@@ -579,34 +585,34 @@ public class HexMap : MonoBehaviour
             {
                 h.terrain = TerrainEnum.Terrain.Mountain;
                 int chance = Random.Range(0, 100);
-                int factor = Random.Range(3, 10);
+                int factor = Random.Range(4, 30);
                 if (chance < 1)
                 {
                     h.setResource(new PlayerResource("uranium", factor));
                 }
                 else if (chance < 4)
                 {
-                    h.setResource(new PlayerResource("stone", 1000 * factor));
+                    h.setResource(new PlayerResource("stone", factor));
                 }
                 else if (chance < 6)
                 {
-                    h.setResource(new PlayerResource("iron", 1000 * factor));
+                    h.setResource(new PlayerResource("iron", factor));
                 }
                 else if (chance < 8)
                 {
-                    h.setResource(new PlayerResource("aluminum", 1000 * factor));
+                    h.setResource(new PlayerResource("aluminum", factor));
                 }
                 else if (chance < 10)
                 {
-                    h.setResource(new PlayerResource("luxury_metals", 10 * factor));
+                    h.setResource(new PlayerResource("luxury_metals", factor));
                 }
                 else if (chance < 11)
                 {
-                    h.setResource(new PlayerResource("coal", 1000 * factor));
+                    h.setResource(new PlayerResource("coal", factor));
                 }
                 else if (chance < 12)
                 {
-                    h.setResource(new PlayerResource("oil", 1000 * factor));
+                    h.setResource(new PlayerResource("oil", factor));
                 }
             }
         }
