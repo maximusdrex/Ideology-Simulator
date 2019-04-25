@@ -13,10 +13,6 @@ public class CommunistCity : City
         name = getName(capitol);
         Debug.Log("City created at: " + baseHex.C + "," + baseHex.R + " named:" + name);
 
-        for (int i = 0; i < 10; i++)
-        {
-            citizens.Add(new Citizen(this));
-        }
     }
 
 
@@ -52,18 +48,28 @@ public class CommunistCity : City
 
     public override void feedCitizens()
     {
-        citizens.Sort(Citizen.wealthComparison);
+        citizens.Sort(Citizen.educationComparison);
         List<Building> stores = this.findBuilding("store");
         PlayerResource food = new PlayerResource("food");
         double foodSum = 0;
+        foreach (Building b in stores)
+        {
+            Store s = (Store)b;
+            foodSum += s.getResourceCount(food.resourceName);
+            s.giveResources(food.resourceName);
+        }
         foreach (Citizen c in citizens)
         {
-            foreach (Building b in stores)
+            if(foodSum >= Citizen.foodAmount)
             {
-                Store s = (Store)b;
-                foodSum += s.getResourceCount(food.resourceName);
+                c.recieveFood(Citizen.foodAmount);
+                foodSum -= Citizen.foodAmount;
             }
-            c.recieveFood(foodSum / citizens.Count);
+            else
+            {
+                c.recieveFood(0);
+            }
         }
+
     }
 }

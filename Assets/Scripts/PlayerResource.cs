@@ -15,6 +15,7 @@ public class PlayerResource
     {
         resourceName = name;
         amount = startingAmount;
+        damount = 0;
         this.harvestCost = harvestCost;
     }
 
@@ -22,6 +23,7 @@ public class PlayerResource
     {
         resourceName = name;
         amount = startingAmount;
+        damount = 0;
         setHarvestCost(name);
     }
 
@@ -29,13 +31,14 @@ public class PlayerResource
     {
         resourceName = name;
         amount = 0;
+        damount = 0;
         setHarvestCost(name);
     }
 
     public void setHarvestCost(string name)
     {
         if (name.Equals("food"))
-            this.harvestCost = 2000000;
+            this.harvestCost = 20000;
         else if (name.Equals("lumber"))
             this.harvestCost = 500000;
         else if (name.Equals("iron"))
@@ -98,16 +101,22 @@ public class PlayerResource
 
     public void changeDamount(double toAdd)
     {
-        damount += toAdd;
+        plusAmount += toAdd;
     }
 
     public void setDResource(double toSet)
     {
+        plusAmount = toSet;
         damount = toSet;
     }
 
     public bool Equals(PlayerResource other)
     {
         return resourceName == other.resourceName;
+    }
+
+    public override string ToString()
+    {
+        return resourceName + " :" + amount;
     }
 }

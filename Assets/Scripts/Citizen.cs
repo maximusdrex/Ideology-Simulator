@@ -22,7 +22,8 @@ public class Citizen
     public double wealth;
     private static string[] firstlines;
     private static string[] lastlines;
-    public static double foodAmount = 1;
+    public static double foodAmount = 2;
+    public int childTimer;
 
     public double satisfaction;
 
@@ -30,21 +31,21 @@ public class Citizen
         health = 100;
         education = 0;
         wealth = 0;
-        age = 18;
+        age = 0;
         float genderRand = UnityEngine.Random.Range(0, 100);
         if (firstlines == null)
         {
             firstlines  = File.ReadAllLines(@"Assets/TextResources/firstNames.txt");
             lastlines = File.ReadAllLines(@"Assets/TextResources/lastNames.txt");
-            Debug.Log(firstlines);
 
         }
         string [] names = getName();
         firstName = names[0].Trim();
         lastName = names[1].Trim();
         livingIn = c;
-        //Debug.Log("Citizen born: " + firstName + " " + lastName + " living in " + livingIn.name);
-}
+        childTimer = UnityEngine.Random.Range(5, 20);
+        Debug.Log("Citizen born: " + firstName + " " + lastName + " living in " + livingIn.name);
+    }
 
     public Citizen createChild()
     {
@@ -59,6 +60,22 @@ public class Citizen
         age += 1;
         checkFood();
         haveHealthEmergency();
+
+        if(turnsSinceFed == 0 && returnSatisfaction() > .74f && childTimer <= 0)
+        {
+            Citizen child = createChild();
+            livingIn.addCitizen(child);
+            childTimer = 18;
+        }
+        childTimer--;
+        if(age >= 100)
+        {
+            int deathChance = UnityEngine.Random.Range(70, age);
+            if(deathChance >= 100)
+            {
+                die();
+            }
+        }
     }
 
 
@@ -144,7 +161,7 @@ public class Citizen
 
     public void recieveFood(double food)
     {
-        if (food >= (foodAmount)){
+        if (food >= foodAmount){
             turnsSinceFed = 0;
         }
         else
@@ -179,6 +196,19 @@ public class Citizen
         return false;
     }
 
+    public void die()
+    {
+        livingIn.citizens.Remove(this);
+        if (currentJob != null)
+        {
+            currentJob.employeeDied(this);
+        }
+        else
+        {
+            livingIn.unemployedCitizens.Remove(this);
+        }
+    }
+
 
 
     public void takeMedicine (float healthToAdd)
@@ -211,7 +241,7 @@ public class Citizen
         {
             return .5f;
         }
-        return 0;
+        return 1;
     }
 
     public int buyLuxuries()

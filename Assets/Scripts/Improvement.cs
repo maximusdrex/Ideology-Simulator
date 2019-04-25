@@ -15,6 +15,7 @@ public class Improvement
     public int idealLE;
     public int idealHE;
     public int minEmployees;
+    public string type;
 
     private int numUE;
     private int numLE;
@@ -32,16 +33,68 @@ public class Improvement
 
 
 
-    public Improvement(bool nationalized, Hex baseHex) {
+    public Improvement(bool nationalized, Hex baseHex, Player player) {
         if (!nationalized)
         {
             corporation = new Corporation(this);
         }
         location = baseHex.getCity();
-        owner = location.owner;
+        location.nationalizedImprovements.Add(this);
+        owner = player;
         employees = new List<Citizen>();
-        harvestCost = baseHex.resourceType.harvestCost;
-        resource = baseHex.resourceType;
+        if(baseHex.resourceType != null)
+        {
+            resource = baseHex.resourceType;
+            harvestCost = baseHex.resourceType.harvestCost;
+        }
+        else
+        {
+            resource = new PlayerResource("food");
+            harvestCost = 2000000;
+        }
+        
+    }
+
+    public void startTurn()
+    {
+
+        if(idealUE > numUE) {
+            Citizen e = location.hireCitizen(0);
+            if(e == null)
+            {
+                Debug.Log("Need more UE citizens!");
+            }
+            else
+            {
+                hireEmployee(e);
+            }
+
+        }
+        if (idealHE > numHE)
+        {
+            Citizen e = location.hireCitizen(2);
+            if (e == null)
+            {
+                Debug.Log("Need more HE citizens!");
+            }
+            else
+            {
+                hireEmployee(e);
+            }
+        }
+        if (idealLE > numLE)
+        {
+            Citizen e = location.hireCitizen(1);
+            if (e == null)
+            {
+                Debug.Log("Need more LE citizens!");
+            }
+            else
+            {
+                hireEmployee(e);
+            }
+        }
+
     }
 
 
@@ -61,7 +114,7 @@ public class Improvement
         {
             numUE++;
         }
-        else if (ed == 0)
+        else if (ed == 1)
         {
             numLE++;
         }
@@ -109,11 +162,33 @@ public class Improvement
         }
     }
 
+    public void employeeDied(Citizen e)
+    {
+        employees.Remove(e);
+        int ed = e.getEducation();
+        if (ed == 0)
+        {
+            numUE--;
+        }
+        else if (ed == 1)
+        {
+            numLE--;
+        }
+        else
+        {
+            numHE--;
+        }
+    }
 
     public double getPerformance()
     {
         double performance = 0;
-        foreach(Citizen e in employees) {
+        if(employees.Count == 0)
+        {
+            Debug.Log("No employees");
+            return 0;
+        }
+        foreach (Citizen e in employees) {
             performance += e.returnSatisfaction();
         }
         performance = performance / employees.Count;
@@ -126,7 +201,7 @@ public class Improvement
 
     public virtual void harvestResource()
     {
-        resource.setResource(getPerformance() * baseHex.resourceType.getDamount());
+        resource.setResource(baseHex.resourceType.getDamount());
     }
 
     public double getHarvestCost(double amount)
@@ -171,7 +246,7 @@ public class Improvement
         employees.Sort(Citizen.jobTimeComparison);
         foreach(Citizen e in employees)
         {
-            CapitalistCity location = (CapitalistCity)this.location;
+            //CapitalistCity location = (CapitalistCity)this.location;
             double wage = 0;
             if (e.getEducation() == 0)
             {

@@ -37,16 +37,17 @@ public class City : IInteractableObj
 
     public Player owner;
 
-
     public City(Hex[,] hexes, bool center, bool capitol, Player owner)
     {
-        baseHex = this.getStartingLocation(hexes);
+        baseHex = getStartingLocation(hexes);
 
         this.owner = owner;
         ownedHexes = new List<Hex>();
-        ownedHexes.Add(baseHex);
-        possibleHexes = HexMap.hexesInRange(baseHex, maxRange);
-
+        ownedHexes.AddRange(HexMap.hexesInRange(baseHex, maxRange));
+        foreach(Hex h in ownedHexes)
+        {
+            h.setCity(this);
+        }
         buildingChanged = 0;
         x = baseHex.x;
         z = baseHex.z;
@@ -58,7 +59,11 @@ public class City : IInteractableObj
         buildings = new List<Building>();
         citizens = new List<Citizen>();
         unemployedCitizens = new List<Citizen>();
-
+        for (int i = 0; i < 10; i++)
+        {
+            citizens.Add(new Citizen(this));
+        }
+        unemployedCitizens.AddRange(citizens);
 
         if (center == true)
         {
@@ -150,18 +155,32 @@ public class City : IInteractableObj
     {
         GDP = 0;
         transport = 0;
-        //foreach(Improvement n in nationalizedImprovements)
-        //{
-        //    n.harvestResource();
-        //   string improvementName = n.resource.resourceName;
-        //    findResource(improvementName).changeDamount(n.resource.getAmount());
-        //}
-        foreach (var resource in resources)
+        foreach(Improvement n in nationalizedImprovements)
+        {
+            n.startTurn();
+            n.harvestResource();
+            string improvementName = n.resource.resourceName;
+            PlayerResource pr = findResource(improvementName);
+            pr.changeDamount(n.resource.getAmount());
+
+        }
+
+        foreach (PlayerResource resource in resources)
         {
             resource.setResource(resource.getAmount() + resource.getDamount());
             //calculate GDP
             GDP += resource.harvestCost*resource.getDamount();
+            if(resource.getAmount() > 1)
+            {
+                foreach (Store s in findBuilding("store"))
+                {
+                    Debug.Log(resource.resourceName + " " + resource.getAmount());
+                    s.recieveResources(resource.resourceName, resource.getAmount());
+                }
+            }
+
         }
+
         //calculate GDP
         GDP = 0;
         foreach (PlayerResource r in resources)
@@ -171,14 +190,18 @@ public class City : IInteractableObj
             {
                 transport = r.getDamount() * transport_mod;
             }
-            Debug.Log("Transportation: " + transport);
+            //Debug.Log("Transportation: " + transport);
+            r.setDResource(0);
+            r.setResource(0);
         }
         feedCitizens();
-        foreach (Citizen c in citizens)
+        for(int i = 0; i < citizens.Count; i++)
         {
-            c.startTurn();
+            citizens[i].startTurn();
         }
         cleanUpBodies();
+
+        Debug.Log(citizens.Count);
     }
 
     public Hex getStartingLocation(Hex[,] hexes)
@@ -208,10 +231,12 @@ public class City : IInteractableObj
     public Citizen hireCitizen(int edNeeded)
     {
         unemployedCitizens.Sort(Citizen.educationComparison);
+        unemployedCitizens.Reverse();
         foreach(Citizen u in unemployedCitizens)
         {
             if(u.getEducation() >= edNeeded)
             {
+                unemployedCitizens.Remove(u);
                 return u;
             }
         }
@@ -297,7 +322,7 @@ public class City : IInteractableObj
             Citizen c = citizens[i];
             if (c.isDead())
             {
-                citizens.Remove(c);
+                c.die();
             }
         }
     }
@@ -311,5 +336,11 @@ public class City : IInteractableObj
     public string GetName()
     {
         return name;
+    }
+
+    public void addCitizen(Citizen c)
+    {
+        citizens.Add(c);
+        unemployedCitizens.Add(c);
     }
 }

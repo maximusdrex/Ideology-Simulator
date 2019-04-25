@@ -13,7 +13,7 @@ public class Producer : Improvement
     public int turnsUnsold;
     public static Store S;
 
-    public Producer (bool nationalized, Hex baseHex) :  base(nationalized, baseHex)
+    public Producer (bool nationalized, Hex baseHex, Player player) :  base(nationalized, baseHex, player)
     {
 
     }

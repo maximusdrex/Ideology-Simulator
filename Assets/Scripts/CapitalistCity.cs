@@ -16,10 +16,6 @@ public class CapitalistCity : City
 
         name = getName(capitol);
         Debug.Log("City created at: " + baseHex.C + "," + baseHex.R + " named:" + name);
-        for (int i = 0; i < 10; i++)
-        {
-            citizens.Add(new Citizen(this));
-        }
     }
 
     public string getName(bool capitol)
@@ -95,6 +91,7 @@ public class CapitalistCity : City
         PlayerResource food = new PlayerResource("food");
         foreach (Citizen c in citizens)
         {
+            Debug.Log(c.firstName + " " + c.wealth + " " + c.timeAtCurrentJob);
             foreach (Building b in stores)
             {
                 Store s = (Store)b;
@@ -102,6 +99,7 @@ public class CapitalistCity : City
                 {
                     break;
                 }
+                Debug.Log(s.getPrice());
                 if (c.wealth >= s.getPrice())
                 {
                     c.wealth -= s.getPrice();
@@ -114,7 +112,7 @@ public class CapitalistCity : City
             }
             c.recieveFood(0);
         }
-        foreach (var resource in resources)
+        foreach (PlayerResource resource in resources)
         {
             money += resource.harvestCost * resource.getDamount() * tax;
         }

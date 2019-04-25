@@ -44,6 +44,15 @@ public class PlayerManager : MonoBehaviour
                         {
                             Debug.Log("forest tile");
                         }
+
+                        createImprovement(hex);
+                        Debug.Log(hex.ToString());
+                        if (hex.resourceType != null)
+                        {
+                            Debug.Log(hex.resourceType.resourceName + ": " + hex.resourceType.getAmount());
+                        }
+
+
                         Debug.Log(hex.ToString());
                         List<IInteractableObj> hexList = hex.tileObjs;
                         if (hexList.Count == 1)
@@ -138,5 +147,30 @@ public class PlayerManager : MonoBehaviour
         u.SetHex(nextHex);
         gm.moveUnit(u);
     }
+
+    public void createImprovement(Hex hex)
+    {
+        if (hex.improvement == null && (hex.terrain != TerrainEnum.Terrain.Mountain ||
+                   hex.terrain != TerrainEnum.Terrain.Ocean))
+        {
+            if (hex.getCity() != null)
+            {
+                GameObject obj = (GameObject)Resources.Load("farm");
+                gm.placeOnHex(obj, hex.C, hex.R);
+                Debug.Log("new farm");
+                hex.improvement = new Farm(hex, player, true);
+            }
+            else
+            {
+                Debug.Log("Can't build on unowned land!");
+            }
+
+        }
+        else
+        {
+            Debug.Log("exists");
+        }
+    }
+
 }
 

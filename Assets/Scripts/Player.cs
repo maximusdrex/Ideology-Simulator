@@ -15,6 +15,7 @@ public class Player
     public double importTax;
     public double minimumWage;
     public double wageTax;
+    public List<Unit> units;
 
     private List<Tech> playerTechTree;
     private Tech researching;
@@ -32,6 +33,7 @@ public class Player
         cities = new List<City>();
         this.communist = communist;
         LoadTechs();
+        units = new List<Unit>();
     }
 
     public virtual void StartTurn()
