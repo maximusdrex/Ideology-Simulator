@@ -307,4 +307,9 @@ public class City : IInteractableObj
     {
         this.transport_mod = transport_mod;
     }
+
+    public string GetName()
+    {
+        return name;
+    }
 }

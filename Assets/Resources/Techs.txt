@@ -1,5 +1,15 @@
 Industrialization,0
 Science,10,Industrialization
-Technology,20,Science
-Nuclear Power,30,Industrialization
-Nuclear Bomb,50,Nuclear Power
+Chemistry,20,Science
+Technology,20,Industrialization
+
+Nuclear Bomb,200,Chemistry
+Nuclear Power,50,Nuclear Bomb
+Nuclear Subs,100,Nuclear Bomb
+
+Jet Engine,30,Industrialization
+Rocket Fuel,40,Jet Engine
+Rockets,30,Rocket Fuel
+
+Cipher Machines,20,Technology
+Computers,80,Cipher Machines

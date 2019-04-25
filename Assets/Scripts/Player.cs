@@ -11,11 +11,13 @@ public class Player
     public double GDP;
     public double money;
     public bool communist;
-    private List<Tech> playerTechTree;
     public double exportTax;
     public double importTax;
     public double minimumWage;
     public double wageTax;
+
+    private List<Tech> playerTechTree;
+    private Tech researching;
 
     public Player(int pid, bool communist)
     {
@@ -53,6 +55,10 @@ public class Player
                 GDP += cap.GDP;
                 money += cap.money;
             }
+        }
+        if(researching != null)
+        {
+            researching.AddProgress(TechProgress());
         }
     }
 
@@ -96,7 +102,7 @@ public class Player
             }
             else
             {
-                Debug.Log("Did not add tech");
+                Debug.Log("Did not add tech, format wrong");
             }
             
         }
@@ -136,5 +142,23 @@ public class Player
     public List<Tech> GetTechTree()
     {
         return playerTechTree;
+    }
+
+    private int TechProgress()
+    {
+        return 5;
+    }
+
+    public bool setResearch(Tech tech)
+    {
+        if (tech.GetPrereq().IsCompleted())
+        {
+            researching = tech;
+            return true;
+        } else
+        {
+            return false;
+        }
+        
     }
 }

@@ -55,4 +55,18 @@ public class Tech
             children.Add(tech);
         }
     }
+
+    public int AddProgress(int added)
+    {
+        if(progress + added <= cost)
+        {
+            progress += added;
+            return 0;
+        } else
+        {
+            int leftover = progress + added - cost;
+            progress = cost;
+            return leftover;
+        }
+    }
 }
