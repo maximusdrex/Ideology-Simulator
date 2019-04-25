@@ -60,17 +60,39 @@ public class Improvement
 
         if(idealUE > numUE) {
             Citizen e = location.hireCitizen(0);
-            hireEmployee(e);
+            if(e == null)
+            {
+                Debug.Log("Need more UE citizens!");
+            }
+            else
+            {
+                hireEmployee(e);
+            }
+
         }
         if (idealHE > numHE)
         {
-            Citizen e = location.hireCitizen(1);
-            hireEmployee(e);
+            Citizen e = location.hireCitizen(2);
+            if (e == null)
+            {
+                Debug.Log("Need more HE citizens!");
+            }
+            else
+            {
+                hireEmployee(e);
+            }
         }
         if (idealLE > numLE)
         {
-            Citizen e = location.hireCitizen(2);
-            hireEmployee(e);
+            Citizen e = location.hireCitizen(1);
+            if (e == null)
+            {
+                Debug.Log("Need more LE citizens!");
+            }
+            else
+            {
+                hireEmployee(e);
+            }
         }
 
     }
@@ -92,7 +114,7 @@ public class Improvement
         {
             numUE++;
         }
-        else if (ed == 0)
+        else if (ed == 1)
         {
             numLE++;
         }
@@ -140,6 +162,23 @@ public class Improvement
         }
     }
 
+    public void employeeDied(Citizen e)
+    {
+        employees.Remove(e);
+        int ed = e.getEducation();
+        if (ed == 0)
+        {
+            numUE--;
+        }
+        else if (ed == 1)
+        {
+            numLE--;
+        }
+        else
+        {
+            numHE--;
+        }
+    }
 
     public double getPerformance()
     {
@@ -207,7 +246,7 @@ public class Improvement
         employees.Sort(Citizen.jobTimeComparison);
         foreach(Citizen e in employees)
         {
-            CapitalistCity location = (CapitalistCity)this.location;
+            //CapitalistCity location = (CapitalistCity)this.location;
             double wage = 0;
             if (e.getEducation() == 0)
             {

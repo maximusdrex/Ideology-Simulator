@@ -6,7 +6,7 @@ public class Farm : Improvement
 {
 
     private double productivity;
-    private double baseFood = 100;
+    private double baseFood = 50;
     static public GameObject model;
 
 
@@ -30,10 +30,8 @@ public class Farm : Improvement
 
     public override void harvestResource()
     {
-        Debug.Log("Performace:" + getPerformance());
-        Debug.Log("Productivity:" + productivity);
         resource.setResource(getPerformance() * baseFood * productivity);
-        Debug.Log("Farm produced: " + getPerformance() * baseFood * productivity);
+        payEmployees();
     }
 
     public GameObject getModel()

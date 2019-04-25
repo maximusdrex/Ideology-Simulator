@@ -10,9 +10,10 @@ public class Store : Building
     public List<PlayerResource> neededResources;
     public List<double> sales;
     public double qouta;
-    public double cost;
+    public Dictionary<PlayerResource, double> costDictionary;
     public List<Citizen> employees;
     public double money;
+    public double cost;
 
     private int numUE;
     private int numLE;
@@ -25,6 +26,7 @@ public class Store : Building
 
     public Store(string name, City owner) : base(name, owner)
     {
+        costDictionary = new Dictionary<PlayerResource, double>();
         model = getModel();
         span = .2f;
         corporation = new Corporation(this);
@@ -32,6 +34,7 @@ public class Store : Building
         type = "store";
         neededResources = new List<PlayerResource>();
         neededResources.Add(new PlayerResource("food"));
+        neededResources.Add(new PlayerResource("iron"));
     }
 
     public GameObject getModel()
@@ -46,6 +49,7 @@ public class Store : Building
             return;
         }
         PlayerResource pr = neededResources.Find(x => x.resourceName == name);
+        //costDictionary.Add(pr, cost);
         pr.gainResource(amount);
     }
 
@@ -192,7 +196,7 @@ public class Store : Building
 
     public double getPrice()
     {
-        return cost / qouta * priceModifier;
+        return (cost / qouta )* priceModifier;
     }
 
     public static Comparison<Store> priceCompare = delegate (Store object1, Store object2)

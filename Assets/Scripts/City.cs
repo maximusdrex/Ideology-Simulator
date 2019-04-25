@@ -167,21 +167,14 @@ public class City : IInteractableObj
 
         foreach (PlayerResource resource in resources)
         {
-            if (resource.resourceName == "food")
-            {
-                Debug.Log("City has " + resource.getAmount() + " food");
-            }
             resource.setResource(resource.getAmount() + resource.getDamount());
-            if(resource.resourceName == "food")
-            {
-                Debug.Log("City now has " + resource.getAmount() + " food");
-            }
             //calculate GDP
             GDP += resource.harvestCost*resource.getDamount();
-            if(resource.getAmount() > 0)
+            if(resource.getAmount() > 1)
             {
                 foreach (Store s in findBuilding("store"))
                 {
+                    Debug.Log(resource.resourceName + " " + resource.getAmount());
                     s.recieveResources(resource.resourceName, resource.getAmount());
                 }
             }
@@ -202,11 +195,13 @@ public class City : IInteractableObj
             r.setResource(0);
         }
         feedCitizens();
-        foreach (Citizen c in citizens)
+        for(int i = 0; i < citizens.Count; i++)
         {
-            c.startTurn();
+            citizens[i].startTurn();
         }
         cleanUpBodies();
+
+        Debug.Log(citizens.Count);
     }
 
     public Hex getStartingLocation(Hex[,] hexes)
@@ -327,7 +322,7 @@ public class City : IInteractableObj
             Citizen c = citizens[i];
             if (c.isDead())
             {
-                citizens.Remove(c);
+                c.die();
             }
         }
     }
@@ -336,5 +331,11 @@ public class City : IInteractableObj
     public void setTransportMod(double transport_mod)
     {
         this.transport_mod = transport_mod;
+    }
+
+    public void addCitizen(Citizen c)
+    {
+        citizens.Add(c);
+        unemployedCitizens.Add(c);
     }
 }
