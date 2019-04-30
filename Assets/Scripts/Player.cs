@@ -16,13 +16,14 @@ public class Player
     public double minimumWage;
     public double wageTax;
     public List<Unit> units;
+    private GameManager gm;
 
     private List<Tech> playerTechTree;
     private Tech researching;
 
     public Player(int pid, bool communist)
     {
-        Canvas canvas = GameObject.FindObjectOfType<Canvas>();
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerTechTree = new List<Tech>();
         id = pid;
         GameObject prefab = (GameObject) Resources.Load("PlayerIndicator");
@@ -38,6 +39,12 @@ public class Player
 
     public virtual void StartTurn()
     {
+        PlayerManager pm = gm.getManager(id);
+        if(pm != null)
+        {
+            pm.StartTurn();
+        }
+
         isTurn = true;
         //indicator.GetComponent<UnityEngine.UI.Toggle>().isOn = true;
         if (communist)
