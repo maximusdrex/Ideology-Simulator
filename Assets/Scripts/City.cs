@@ -333,6 +333,11 @@ public class City : IInteractableObj
         this.transport_mod = transport_mod;
     }
 
+    public string GetName()
+    {
+        return name;
+    }
+
     public void addCitizen(Citizen c)
     {
         citizens.Add(c);

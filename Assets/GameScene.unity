@@ -559,3 +559,4 @@ MonoBehaviour:
   playerId: 0
   defaultGUI: {fileID: 4535791643709471012, guid: 18166e0ee3961554bbf4504ff463cfe0,
     type: 3}
+  currentGUI: {fileID: 0}

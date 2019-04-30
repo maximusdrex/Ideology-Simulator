@@ -9,7 +9,9 @@ public class TechGUI : MonoBehaviour
     List<Tech> ttree;
     private int nexty;
     private int layerSpace = 180;
-    private int ySpace = 80;
+    private int ySpace = 50;
+    private int maxLayer = 1;
+    private int maxY = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -17,10 +19,11 @@ public class TechGUI : MonoBehaviour
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         player = gm.GetPlayer(Camera.main.GetComponent<PlayerManager>().playerId);
         ttree = player.GetTechTree();
-        Debug.Log(player.id);
+        //Debug.Log(player.id);
         setupTree();
         nexty = 30;
         placeChildren(player.getTech("Industrialization"), 0);
+        transform.GetComponent<RectTransform>().sizeDelta = new Vector2((maxLayer + 1) * layerSpace, maxY);
     }
 
     // Update is called once per frame
@@ -57,38 +60,51 @@ public class TechGUI : MonoBehaviour
 
     int placeChildren(Tech tech, int layer)
     {
-        Debug.Log("Placing " + tech.name);
-        if(tech.GetChildren() == null)
+        //Debug.Log("Placing " + tech.name);
+        if(tech.GetChildren().Count < 1)
         {
+            //Debug.Log("This was called");
+            if(layer > maxLayer)
+            {
+                maxLayer = layer;
+            }
             placeTech(tech, layer, nexty);
-            return nexty;
+            int lasty = nexty;
+            nexty += ySpace;
+            return lasty;
         } else
         {
             List<int> y = new List<int>();
+            int numchild = 0;
             foreach(Tech child in tech.GetChildren())
             {
                 int lasty = placeChildren(child, layer + 1);
                 y.Add(lasty);
-                nexty += ySpace;
+                numchild++;
             }
-            Debug.Log("y values for " + tech.name + " - " + y.ToString());
             int min = Mathf.Min(y.ToArray());
-            int max = Mathf.Max(y.ToArray()) + 30;
-            Debug.Log("Min/Max of " + tech.name + " " + min.ToString() + "/" + max.ToString());
-            placeTech(tech, layer, ((min + max) / 2));
-            return ((min + max) / 2) - 15;
+            int max = Mathf.Max(y.ToArray());
+            if(max+30 > maxY)
+            {
+                maxY = max + 30;
+            }
+            //Debug.Log("Min/Max of " + tech.name + " " + min.ToString() + "/" + max.ToString());
+            int newPos = ((min + (max + 30)) / 2) - 15;
+            placeTech(tech, layer, newPos);
+            return newPos;
         }
     }
 
     void placeTech(Tech tech, int layer, int y)
     {
-        Debug.Log(tech.name + " placed");
+        //Debug.Log(tech.name + " placed at y: " + y.ToString());
         int x = layer * layerSpace;
         GameObject Button = Instantiate((GameObject)Resources.Load("TechButtons"));
         Button.transform.SetParent(transform, false);
         Button.transform.position = new Vector3(x, -y);
-        Debug.Log("Set " + tech.name + " to " + x.ToString() + ", " + y.ToString());
+        //Debug.Log("Set " + tech.name + " to " + x.ToString() + ", " + y.ToString());
         Button.name = tech.name;
         Button.GetComponentInChildren<UnityEngine.UI.Text>().text = tech.name;
+        Button.GetComponent<TechSelector>().tech = tech;
     }
 }

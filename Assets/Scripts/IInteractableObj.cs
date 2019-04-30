@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IInteractableObj
 {
-    //
+    string GetName();
     GameObject GetUI();
 }

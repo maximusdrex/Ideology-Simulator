@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     private Canvas playerGUI;
     public List<Unit> units;
     public GameObject defaultGUI;
+    public GameObject currentGUI;
 
     // Start is called before the first frame update
     void Start()
@@ -18,12 +20,6 @@ public class PlayerManager : MonoBehaviour
         player = gm.GetPlayer(0);
         units = new List<Unit>();
         setGUI(defaultGUI);
-        City c = player.cities[0];
-        Hex[] neighbors = c.baseHex.getNeighbors(HexMap.numCollumns, HexMap.numRows);
-        Hex neighbor = neighbors[Random.Range(0, 5)];
-        Worker w = new Worker(100);
-        spawnUnit(w, neighbor.C, neighbor.R);
-        Debug.Log("Unit spawned " + neighbor.C + " " + neighbor.R);
     }
 
     // Update is called once per frame
@@ -33,45 +29,52 @@ public class PlayerManager : MonoBehaviour
         {
             if(Input.GetMouseButtonDown(0))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit))
+                if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 {
-                    Hex hex = clickHex(hit.transform);
-                    if(hex == null)
-                    {
-                        Debug.Log("forest tile");
-                    }
-                    createImprovement(hex);
-                    Debug.Log(hex.ToString());
-                    if (hex.resourceType != null)
-                    {
-                        Debug.Log(hex.resourceType.resourceName + ": " + hex.resourceType.getAmount());
-                    }
-                    List<IInteractableObj> hexList = hex.tileObjs;
-                    if(hexList.Count == 1)
-                    {
-                        setGUI(hexList[0].GetUI());
-                    } 
-                    else
-                    {
-                        setGUI(defaultGUI);
-                    }
+                    Debug.Log("Clicked on the UI");
                 } else
                 {
-                    Debug.Log("Did not hit");
-                    setGUI(defaultGUI);
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        Hex hex = clickHex(hit.transform);
+                        if (hex == null)
+                        {
+                            Debug.Log("forest tile");
+                        }
+
+                        createImprovement(hex);
+                        Debug.Log(hex.ToString());
+                        if (hex.resourceType != null)
+                        {
+                            Debug.Log(hex.resourceType.resourceName + ": " + hex.resourceType.getAmount());
+                        }
+
+
+                        Debug.Log(hex.ToString());
+                        List<IInteractableObj> hexList = hex.tileObjs;
+                        if (hexList.Count == 1)
+                        {
+                            setGUI(hexList[0].GetUI());
+                        }
+                        else if (hexList.Count > 1)
+                        {
+                            UISelector(hexList, Input.mousePosition);
+                        }
+                        else
+                        {
+                            setGUI(defaultGUI);
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Did not hit: ");
+                        setGUI(defaultGUI);
+                    }
                 }
             }
-
-            //if (Input.GetKey("F"))
-            //{
-            //    foreach(Worker w in units)
-            //    {
-            //        w.buildFarm();
-            //    }
-            //}
         }
     }
 
@@ -113,14 +116,30 @@ public class PlayerManager : MonoBehaviour
             GameObject newObj = Instantiate(gui);
             newObj.tag = "GUI";
             newObj.name = gui.name;
+            currentGUI = newObj;
         }
+
+    }
+
+    private void UISelector(List<IInteractableObj> objs, Vector3 screenPoint)
+    {
+        if(GameObject.Find("Selector") != null)
+        {
+            Destroy(GameObject.Find("Selector"));
+        }
+        GameObject selector = Instantiate((GameObject)Resources.Load("Selector"));
+        selector.transform.SetParent(currentGUI.transform);
+        selector.name = "Selector";
+        selector.GetComponent<UISelector>().Init(objs);
+        Vector2 newPos = new Vector2();
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(currentGUI.GetComponent<RectTransform>(), new Vector2(screenPoint.x, screenPoint.y), Camera.main, out newPos);
+        selector.transform.localPosition = new Vector3(newPos.x, newPos.y);
 
     }
 
     public void spawnUnit (Unit u, int q, int r)
     {
         units.Add(u);
-        player.units.Add(u);
         gm.spawnUnit(u, q, r);
     }
     public void moveUnit(Unit u, Hex nextHex)
@@ -134,7 +153,7 @@ public class PlayerManager : MonoBehaviour
         if (hex.improvement == null && (hex.terrain != TerrainEnum.Terrain.Mountain ||
                    hex.terrain != TerrainEnum.Terrain.Ocean))
         {
-            if(hex.getCity() != null)
+            if (hex.getCity() != null)
             {
                 GameObject obj = (GameObject)Resources.Load("farm");
                 gm.placeOnHex(obj, hex.C, hex.R);
@@ -152,5 +171,6 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("exists");
         }
     }
+
 }
 
