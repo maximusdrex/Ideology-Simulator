@@ -85,7 +85,7 @@ public class CapitalistCity : City
     }
 
 
-    public override void feedCitizens(){
+    public override bool feedCitizens(){
         citizens.Sort(Citizen.wealthComparison);
         List<Building> stores = this.findBuilding("store");
         PlayerResource food = new PlayerResource("food");
@@ -116,6 +116,7 @@ public class CapitalistCity : City
         {
             money += resource.harvestCost * resource.getDamount() * tax;
         }
+        return false;
     }
 
 }
