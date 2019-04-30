@@ -46,7 +46,7 @@ public class CommunistCity : City
         feedCitizens();
     }
 
-    public override void feedCitizens()
+    public override bool feedCitizens()
     {
         citizens.Sort(Citizen.educationComparison);
         List<Building> stores = this.findBuilding("store");
@@ -70,6 +70,10 @@ public class CommunistCity : City
                 c.recieveFood(0);
             }
         }
-
+        if(foodSum > 0)
+        {
+            return true;
+        }
+        return false;
     }
 }

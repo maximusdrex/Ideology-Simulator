@@ -194,10 +194,10 @@ public class City : IInteractableObj
             r.setDResource(0);
             r.setResource(0);
         }
-        feedCitizens();
+        bool food = feedCitizens();
         for(int i = 0; i < citizens.Count; i++)
         {
-            citizens[i].startTurn();
+            citizens[i].startTurn(food);
         }
         cleanUpBodies();
 
@@ -310,9 +310,9 @@ public class City : IInteractableObj
         return 0;
     }
 
-    public virtual void feedCitizens()
+    public virtual bool feedCitizens()
     {
-        Debug.Log("Default feed citizens called");
+        return false;
     }
 
     public void cleanUpBodies()

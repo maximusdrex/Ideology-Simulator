@@ -43,7 +43,7 @@ public class Citizen
         firstName = names[0].Trim();
         lastName = names[1].Trim();
         livingIn = c;
-        childTimer = UnityEngine.Random.Range(5, 20);
+        childTimer = UnityEngine.Random.Range(5, 25);
         Debug.Log("Citizen born: " + firstName + " " + lastName + " living in " + livingIn.name);
     }
 
@@ -55,7 +55,7 @@ public class Citizen
         return c;
     }
 
-    public void startTurn()
+    public void startTurn(bool surplusFood)
     {
         age += 1;
         checkFood();
@@ -63,9 +63,22 @@ public class Citizen
 
         if(turnsSinceFed == 0 && returnSatisfaction() > .74f && childTimer <= 0)
         {
-            Citizen child = createChild();
-            livingIn.addCitizen(child);
-            childTimer = 18;
+            if(surplusFood == true || wealth > 0)
+            {
+                Citizen child = createChild();
+                livingIn.addCitizen(child);
+
+                if(age >= 60)
+                {
+                    childTimer = 10000;
+                }
+                else
+                {
+                    childTimer = education+1 * 8;
+                }
+
+            }
+
         }
         childTimer--;
         if(age >= 100)
