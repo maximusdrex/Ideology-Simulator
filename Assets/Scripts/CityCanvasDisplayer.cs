@@ -7,6 +7,7 @@ using System.IO;
 public class CityCanvasDisplayer : MonoBehaviour
 {
     public Text cityName;
+    public Text populationCount;
     public City ownedBy;
     public List<Text> resourceTexts;
     public List<PlayerResource> resourcesKeepTrack;
@@ -28,6 +29,11 @@ public class CityCanvasDisplayer : MonoBehaviour
     public void setCityNameText(string name)
     {
         cityName.text = "  <b>CITY: " + name + "</b>";
+    }
+
+    public void setPopulationCountText(int amount)
+    {
+        populationCount.text = "  Population: " + amount.ToString();
     }
 
     public void displayResources(List<PlayerResource> resources)
