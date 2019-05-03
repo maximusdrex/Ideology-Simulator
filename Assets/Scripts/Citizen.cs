@@ -42,6 +42,7 @@ public class Citizen
         string [] names = getName();
         firstName = names[0].Trim();
         lastName = names[1].Trim();
+
         livingIn = c;
         childTimer = UnityEngine.Random.Range(5, 25);
         Debug.Log("Citizen born: " + firstName + " " + lastName + " living in " + livingIn.name);

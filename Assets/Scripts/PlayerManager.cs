@@ -196,5 +196,24 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void StartTurn()
+    {
+        if(player == null)
+        {
+            Start();
+        }
+        City capitol = getCapitol(player);
+        Camera.main.transform.position = new Vector3(capitol.baseHex.GetPosition().x, 5f, capitol.baseHex.GetPosition().z -5f);
+    }
+
+    private City getCapitol(Player player)
+    {
+        foreach(City city in player.cities)
+        {
+            return city;
+        }
+        return null;
+    }
+
 }
 

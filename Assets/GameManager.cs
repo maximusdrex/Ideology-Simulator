@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
         for (int i = 1; i < numPlayers; i++)
         {
             players.Add(new AIPlayer(i, Random.Range(0, 1) > .5f));
-
         }
         unitToGameObject = new Dictionary<Unit, GameObject>();
     }
@@ -164,6 +163,17 @@ public class GameManager : MonoBehaviour
     public Player GetPlayer(int id)
     {
         return players[id];
+    }
+
+    public PlayerManager getManager(int id)
+    {
+        if(Camera.main.GetComponent<PlayerManager>() != null)
+        {
+            return Camera.main.GetComponent<PlayerManager>();
+        } else
+        {
+            return null;
+        }
     }
 
  
