@@ -76,17 +76,26 @@ public class GameManager : MonoBehaviour
 
     public void spawnUnit(Unit u, int q, int r)
     {
-        GameObject unitModel = u.model;
-        unitToGameObject.Add(u, unitModel);
-        placeOnHex(unitModel,q,r);
+        HexMap.hexes[q, r].tileObjs.Add(u);
+        HexMap.hexes[q, r].tileUnits.Add(u);
+        GameObject placedModel = placeOnHex(u.model, q, r);
+        unitToGameObject.Add(u, placedModel);
+        u.SetHex(HexMap.hexes[q, r]);
+
     }
 
-    public void moveUnit(Unit u)
+    public void moveUnit(Unit u, Hex nextHex)
     {
-        Hex nextHex = u.hex;
+        Debug.Log(unitToGameObject[u].transform.position);
+        Hex oldHex = u.getHex();
+        List<IInteractableObj> tileObjs = oldHex.tileObjs;
+        List<Unit> tileUnits = oldHex.tileUnits;
+        tileObjs.Remove(u);
+        tileUnits.Remove(u);
+        u.SetHex(nextHex);
         GameObject unitModel = unitToGameObject[u];
         unitModel.transform.position = new Vector3(nextHex.x, 0, nextHex.z);
-
+        Debug.Log(unitModel.transform.position);
     }
 
     public void instantiateBuilding(City c)
@@ -114,32 +123,30 @@ public class GameManager : MonoBehaviour
         c.buildingChanged = 0;
     }
 
-    public bool placeOnHex(GameObject obj, int x, int z)
+    public GameObject placeOnHex(GameObject obj, int x, int z)
     {
-        placeOnHex(obj, x, z, 0);
-        return true;
+        return placeOnHex(obj, x, z, 0);
     }
 
-    public bool placeOnHex(GameObject obj, int x, int z, float span)
+    public GameObject placeOnHex(GameObject obj, int x, int z, float span)
     {
-        placeOnHex(obj, x, z, span, Quaternion.Euler(0, 0, 0));
-        return true;
+       return placeOnHex(obj, x, z, span, Quaternion.Euler(0, 0, 0));
+
     }
 
-    public bool placeOnHex(GameObject obj, int x, int z, float span, Quaternion q)
+    public GameObject placeOnHex(GameObject obj, int x, int z, float span, Quaternion q)
     {
-        placeOnHex(obj, x, z, span, 0, q);
-        return true;
+        return placeOnHex(obj, x, z, span, 0, q);
     }
 
-    public bool placeOnHex(GameObject obj, int x, int z, float span, float horizontalDisp, Quaternion q)
+    public GameObject placeOnHex(GameObject obj, int x, int z, float span, float horizontalDisp, Quaternion q)
     {
         GameObject placedObject = Instantiate(obj, Vector3.zero, Quaternion.identity);
         placedObject.transform.position = gameMap.getHexObj(x, z).transform.position;
         placedObject.transform.SetParent(gameMap.getHexObj(x, z).transform);
         placedObject.transform.localPosition = new Vector3(horizontalDisp, .2f, span);
         placedObject.transform.localRotation = q;
-        return true;
+        return placedObject;
     }
 
     public void nextTurnPressed()

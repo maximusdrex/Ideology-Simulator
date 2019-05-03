@@ -17,11 +17,12 @@ public class Unit: IInteractableObj {
     public Unit(string type)
     {
         this.type = type;
+        name = "Worker: Manpower: " + manPower;
     }
 
     public Hex getHex()
     {
-        return this.hex;
+        return hex;
     }
 
     public void SetHex(Hex newHex)
@@ -32,6 +33,7 @@ public class Unit: IInteractableObj {
         }
         this.hex = newHex;
         newHex.tileObjs.Add(this);
+        newHex.tileUnits.Add(this);
     }
 
     public GameObject GetUI()

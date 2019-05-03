@@ -12,14 +12,18 @@ public class PlayerManager : MonoBehaviour
     public List<Unit> units;
     public GameObject defaultGUI;
     public GameObject currentGUI;
-
+    public Hex rememberedHex;
     // Start is called before the first frame update
     void Start()
     {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         player = gm.GetPlayer(0);
         units = new List<Unit>();
+        player.units.Add(new Worker(50));
         setGUI(defaultGUI);
+        Debug.Log(player.units[0].name);
+        spawnUnit(player.units[0], player.cities[0].baseHex.C+1, player.cities[0].baseHex.R+1);
+        rememberedHex = null;
     }
 
     // Update is called once per frame
@@ -32,7 +36,8 @@ public class PlayerManager : MonoBehaviour
                 if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 {
                     Debug.Log("Clicked on the UI");
-                } else
+                } 
+                else
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit;
@@ -44,6 +49,37 @@ public class PlayerManager : MonoBehaviour
                         {
                             Debug.Log("forest tile");
                         }
+                        if (rememberedHex != null && rememberedHex.tileUnits.Count > 0)
+                        {
+                            List<Unit> unitsToMove = new List<Unit>();
+                            foreach (Unit u in rememberedHex.tileUnits)
+                            {
+                                Debug.Log("iterating through units");
+                                Debug.Log(u.type);
+                                unitsToMove.Add(u);
+                            }
+                            foreach (Unit u in unitsToMove)
+                            {
+                                moveUnit(u, hex);
+                            }
+
+                        }
+                        List<IInteractableObj> hexList = hex.tileObjs;
+                        if (hexList.Count == 1)
+                        {
+                            rememberedHex = hex;
+                            setGUI(hexList[0].GetUI());
+                        }
+                        else if (hexList.Count > 1)
+                        {
+                            rememberedHex = hex;
+                            UISelector(hexList, Input.mousePosition);
+                        }
+                        else
+                        {
+                            rememberedHex = null;
+                            setGUI(defaultGUI);
+                        }
 
                         createImprovement(hex);
                         Debug.Log(hex.ToString());
@@ -54,19 +90,7 @@ public class PlayerManager : MonoBehaviour
 
 
                         Debug.Log(hex.ToString());
-                        List<IInteractableObj> hexList = hex.tileObjs;
-                        if (hexList.Count == 1)
-                        {
-                            setGUI(hexList[0].GetUI());
-                        }
-                        else if (hexList.Count > 1)
-                        {
-                            UISelector(hexList, Input.mousePosition);
-                        }
-                        else
-                        {
-                            setGUI(defaultGUI);
-                        }
+
                     }
                     else
                     {
@@ -144,15 +168,15 @@ public class PlayerManager : MonoBehaviour
     }
     public void moveUnit(Unit u, Hex nextHex)
     {
-        u.SetHex(nextHex);
-        gm.moveUnit(u);
+        gm.moveUnit(u, nextHex);
     }
 
     public void createImprovement(Hex hex)
     {
-        if (hex.improvement == null && (hex.terrain != TerrainEnum.Terrain.Mountain ||
+        if (hex.improvement == null && (hex.terrain != TerrainEnum.Terrain.Mountain &&
                    hex.terrain != TerrainEnum.Terrain.Ocean))
         {
+
             if (hex.getCity() != null)
             {
                 GameObject obj = (GameObject)Resources.Load("farm");

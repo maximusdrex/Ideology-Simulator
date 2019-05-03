@@ -22,7 +22,7 @@ public class Hex
     public float z;
 
     public List<IInteractableObj> tileObjs;
-
+    public List<Unit> tileUnits;
     public float height;
     public float temp;
     public float moisture;
@@ -39,7 +39,9 @@ public class Hex
         this.S = -(c + r);
 
         tileObjs = new List<IInteractableObj>();
+        tileUnits = new List<Unit>();
     }
+
     /// <summary>
     /// Returns a string that represents the current Hex.
     /// </summary>
