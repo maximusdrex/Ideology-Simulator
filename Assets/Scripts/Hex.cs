@@ -119,6 +119,14 @@ public class Hex
         return Mathf.Sqrt(Mathf.Pow(otherHex.C - C, 2f)  + Mathf.Pow(otherHex.R - R, 2f) + (otherHex.C - C)*(otherHex.R - R));
     }
 
+    public int getHexDistance(Hex otherHex)
+    {
+        Debug.Log("C: " + C + " R: " + R + " S: " + S);
+        Debug.Log("C: " + otherHex.C + " R: " + otherHex.R + " S: " + otherHex.S);
+        return Mathf.Abs(C - otherHex.C) + Mathf.Abs(R - otherHex.R) + Mathf.Abs(S - otherHex.S) / 2;
+
+    }
+
     /// <summary>
     /// Gets the neighbor in a given direction.
     /// </summary>

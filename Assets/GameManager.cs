@@ -85,16 +85,23 @@ public class GameManager : MonoBehaviour
 
     public void moveUnit(Unit u, Hex nextHex)
     {
-        Debug.Log(unitToGameObject[u].transform.position);
-        Hex oldHex = u.getHex();
-        List<IInteractableObj> tileObjs = oldHex.tileObjs;
-        List<Unit> tileUnits = oldHex.tileUnits;
-        tileObjs.Remove(u);
-        tileUnits.Remove(u);
-        u.SetHex(nextHex);
-        GameObject unitModel = unitToGameObject[u];
-        unitModel.transform.position = new Vector3(nextHex.x, 0, nextHex.z);
-        Debug.Log(unitModel.transform.position);
+        bool canMove = u.movementCheck(nextHex);
+        if (canMove)
+        {
+            Hex oldHex = u.getHex();
+            List<IInteractableObj> tileObjs = oldHex.tileObjs;
+            List<Unit> tileUnits = oldHex.tileUnits;
+            tileObjs.Remove(u);
+            tileUnits.Remove(u);
+            u.SetHex(nextHex);
+            GameObject unitModel = unitToGameObject[u];
+            unitModel.transform.position = new Vector3(nextHex.x, 0, nextHex.z);
+            Debug.Log(unitModel.transform.position);
+        }
+        else
+        {
+            Debug.Log("Distance too far!");
+        }
     }
 
     public void instantiateBuilding(City c)
