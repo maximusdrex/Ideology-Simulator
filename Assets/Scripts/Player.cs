@@ -69,6 +69,10 @@ public class Player
         {
             researching.AddProgress(TechProgress());
         }
+        foreach(Unit u in units)
+        {
+            u.startTurn();
+        }
     }
 
     public void EndTurn()

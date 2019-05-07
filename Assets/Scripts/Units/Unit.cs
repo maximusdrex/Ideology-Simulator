@@ -10,18 +10,24 @@ public class Unit: IInteractableObj {
     public string name;
     public int manPower;
     public int baseStrength;
-    public int movement = 2;
-    public int movementRemaining = 2;
+    public int movement = 3;
+    public int movementRemaining = 3;
     public GameObject model;
 
     public Unit(string type)
     {
         this.type = type;
+        name = "Worker: Manpower: " + manPower;
+    }
+
+    public void startTurn()
+    {
+        movementRemaining = movement;
     }
 
     public Hex getHex()
     {
-        return this.hex;
+        return hex;
     }
 
     public void SetHex(Hex newHex)
@@ -32,6 +38,19 @@ public class Unit: IInteractableObj {
         }
         this.hex = newHex;
         newHex.tileObjs.Add(this);
+        newHex.tileUnits.Add(this);
+    }
+
+    public bool movementCheck(Hex nextHex)
+    {
+        int dist = hex.getHexDistance(nextHex);
+        Debug.Log("Movement Remaining: " + movementRemaining + " Dist:" + dist);
+        if(dist <= movementRemaining)
+        {
+            movementRemaining -= dist;
+            return true;
+        }
+        return false; 
     }
 
     public GameObject GetUI()
