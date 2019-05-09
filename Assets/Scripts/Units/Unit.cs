@@ -13,9 +13,14 @@ public class Unit: IInteractableObj {
     public int movement = 3;
     public int movementRemaining = 3;
     public GameObject model;
+    public static PlayerManager pm;
 
     public Unit(string type)
     {
+        if(pm == null) {
+            pm = Camera.main.GetComponent<PlayerManager>();
+        }
+
         this.type = type;
         name = "Worker: Manpower: " + manPower;
     }
@@ -55,6 +60,7 @@ public class Unit: IInteractableObj {
 
     public GameObject GetUI()
     {
+        pm.rememberedUnit = this;
         return (GameObject)Resources.Load("UnitUI");
     }
 

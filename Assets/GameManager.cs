@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         gameMap = GameObject.FindObjectOfType<HexMap>();
+        gameMap.Begin();
         turn = 1;
         players = new List<Player>();
         int numPlayers = 1;
@@ -26,10 +27,6 @@ public class GameManager : MonoBehaviour
             players.Add(new AIPlayer(i, Random.Range(0, 1) > .5f));
         }
         unitToGameObject = new Dictionary<Unit, GameObject>();
-    }
-
-    void Start()
-    {
         //Debug.Log("Game Manager started");
         foreach (Player p in players)
         {
@@ -51,6 +48,10 @@ public class GameManager : MonoBehaviour
         playing = players[0];
         playing.StartTurn();
         unitToGameObject = new Dictionary<Unit, GameObject>();
+    }
+
+    void Start()
+    {
     }
 
 

@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject defaultGUI;
     public GameObject currentGUI;
     public Hex rememberedHex;
+    public Unit rememberedUnit;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,21 +50,26 @@ public class PlayerManager : MonoBehaviour
                         {
                             Debug.Log("forest tile");
                         }
-                        if (rememberedHex != null && rememberedHex.tileUnits.Count > 0)
-                        {
-                            List<Unit> unitsToMove = new List<Unit>();
-                            foreach (Unit u in rememberedHex.tileUnits)
-                            {
-                                Debug.Log("iterating through units");
-                                Debug.Log(u.type);
-                                unitsToMove.Add(u);
-                            }
-                            foreach (Unit u in unitsToMove)
-                            {
-                                moveUnit(u, hex);
-                            }
+                        //if (rememberedHex != null && rememberedHex.tileUnits.Count > 0)
+                        //{
+                        //    List<Unit> unitsToMove = new List<Unit>();
+                        //    foreach (Unit u in rememberedHex.tileUnits)
+                        //    {
+                        //        Debug.Log("iterating through units");
+                        //        Debug.Log(u.type);
+                        //        unitsToMove.Add(u);
+                        //    }
+                        //    foreach (Unit u in unitsToMove)
+                        //    {
+                        //        moveUnit(u, hex);
+                        //    }
 
+                        //}
+
+                        if(rememberedUnit != null) {
+                            moveUnit(rememberedUnit, hex);
                         }
+
                         List<IInteractableObj> hexList = hex.tileObjs;
                         if (hexList.Count == 1)
                         {
@@ -77,11 +83,12 @@ public class PlayerManager : MonoBehaviour
                         }
                         else
                         {
+                            rememberedUnit = null;
                             rememberedHex = null;
                             setGUI(defaultGUI);
                         }
 
-                        createImprovement(hex);
+                        //createImprovement(hex);
                         Debug.Log(hex.ToString());
                         if (hex.resourceType != null)
                         {
@@ -163,6 +170,7 @@ public class PlayerManager : MonoBehaviour
 
     public void spawnUnit (Unit u, int q, int r)
     {
+        Debug.Log(u);
         units.Add(u);
         gm.spawnUnit(u, q, r);
     }

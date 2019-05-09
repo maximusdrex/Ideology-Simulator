@@ -36,7 +36,7 @@ public class HexMap : MonoBehaviour
 
     public Dictionary<Hex, GameObject> hexToGameObject;
 
-    private void Awake()
+    public void Begin()
     {
         Vector3 cameraPosition = Camera.main.transform.position;
         Random.InitState(0);
@@ -359,6 +359,8 @@ public class HexMap : MonoBehaviour
         }
 
     }
+
+
 
     /// <summary>
     /// Helper method to get Hexes in a given range
