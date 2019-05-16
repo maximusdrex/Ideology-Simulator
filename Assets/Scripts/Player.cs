@@ -93,6 +93,18 @@ public class Player
         }
     }
 
+    public void levy()
+    {
+        if (money > 50000)
+        {
+            money -= 50000;
+        }
+        else
+        {
+            Debug.Log("not enough bread");
+        }
+    }
+
     private void LoadTechs()
     {
         TextAsset fullTechs = (TextAsset) Resources.Load("Techs");

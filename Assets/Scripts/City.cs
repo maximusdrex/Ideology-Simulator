@@ -184,6 +184,7 @@ public class City : IInteractableObj
 
         //calculate GDP
         GDP = 0;
+        money = 0;
         foreach (PlayerResource r in resources)
         {
             GDP += (r.getDamount() * r.harvestCost);
@@ -194,6 +195,7 @@ public class City : IInteractableObj
             //Debug.Log("Transportation: " + transport);
             r.setDResource(0);
             r.setResource(0);
+            money = GDP * .08;
         }
         bool food = feedCitizens();
         for(int i = 0; i < citizens.Count; i++)
