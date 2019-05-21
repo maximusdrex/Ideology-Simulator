@@ -16,8 +16,8 @@ public class HexMap : MonoBehaviour
     public GameObject IceModel;
     public GameObject BlankModel;
 
-    public static int numRows = 54;
-    public static int numCollumns = 84;
+    public static int numRows = 30;
+    public static int numCollumns = 30;
     readonly float heightAdd = .33f;
     //readonly float heightMinus = .35f;
     readonly float heightDropOff = .6f;
@@ -173,9 +173,7 @@ public class HexMap : MonoBehaviour
     {
         for (int i = 0; i < numberOfRivers; i++)
         {
-            int randomCol = Random.Range(-15, 15);
-            int randomRow = Random.Range(-15, 15);
-            Hex h = hexes[numCollumns / 2 + randomCol, numRows / 2 + randomRow];
+            Hex h = hexes[numCollumns / 2, numRows / 2];
             int numSteps = Random.Range(3, 5);
             h.terrain = TerrainEnum.Terrain.Ocean;
             nextLakeTile(h, numSteps);
@@ -218,22 +216,14 @@ public class HexMap : MonoBehaviour
             float x = hexGo.transform.position.x;
             float z = hexGo.transform.position.z;
             //Minimum distance to one of the poles
-            float distance = Mathf.Min(h.getEuclideanDistance(hexes[h.C, 0]), h.getEuclideanDistance(hexes[h.C, numRows - 1]));
+            float distance = h.getEuclideanDistance(hexes[h.C, numRows - 1]);
 
             distance = distance * Random.Range(.7f, 1.3f);
 
             //maxDistance is from middle tile to polar
-            float maxPolarDistance = hexes[numCollumns / 2, 0].getEuclideanDistance(hexes[numCollumns / 2, numRows / 2]);
+            float maxPolarDistance = hexes[numCollumns / 2, 0].getEuclideanDistance(hexes[numCollumns / 2, numRows-1]);
             float d = Mathf.Min(distance / maxPolarDistance, 1f);
             h.temp = d;
-
-            //distance = Mathf.Min(h.getEuclideanDistance(hexes[0, h.R]), h.getEuclideanDistance(hexes[numColelumns - 1, h.R]));
-            //float maxCoastalDistance = hexes[0, 0].getEuclideanDistance(hexes[numCollumns / 2, numRows / 2]);
-            //d = Mathf.Miny(dexGo.Keistance / maxCoastalDistance, 1f);
-            //d = (1 - d) * Random.Range(.7f, 1.3f);
-            //float noiseMoisture = hhf.PerlinNoise(waterSeed + x, waterSeed + z);
-            //float moisture = noiseMoisture * .1+ Mathf.Pow(d, moistureDropOff);
-            //h.moiure = moisexGo.Keyture;
 
             if (h.moisture >= .9f && h.height < globalSeaLevel)
             {

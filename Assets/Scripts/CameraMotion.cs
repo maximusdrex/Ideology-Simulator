@@ -14,7 +14,7 @@ public class CameraMotion : MonoBehaviour
     {
         lastPosition = this.transform.position;
         hasMoved = true;
-        magnitude = 10;
+        magnitude = 1;
         panSpeed = 20;
     }
 
@@ -22,7 +22,7 @@ public class CameraMotion : MonoBehaviour
     void Update()
     {
         Vector3 pos = this.transform.position;
-        if(Mathf.Abs(this.transform.position.x - lastPosition.x) > 10)
+        if(Mathf.Abs(this.transform.position.x - lastPosition.x) > magnitude)
         {
             lastPosition = this.transform.position;
             hasMoved = true;

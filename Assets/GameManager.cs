@@ -76,15 +76,15 @@ public class GameManager : MonoBehaviour
 
     public void spawnUnit(Unit u, int q, int r)
     {
+        Debug.Log("spawnUnit called at tile" + q + " " + r);
         HexMap.hexes[q, r].tileObjs.Add(u);
         HexMap.hexes[q, r].tileUnits.Add(u);
         GameObject placedModel = placeOnHex(u.model, q, r);
         unitToGameObject.Add(u, placedModel);
         u.SetHex(HexMap.hexes[q, r]);
-
     }
 
-    public void moveUnit(Unit u, Hex nextHex)
+    public bool moveUnit(Unit u, Hex nextHex)
     {
         bool canMove = u.movementCheck(nextHex);
         if (canMove)
@@ -97,12 +97,9 @@ public class GameManager : MonoBehaviour
             u.SetHex(nextHex);
             GameObject unitModel = unitToGameObject[u];
             unitModel.transform.position = new Vector3(nextHex.x, 0, nextHex.z);
-            Debug.Log(unitModel.transform.position);
+            return true;
         }
-        else
-        {
-            Debug.Log("Distance too far!");
-        }
+        return false;
     }
 
     public void instantiateBuilding(City c)

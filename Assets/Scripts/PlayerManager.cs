@@ -22,7 +22,6 @@ public class PlayerManager : MonoBehaviour
         units = new List<Unit>();
         player.units.Add(new Worker(50));
         setGUI(defaultGUI);
-        Debug.Log(player.units[0].name);
         spawnUnit(player.units[0], player.cities[0].baseHex.C+1, player.cities[0].baseHex.R+1);
         rememberedHex = null;
     }
@@ -67,7 +66,11 @@ public class PlayerManager : MonoBehaviour
                         //}
 
                         if(rememberedUnit != null) {
-                            moveUnit(rememberedUnit, hex);
+                            bool moved = moveUnit(rememberedUnit, hex);
+                            if (!moved) {
+                                rememberedUnit = null;
+                            }
+
                         }
 
                         List<IInteractableObj> hexList = hex.tileObjs;
@@ -170,13 +173,12 @@ public class PlayerManager : MonoBehaviour
 
     public void spawnUnit (Unit u, int q, int r)
     {
-        Debug.Log(u);
         units.Add(u);
         gm.spawnUnit(u, q, r);
     }
-    public void moveUnit(Unit u, Hex nextHex)
+    public bool moveUnit(Unit u, Hex nextHex)
     {
-        gm.moveUnit(u, nextHex);
+        return gm.moveUnit(u, nextHex);
     }
 
     public void createImprovement(Hex hex)
