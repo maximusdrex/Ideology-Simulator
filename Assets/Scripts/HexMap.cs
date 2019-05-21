@@ -29,6 +29,10 @@ public class HexMap : MonoBehaviour
     float seed = 100;
     float moistureSeed = 97;
 
+    readonly int strategic = 50;
+    readonly int common = 200;
+    readonly int rare = 10;
+
     /// <summary>
     /// creates a 2D array of Hexes
     /// </summary>
@@ -550,19 +554,19 @@ public class HexMap : MonoBehaviour
     public void allocateResources()
     {
         int coalCurrent = 0;
-        int coalMax = 200;
+        int coalMax = common;
         int stoneCurrent = 0;
-        int stoneMax = 200;
+        int stoneMax = common;
         int ironCurrent = 0;
-        int ironMax = 50;
+        int ironMax = strategic;
         int aluminumCurrent = 0;
-        int aluminumMax = 50;
+        int aluminumMax = strategic;
         int oilCurrent = 0;
-        int oilMax = 200;
+        int oilMax = common;
         int luxuryMetalsCurrent = 0;
-        int luxuryMetalsMax = 10;
+        int luxuryMetalsMax = rare;
         int uraniumCurrent = 0;
-        int uraniumMax = 10;
+        int uraniumMax = rare;
         //200 for common, 50 for rare, 10 for epic.
         foreach (Hex h in hexes)
         {
