@@ -22,7 +22,7 @@ public class PlayerManager : MonoBehaviour
         units = new List<Unit>();
         player.units.Add(new Worker(50));
         setGUI(defaultGUI);
-        spawnUnit(player.units[0], player.cities[0].baseHex.C+1, player.cities[0].baseHex.R+1);
+        spawnUnit(player.units[0], player.city.baseHex.C+1, player.city.baseHex.R+1);
         rememberedHex = null;
     }
 
@@ -218,11 +218,7 @@ public class PlayerManager : MonoBehaviour
 
     private City getCapitol(Player player)
     {
-        foreach(City city in player.cities)
-        {
-            return city;
-        }
-        return null;
+        return player.city;
     }
 
 }

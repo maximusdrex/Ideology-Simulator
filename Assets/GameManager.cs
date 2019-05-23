@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
             {
                 c = new CapitalistCity(hexes, true, true, p);
             }
-            p.cities.Add(c);
+            p.city = c;
         }
         g = new GlobalMarket();
         Camera cam = FindObjectOfType<Camera>();
@@ -59,17 +59,11 @@ public class GameManager : MonoBehaviour
     {
         foreach (Player p in players)
         {
-            foreach (City c in p.cities)
+            City c = p.city;
+            if (c.buildingChanged > 0)
             {
-                if (c.buildingChanged > 0 )
-                {
-                    Debug.Log("instantiating buildings");
-                    instantiateBuilding(c);
-                }
-                else
-                {
-
-                }
+                Debug.Log("instantiating buildings");
+                instantiateBuilding(c);
             }
         }
     }
