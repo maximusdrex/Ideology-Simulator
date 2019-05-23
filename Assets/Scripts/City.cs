@@ -118,7 +118,7 @@ public class City : IInteractableObj
 
     public GameObject GetUI()
     {
-        GameObject temp =  (GameObject) Resources.Load("CityCanvas");
+        GameObject temp = (GameObject) Resources.Load("CityCanvas");
         temp.GetComponent<CityCanvasDisplayer>().ownedBy = this;
         temp.GetComponent<CityCanvasDisplayer>().setCityNameText(name);
         temp.GetComponent<CityCanvasDisplayer>().setPopulationCountText(citizens.Count);

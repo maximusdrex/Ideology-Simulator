@@ -98,6 +98,7 @@ public class Player
         if (money > 50000)
         {
             money -= 50000;
+            Debug.Log("We have enough bread. ");
         }
         else
         {
