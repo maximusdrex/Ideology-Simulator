@@ -76,19 +76,6 @@ public class Player
         }
     }
 
-    public void levy()
-    {
-        if (money > 50000)
-        {
-            money -= 50000;
-            playerManager.spawnUnit(new Worker(500), city.baseHex.C, city.baseHex.R);
-        }
-        else
-        {
-            Debug.Log("not enough bread");
-        }
-    }
-
     private void LoadTechs()
     {
         TextAsset fullTechs = (TextAsset) Resources.Load("Techs");

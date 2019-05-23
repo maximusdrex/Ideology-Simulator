@@ -6,6 +6,7 @@ public class Levy : MonoBehaviour
 {
     public Player owner;
     private GameManager gm;
+    private PlayerManager playerManager;
 
     public void levyExecute()
     {
@@ -14,7 +15,6 @@ public class Levy : MonoBehaviour
         if (owner.money > 50000)
         {
             owner.money -= 50000;
-            Debug.Log("We have enough bread. ");
         }
         else
         {
