@@ -46,10 +46,12 @@ public class Unit: IInteractableObj {
         this.hex = newHex;
         newHex.tileObjs.Add(this);
         newHex.tileUnits.Add(this);
-        if((this.hex).tileUnits[1] == null){
-
+        int numUnits = 0;
+        foreach (Unit u in getHex().tileUnits)
+        {
+            numUnits++;
         }
-        else
+        if(numUnits > 1)
         {
             fight();
         }
