@@ -1,23 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Worker : Unit
+public class Fighter : Unit
 {
-   public Worker(int manPower) : base("worker")
+    public Fighter(int manPower) : base("fighter")
     {
         this.manPower = manPower;
         model = getModel();
-        baseStrength = 0;
+        baseStrength = 5;
     }
 
     public GameObject getModel()
     {
         return (GameObject)Resources.Load("worker");
-    }
-
-    public void buildFarm()
-    {
-
     }
 
 }
