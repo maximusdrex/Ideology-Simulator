@@ -58,7 +58,7 @@ public class Unit: IInteractableObj {
         return false; 
     }
 
-    public GameObject GetUI()
+    public virtual GameObject GetUI()
     {
         pm.rememberedUnit = this;
         return (GameObject)Resources.Load("UnitUI");
@@ -69,7 +69,7 @@ public class Unit: IInteractableObj {
         return name;
     }
 
-    public void doAction()
+    public virtual void doAction()
     {
 
     }
