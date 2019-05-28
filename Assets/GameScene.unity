@@ -560,3 +560,13 @@ MonoBehaviour:
   defaultGUI: {fileID: 4535791643709471012, guid: 18166e0ee3961554bbf4504ff463cfe0,
     type: 3}
   currentGUI: {fileID: 0}
+  rememberedHex:
+    C: 0
+    R: 0
+    S: 0
+    x: 0
+    z: 0
+    height: 0
+    temp: 0
+    moisture: 0
+    terrain: 0
