@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Unit: IInteractableObj {
 
@@ -12,6 +13,7 @@ public class Unit: IInteractableObj {
     public int baseStrength;
     public int movement = 3;
     public int movementRemaining = 3;
+    public int health = 10;
     public GameObject model;
     public static PlayerManager pm;
 
@@ -44,6 +46,13 @@ public class Unit: IInteractableObj {
         this.hex = newHex;
         newHex.tileObjs.Add(this);
         newHex.tileUnits.Add(this);
+        if((this.hex).tileUnits[1] == null){
+
+        }
+        else
+        {
+            fight();
+        }
     }
 
     public bool movementCheck(Hex nextHex)
@@ -69,11 +78,15 @@ public class Unit: IInteractableObj {
         return name;
     }
 
-<<<<<<< HEAD
     public void fight()
-=======
+    {
+        System.Random rnd = new System.Random();
+        foreach (Unit u in getHex().tileUnits)
+        {
+            health -= (int)(u.baseStrength * (.75 + (.5 *(rnd.NextDouble()))));
+        }
+    }
     public void doAction()
->>>>>>> d31b3e0756ef5c76ffe5499b589022c99333ba7f
     {
 
     }

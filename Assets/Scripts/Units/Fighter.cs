@@ -12,7 +12,7 @@ public class Fighter : Unit
 
     public GameObject getModel()
     {
-        return (GameObject)Resources.Load("worker");
+        return (GameObject)Resources.Load("Figher");
     }
 
 }
