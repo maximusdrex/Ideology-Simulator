@@ -223,6 +223,16 @@ public class Hex
     {
         city = c;
         owner = c.owner;
+        HexMap hm = GameObject.Find("HexMap").GetComponent<HexMap>();
+        GameObject hex = hm.hexToGameObject[this];
+        Debug.Log("Tile: " + hex.name + " (" + C + ", " + R + ") changed");
+        foreach (MeshRenderer x in hex.GetComponentsInChildren<MeshRenderer>()) {
+            if(x.transform.gameObject.name == "hextile")
+            {
+                x.material = (Material)Resources.Load("CityBorder");
+                Debug.Log(x.material.ToString());
+            }
+        }
     }
 
     public City getCity()

@@ -91,7 +91,47 @@ ModelImporter:
     4300026: Tree Leaf 2.002
     4300028: Tree Leaf 5.002
     10800000: Point
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dirt
+    second: {fileID: 2100000, guid: 375b0213f4054074b8a1cadc766cc718, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Grass.001
+    second: {fileID: 2100000, guid: 20888dc3ab649b549af52ecf2b6ae5be, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.000
+    second: {fileID: 2100000, guid: 55efa3bbea1387d4aa66ff00c58207a4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 18c41d54a5744e74688f8d4ae10084e3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 0055d94c3223e46499feb1caeb304051, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TreeColor
+    second: {fileID: 2100000, guid: fb086b736f9467f49a7a0f70f6e75bf8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TreeColor.001
+    second: {fileID: 2100000, guid: 10573040cf1ef9243903b6df4f5842b6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TreeColor.002
+    second: {fileID: 2100000, guid: f1cea0470bd24a6478c3bb1ca3632cca, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
