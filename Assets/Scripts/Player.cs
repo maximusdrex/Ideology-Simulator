@@ -7,7 +7,7 @@ public class Player
     public int id;
     public bool isTurn;
     private GameObject indicator;
-    public List <City> cities;
+    public City city;
     public double GDP;
     public double money;
     public bool communist;
@@ -17,6 +17,7 @@ public class Player
     public double wageTax;
     public List<Unit> units;
     private GameManager gm;
+    private PlayerManager playerManager;
 
     private List<Tech> playerTechTree;
     private Tech researching;
@@ -31,7 +32,6 @@ public class Player
         //indicator.transform.position = new Vector3(70, 10 + (id * 25), 0);
         //indicator.GetComponentInChildren<UnityEngine.UI.Text>().text = "Player " + id.ToString();
         //indicator.GetComponent<UnityEngine.UI.Toggle>().isOn = false;
-        cities = new List<City>();
         this.communist = communist;
         LoadTechs();
         units = new List<Unit>();
@@ -40,6 +40,7 @@ public class Player
     public virtual void StartTurn()
     {
         PlayerManager pm = gm.getManager(id);
+        playerManager = pm;
         if(pm != null)
         {
             pm.StartTurn();
@@ -47,27 +48,16 @@ public class Player
 
         isTurn = true;
         //indicator.GetComponent<UnityEngine.UI.Toggle>().isOn = true;
-        if (communist)
-        {
-            foreach (CommunistCity com in cities)
-            {
-                com.startTurn();
-                GDP += com.GDP;
-                money += com.money;
-            }
-        }
-        else
-        {
-            foreach (CapitalistCity cap in cities)
-            {
-                cap.startTurn();
-                GDP += cap.GDP;
-                money += cap.money;
-            }
-        }
+        city.startTurn();
+        GDP += city.GDP;
+        money += city.money;
         if(researching != null)
         {
             researching.AddProgress(TechProgress());
+        }
+        foreach(Unit u in units)
+        {
+            u.startTurn();
         }
     }
 
@@ -75,10 +65,7 @@ public class Player
     {
         isTurn = false;
         //indicator.GetComponent<UnityEngine.UI.Toggle>().isOn = false;
-        foreach(City c in cities)
-        {
-            c.endTurn();
-        }
+        city.endTurn();
     }
 
     void Update()

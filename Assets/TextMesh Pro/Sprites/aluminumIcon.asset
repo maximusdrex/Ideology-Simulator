@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a92b25f83d49b9bc132d206b370281, type: 3}
+  m_Name: aluminumIcon
+  m_EditorClassIdentifier: 
+  hashCode: -800858847
+  material: {fileID: 21695434834772964}
+  materialHashCode: 0
+  spriteSheet: {fileID: 2800000, guid: a5d953f1b9d0bc84ebd1a4747f10f82a, type: 3}
+  spriteInfoList:
+  - id: 0
+    x: 0
+    y: 0
+    width: 275
+    height: 275
+    xOffset: -137.5
+    yOffset: 137.5
+    xAdvance: 275
+    scale: 1
+    name: aluminumIcon
+    hashCode: -800858847
+    unicode: 0
+    pivot: {x: -137.5, y: 137.5}
+    sprite: {fileID: 21300000, guid: a5d953f1b9d0bc84ebd1a4747f10f82a, type: 3}
+  fallbackSpriteAssets:
+  - {fileID: 11400000, guid: 4346c7bf941c2c6469c05059584767df, type: 2}
+  - {fileID: 11400000, guid: 4e590054936e4004eb085934db890a65, type: 2}
+  - {fileID: 11400000, guid: 77958db000546c7459b37fb0c564edd8, type: 2}
+  - {fileID: 11400000, guid: 066edfc28da4b684480f6c1c9a298828, type: 2}
+  - {fileID: 11400000, guid: 7bd25426f503dd54e9e97b844818eb5d, type: 2}
+  - {fileID: 11400000, guid: 408fc9f934f86774ab34fe334e30a628, type: 2}
+  - {fileID: 11400000, guid: 2c5dd3bb99d964a4bb31580598a358fb, type: 2}
+  - {fileID: 11400000, guid: b9254cea41451244d800b306ebac1e7c, type: 2}
+  - {fileID: 11400000, guid: 46618fce261d34142b2046454dbbf0f7, type: 2}
+  - {fileID: 11400000, guid: e16a41a26d2963043b2412cbff85a79f, type: 2}
+  - {fileID: 11400000, guid: 14224ee2195b0a64499e387bab022561, type: 2}
+  - {fileID: 11400000, guid: f98f60d7a50cd1244b9e2ffcf42bc285, type: 2}
+  - {fileID: 11400000, guid: 785d29ccd93a46a46bb114bb533e738a, type: 2}
+--- !u!21 &21695434834772964
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TextMeshPro/Sprite
+  m_Shader: {fileID: 4800000, guid: cf81c85f95fe47e1a27f6ae460cf182c, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: a5d953f1b9d0bc84ebd1a4747f10f82a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
