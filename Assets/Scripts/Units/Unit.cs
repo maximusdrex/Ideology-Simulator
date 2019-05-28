@@ -43,4 +43,9 @@ public class Unit: IInteractableObj {
     {
         return name;
     }
+
+    public void doAction()
+    {
+
+    }
 }

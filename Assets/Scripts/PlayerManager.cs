@@ -45,7 +45,7 @@ public class PlayerManager : MonoBehaviour
                             Debug.Log("forest tile");
                         }
 
-                        createImprovement(hex);
+                        //createImprovement(hex);
                         Debug.Log(hex.ToString());
                         if (hex.resourceType != null)
                         {
