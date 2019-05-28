@@ -69,7 +69,11 @@ public class Unit: IInteractableObj {
         return name;
     }
 
+<<<<<<< HEAD
     public void fight()
+=======
+    public void doAction()
+>>>>>>> d31b3e0756ef5c76ffe5499b589022c99333ba7f
     {
 
     }

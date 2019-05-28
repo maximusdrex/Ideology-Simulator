@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class UnitAction : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Unit parent;
+
+    public void Use()
     {
-        
+        if(parent != null)
+        {
+            parent.doAction();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void setText(string text)
     {
-        
+        GetComponentInChildren<UnityEngine.UI.Text>().text = text;
     }
 }

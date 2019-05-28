@@ -70,7 +70,6 @@ public class PlayerManager : MonoBehaviour
                             if (!moved) {
                                 rememberedUnit = null;
                             }
-
                         }
 
                         List<IInteractableObj> hexList = hex.tileObjs;

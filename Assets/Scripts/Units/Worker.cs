@@ -20,4 +20,15 @@ public class Worker : Unit
 
     }
 
+    new public GameObject GetUI()
+    {
+        GameObject ui = (GameObject)Resources.Load("UnitUI");
+        ui.GetComponentInChildren<UnitAction>().setText("Build Farm");
+        return ui;
+    }
+
+    new public void doAction()
+    {
+        Camera.main.GetComponent<PlayerManager>().createImprovement(this.hex);
+    }
 }
