@@ -18,12 +18,14 @@ public class Player
     public List<Unit> units;
     private GameManager gm;
     private PlayerManager playerManager;
+    public int turns;
 
     private List<Tech> playerTechTree;
     private Tech researching;
 
     public Player(int pid, bool communist)
     {
+        turns = 0;
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerTechTree = new List<Tech>();
         id = pid;
@@ -39,6 +41,7 @@ public class Player
 
     public virtual void StartTurn()
     {
+        turns++;
         PlayerManager pm = gm.getManager(id);
         playerManager = pm;
         if(pm != null)

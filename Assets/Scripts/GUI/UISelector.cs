@@ -21,6 +21,7 @@ public class UISelector : MonoBehaviour
         options.Add("Select an option: ");
         foreach (IInteractableObj obj in ObjectList)
         {
+            Debug.Log("IIOBJ on tile: " + obj.GetName());
             options.Add(obj.GetName());
         }
         dropdown.value = -1;

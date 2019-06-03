@@ -65,6 +65,10 @@ public class GameManager : MonoBehaviour
                 Debug.Log("instantiating buildings");
                 instantiateBuilding(c);
             }
+            if(p.turns >= 20) {
+                Application.Quit();
+            }
+
         }
     }
 
