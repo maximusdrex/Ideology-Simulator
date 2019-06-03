@@ -46,10 +46,12 @@ public class Unit: IInteractableObj {
         this.hex = newHex;
         newHex.tileObjs.Add(this);
         newHex.tileUnits.Add(this);
-        if((this.hex).tileUnits[1] == null){
-
+        int numUnits = 0;
+        foreach (Unit u in getHex().tileUnits)
+        {
+            numUnits++;
         }
-        else
+        if(numUnits > 1)
         {
             fight();
         }
@@ -67,7 +69,7 @@ public class Unit: IInteractableObj {
         return false; 
     }
 
-    public GameObject GetUI()
+    public virtual GameObject GetUI()
     {
         pm.rememberedUnit = this;
         return (GameObject)Resources.Load("UnitUI");
@@ -86,7 +88,7 @@ public class Unit: IInteractableObj {
             health -= (int)(u.baseStrength * (.75 + (.5 *(rnd.NextDouble()))));
         }
     }
-    public void doAction()
+    public virtual void doAction()
     {
 
     }

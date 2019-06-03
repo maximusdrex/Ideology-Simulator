@@ -20,15 +20,17 @@ public class Worker : Unit
 
     }
 
-    new public GameObject GetUI()
+    public override GameObject GetUI()
     {
+        pm.rememberedUnit = this;
         GameObject ui = (GameObject)Resources.Load("UnitUI");
         ui.GetComponentInChildren<UnitAction>().setText("Build Farm");
         return ui;
     }
 
-    new public void doAction()
+    public override void doAction()
     {
+        Debug.Log("working");
         Camera.main.GetComponent<PlayerManager>().createImprovement(this.hex);
     }
 }
